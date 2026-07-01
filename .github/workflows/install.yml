@@ -26,6 +26,10 @@ on:
       - "**.py"
   workflow_dispatch:
 
+# 默认只给读权限；需要写权限的 release job 单独放开
+permissions:
+  contents: read
+
 jobs:
   meta:
     runs-on: ubuntu-latest
@@ -46,7 +50,7 @@ jobs:
             tag=$(date "+$tag-%y%m%d-$(git rev-parse --short HEAD)")
           fi
 
-          if ! $($is_release) ; then
+          if [[ "$is_release" != "true" ]]; then
             prefix=${tag%-*-*}
             suffix=${tag#$prefix-}
             tag="$prefix-ci.$suffix"
@@ -147,6 +151,9 @@ jobs:
     name: Generate changelog
     needs: meta
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       release_body: ${{ steps.git-cliff.outputs.content }}
     steps:
@@ -160,6 +167,7 @@ jobs:
         id: git-cliff
         with:
           config: .github/cliff.toml
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           # 正式版：使用 tag-pattern 只匹配正式版标签，包含所有从上一个正式版以来的提交
           # 预发布版：正常生成，只包含从上一个标签以来的提交
           args: >-
@@ -168,11 +176,14 @@ jobs:
         env:
           OUTPUT: CHANGES.md
           GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     if: ${{ needs.meta.outputs.is_release == 'true' }}
     needs: [meta, install, changelog]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -184,10 +195,11 @@ jobs:
             (cd $f && zip -r ../$f-${{ needs.meta.outputs.tag }}.zip .)
           done
           
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
-          files: assets/*
+          files: assets/*.zip
           tag_name: ${{ needs.meta.outputs.tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           body: ${{ needs.changelog.outputs.release_body }}
           draft: false
           prerelease: ${{ needs.meta.outputs.is_prerelease == 'true' }}

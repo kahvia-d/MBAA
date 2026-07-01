@@ -27,13 +27,14 @@
             "type": "Win32",
             "win32": {
                 "class_regex": ".*",
-                "window_regex": "Visual Studio",
+                "window_regex": "Blue Archive",
                 // 截图及控制方式，请根据项目实际情况修改
                 // 文档: https://maafw.xyz/docs/2.4-ControlMethods
                 "screencap": "PrintWindow", // 截图方式
                 "mouse": "PostMessageWithCursorPos", // 鼠标控制方式
-                "keyboard": "PostMessageWithCursorPos" // 键盘控制方式
-            }
+                "keyboard": "PostMessageWithCursorPos", // 键盘控制方式
+            },
+            "display_short_side": 720
         }
     ],
     "resource": [
@@ -59,6 +60,14 @@
     //     ]
     // },
     "task": [
+        {
+            "name": "登录测试",
+            "entry": "JumpToMainUI"
+        },
+        {
+            "name": "测试任务",
+            "entry": "Start"
+        },
         {
             "name": "普通任务",
             "entry": "MyTask1"

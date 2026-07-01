@@ -1,0 +1,64 @@
+{
+  "JumpToMainUI": {
+    "post_wait_freezes": 0,
+    "next": [
+      "TapToStart",
+      "DailyCheckIn",
+      "ActivityCheckIn",
+      "CloseNews",
+      "JumpToMainUISuccess"
+    ]
+  },
+  "TapToStart": {
+    "recognition": "TemplateMatch",
+    "template": "before_main_ui/start_button.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 0,
+    "next": [
+      "DailyCheckIn",
+      "JumpToMainUI"
+    ]
+  },
+  "DailyCheckIn": {
+    "recognition": "TemplateMatch",
+    "template": "before_main_ui/daily_check_in.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 0,
+    "next": [
+      "ActivityCheckIn",
+      "JumpToMainUI"
+    ]
+  },  
+  "ActivityCheckIn": {
+    "recognition": "TemplateMatch",
+    "template": "before_main_ui/activity_check_in.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 0,
+    "next": [
+      "JumpToMainUI",
+      "CloseNews"
+    ]
+  },
+  "CloseNews": {
+    "recognition": "TemplateMatch",
+    "template": "before_main_ui/news_close_button.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 0,
+    "next": [
+      "JumpToMainUI"
+    ]
+  },
+  "JumpToMainUISuccess": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/students.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 0,
+    "next": [
+      "Stop"
+    ]
+  }
+}

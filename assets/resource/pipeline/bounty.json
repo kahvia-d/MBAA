@@ -1,0 +1,48 @@
+{
+  "StartBounty": {
+    "next": [
+        "FromMainJumpToTasksBounty",
+        "JumpToBounty"
+    ]
+  },
+  "FromMainJumpToTasksBounty": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/tasks.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+        "FromMainJumpToTasksBountyLoading",
+        "JumpToBounty"
+    ]
+  },
+  "FromMainJumpToTasksBountyLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+        "FromMainJumpToTasksBountyLoading",
+        "JumpToBounty"
+    ]
+  },
+  "JumpToBounty": {
+    "recognition": "TemplateMatch",
+    "template": "tasks/bounty.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+    ]
+  },
+  "JumpToBountyLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+        "JumpToBountyLoading",
+        "JumpToBounty"
+    ]
+  },
+}

@@ -1,8 +1,8 @@
 {
   "StartBounty": {
     "next": [
-        "FromMainJumpToTasksBounty",
-        "JumpToBounty"
+      "FromMainJumpToTasksBounty",
+      "JumpToBounty"
     ]
   },
   "FromMainJumpToTasksBounty": {
@@ -12,8 +12,9 @@
     "action": "Click",
     "post_wait_freezes": 1000,
     "next": [
-        "FromMainJumpToTasksBountyLoading",
-        "JumpToBounty"
+      "FromMainJumpToTasksBountyLoading",
+      "FromMainJumpToTasksBounty",
+      "JumpToBounty"
     ]
   },
   "FromMainJumpToTasksBountyLoading": {
@@ -22,8 +23,8 @@
     "threshold": 0.7,
     "post_wait_freezes": 1000,
     "next": [
-        "FromMainJumpToTasksBountyLoading",
-        "JumpToBounty"
+      "FromMainJumpToTasksBountyLoading",
+      "JumpToBounty"
     ]
   },
   "JumpToBounty": {
@@ -31,8 +32,11 @@
     "template": "tasks/bounty.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 1500,
     "next": [
+      "JumpToBountyLoading",
+      "JumpToBounty",
+      "RunBountySweepPlan"
     ]
   },
   "JumpToBountyLoading": {
@@ -41,8 +45,553 @@
     "threshold": 0.7,
     "post_wait_freezes": 1000,
     "next": [
-        "JumpToBountyLoading",
-        "JumpToBounty"
+      "JumpToBountyLoading",
+      "JumpToBounty",
+      "RunBountySweepPlan"
     ]
   },
+  "RunBountySweepPlan": {
+    "next": [
+      "RunRoadBounty",
+      "RunRailwayBounty",
+      "RunClassroomBounty",
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "RunRoadBounty": {
+    "enabled": false,
+    "timeout": 3000,
+    "next": [
+      "OpenRoadBountyCategory"
+    ],
+    "on_error": [
+      "RunRailwayBounty",
+      "RunClassroomBounty",
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "OpenRoadBountyCategory": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/road.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "FindRoadBountyStage"
+    ]
+  },
+  "FindRoadBountyStage": {
+    "timeout": 2000,
+    "next": [
+      "FindRoadBountyStageNumber",
+      "ScrollRoadBountyStageListDown"
+    ],
+    "on_error": [
+      "ReturnRoadBountyListToCategory"
+    ]
+  },
+  "FindRoadBountyStageNumber": {
+    "recognition": "OCR",
+    "roi": [
+      695,
+      130,
+      65,
+      545
+    ],
+    "expected": "^06$",
+    "replace": [
+      [
+        "O",
+        "0"
+      ],
+      [
+        "o",
+        "0"
+      ]
+    ],
+    "threshold": 0.3,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      355,
+      -9,
+      75,
+      35
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "WaitRoadSweepInfo"
+    ]
+  },
+  "ScrollRoadBountyStageListDown": {
+    "max_hit": 12,
+    "action": "Swipe",
+    "begin": [
+      960,
+      650
+    ],
+    "end": [
+      960,
+      250
+    ],
+    "duration": 500,
+    "post_wait_freezes": 800,
+    "next": [
+      "FindRoadBountyStage"
+    ]
+  },
+  "WaitRoadSweepInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "timeout": 5000,
+    "next": [
+      "AddRoadSweepCount",
+      "StartRoadSweep"
+    ]
+  },
+  "AddRoadSweepCount": {
+    "enabled": false,
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_plus.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "repeat": 1,
+    "repeat_delay": 150,
+    "post_wait_freezes": 300,
+    "next": [
+      "StartRoadSweep"
+    ]
+  },
+  "StartRoadSweep": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmRoadSweepStart"
+    ],
+    "on_error": [
+      "CloseRoadBountyInfo"
+    ]
+  },
+  "ConfirmRoadSweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmRoadSweepComplete"
+    ],
+    "on_error": [
+      "CloseRoadBountyInfo"
+    ]
+  },
+  "ConfirmRoadSweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 5000,
+    "next": [
+      "CloseRoadBountyInfo"
+    ]
+  },
+  "CloseRoadBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 800,
+    "next": [
+      "ReturnRoadBountyListToCategory"
+    ]
+  },
+  "ReturnRoadBountyListToCategory": {
+    "action": "Click",
+    "target": [
+      56,
+      37
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "RunRailwayBounty",
+      "RunClassroomBounty",
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "RunRailwayBounty": {
+    "enabled": false,
+    "timeout": 3000,
+    "next": [
+      "OpenRailwayBountyCategory"
+    ],
+    "on_error": [
+      "RunClassroomBounty",
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "OpenRailwayBountyCategory": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/railway.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "FindRailwayBountyStage"
+    ]
+  },
+  "FindRailwayBountyStage": {
+    "timeout": 2000,
+    "next": [
+      "FindRailwayBountyStageNumber",
+      "ScrollRailwayBountyStageListDown"
+    ],
+    "on_error": [
+      "ReturnRailwayBountyListToCategory"
+    ]
+  },
+  "FindRailwayBountyStageNumber": {
+    "recognition": "OCR",
+    "roi": [
+      695,
+      130,
+      65,
+      545
+    ],
+    "expected": "^06$",
+    "replace": [
+      [
+        "O",
+        "0"
+      ],
+      [
+        "o",
+        "0"
+      ]
+    ],
+    "threshold": 0.3,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      355,
+      -9,
+      75,
+      35
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "WaitRailwaySweepInfo"
+    ]
+  },
+  "ScrollRailwayBountyStageListDown": {
+    "max_hit": 12,
+    "action": "Swipe",
+    "begin": [
+      960,
+      650
+    ],
+    "end": [
+      960,
+      250
+    ],
+    "duration": 500,
+    "post_wait_freezes": 800,
+    "next": [
+      "FindRailwayBountyStage"
+    ]
+  },
+  "WaitRailwaySweepInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "timeout": 5000,
+    "next": [
+      "AddRailwaySweepCount",
+      "StartRailwaySweep"
+    ]
+  },
+  "AddRailwaySweepCount": {
+    "enabled": false,
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_plus.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "repeat": 1,
+    "repeat_delay": 150,
+    "post_wait_freezes": 300,
+    "next": [
+      "StartRailwaySweep"
+    ]
+  },
+  "StartRailwaySweep": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmRailwaySweepStart"
+    ],
+    "on_error": [
+      "CloseRailwayBountyInfo"
+    ]
+  },
+  "ConfirmRailwaySweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmRailwaySweepComplete"
+    ],
+    "on_error": [
+      "CloseRailwayBountyInfo"
+    ]
+  },
+  "ConfirmRailwaySweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 5000,
+    "next": [
+      "CloseRailwayBountyInfo"
+    ]
+  },
+  "CloseRailwayBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 800,
+    "next": [
+      "ReturnRailwayBountyListToCategory"
+    ]
+  },
+  "ReturnRailwayBountyListToCategory": {
+    "action": "Click",
+    "target": [
+      56,
+      37
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "RunClassroomBounty",
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "RunClassroomBounty": {
+    "enabled": false,
+    "timeout": 3000,
+    "next": [
+      "OpenClassroomBountyCategory"
+    ],
+    "on_error": [
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "OpenClassroomBountyCategory": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/classroom.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "FindClassroomBountyStage"
+    ]
+  },
+  "FindClassroomBountyStage": {
+    "timeout": 2000,
+    "next": [
+      "FindClassroomBountyStageNumber",
+      "ScrollClassroomBountyStageListDown"
+    ],
+    "on_error": [
+      "ReturnClassroomBountyListToCategory"
+    ]
+  },
+  "FindClassroomBountyStageNumber": {
+    "recognition": "OCR",
+    "roi": [
+      695,
+      130,
+      65,
+      545
+    ],
+    "expected": "^06$",
+    "replace": [
+      [
+        "O",
+        "0"
+      ],
+      [
+        "o",
+        "0"
+      ]
+    ],
+    "threshold": 0.3,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      355,
+      -9,
+      75,
+      35
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "WaitClassroomSweepInfo"
+    ]
+  },
+  "ScrollClassroomBountyStageListDown": {
+    "max_hit": 12,
+    "action": "Swipe",
+    "begin": [
+      960,
+      650
+    ],
+    "end": [
+      960,
+      250
+    ],
+    "duration": 500,
+    "post_wait_freezes": 800,
+    "next": [
+      "FindClassroomBountyStage"
+    ]
+  },
+  "WaitClassroomSweepInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "timeout": 5000,
+    "next": [
+      "AddClassroomSweepCount",
+      "StartClassroomSweep"
+    ]
+  },
+  "AddClassroomSweepCount": {
+    "enabled": false,
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_plus.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "repeat": 1,
+    "repeat_delay": 150,
+    "post_wait_freezes": 300,
+    "next": [
+      "StartClassroomSweep"
+    ]
+  },
+  "StartClassroomSweep": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmClassroomSweepStart"
+    ],
+    "on_error": [
+      "CloseClassroomBountyInfo"
+    ]
+  },
+  "ConfirmClassroomSweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 60000,
+    "next": [
+      "ConfirmClassroomSweepComplete"
+    ],
+    "on_error": [
+      "CloseClassroomBountyInfo"
+    ]
+  },
+  "ConfirmClassroomSweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 5000,
+    "next": [
+      "CloseClassroomBountyInfo"
+    ]
+  },
+  "CloseClassroomBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 800,
+    "next": [
+      "ReturnClassroomBountyListToCategory"
+    ]
+  },
+  "ReturnClassroomBountyListToCategory": {
+    "action": "Click",
+    "target": [
+      56,
+      37
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnBountyListToTasks"
+    ]
+  },
+  "ReturnBountyListToTasks": {
+    "action": "Click",
+    "target": [
+      56,
+      37
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 5000,
+    "next": [
+      "WaitBountyReturnedToTasks"
+    ],
+    "on_error": [
+      "Stop"
+    ]
+  },
+  "WaitBountyReturnedToTasks": {
+    "recognition": "TemplateMatch",
+    "template": "tasks/bounty.png",
+    "threshold": 0.7,
+    "next": [
+      "Stop"
+    ]
+  }
 }

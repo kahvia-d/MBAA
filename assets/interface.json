@@ -32,7 +32,7 @@
                 // 文档: https://maafw.xyz/docs/2.4-ControlMethods
                 "screencap": "PrintWindow", // 截图方式
                 "mouse": "PostMessageWithCursorPos", // 鼠标控制方式
-                "keyboard": "PostMessageWithCursorPos", // 键盘控制方式
+                "keyboard": "PostMessageWithCursorPos" // 键盘控制方式
             },
             "display_short_side": 720
         }
@@ -67,6 +67,18 @@
         {
             "name": "测试任务",
             "entry": "Start"
+        },
+        {
+            "name": "悬赏通缉",
+            "entry": "StartBounty",
+            "option": [
+                "高架公路关号",
+                "高架公路扫荡次数",
+                "沙漠铁道关号",
+                "沙漠铁道扫荡次数",
+                "教室关号",
+                "教室扫荡次数"
+            ]
         },
         {
             "name": "普通任务",
@@ -109,6 +121,549 @@
                     "pipeline_override": {
                         "OcrTask": {
                             "text": "文本2"
+                        }
+                    }
+                }
+            ]
+        },
+        "高架公路关号": {
+            "type": "select",
+            "default_case": "6",
+            "cases": [
+                {
+                    "name": "1",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^01$"
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^02$"
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^03$"
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^04$"
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^05$"
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^06$"
+                        }
+                    }
+                },
+                {
+                    "name": "7",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^07$"
+                        }
+                    }
+                },
+                {
+                    "name": "8",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^08$"
+                        }
+                    }
+                },
+                {
+                    "name": "9",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^09$"
+                        }
+                    }
+                },
+                {
+                    "name": "10",
+                    "pipeline_override": {
+                        "FindRoadBountyStageNumber": {
+                            "expected": "^10$"
+                        }
+                    }
+                }
+            ]
+        },
+        "高架公路扫荡次数": {
+            "type": "select",
+            "default_case": "0",
+            "cases": [
+                {
+                    "name": "0",
+                    "label": "0 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": false
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "1",
+                    "label": "1 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "label": "2 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": true,
+                            "repeat": 1
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "label": "3 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": true,
+                            "repeat": 2
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "label": "4 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": true,
+                            "repeat": 3
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "label": "5 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": true,
+                            "repeat": 4
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "label": "6 次",
+                    "pipeline_override": {
+                        "RunRoadBounty": {
+                            "enabled": true
+                        },
+                        "AddRoadSweepCount": {
+                            "enabled": true,
+                            "repeat": 5
+                        }
+                    }
+                }
+            ]
+        },
+        "沙漠铁道关号": {
+            "type": "select",
+            "default_case": "6",
+            "cases": [
+                {
+                    "name": "1",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^01$"
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^02$"
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^03$"
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^04$"
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^05$"
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^06$"
+                        }
+                    }
+                },
+                {
+                    "name": "7",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^07$"
+                        }
+                    }
+                },
+                {
+                    "name": "8",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^08$"
+                        }
+                    }
+                },
+                {
+                    "name": "9",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^09$"
+                        }
+                    }
+                },
+                {
+                    "name": "10",
+                    "pipeline_override": {
+                        "FindRailwayBountyStageNumber": {
+                            "expected": "^10$"
+                        }
+                    }
+                }
+            ]
+        },
+        "沙漠铁道扫荡次数": {
+            "type": "select",
+            "default_case": "0",
+            "cases": [
+                {
+                    "name": "0",
+                    "label": "0 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": false
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "1",
+                    "label": "1 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "label": "2 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": true,
+                            "repeat": 1
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "label": "3 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": true,
+                            "repeat": 2
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "label": "4 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": true,
+                            "repeat": 3
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "label": "5 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": true,
+                            "repeat": 4
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "label": "6 次",
+                    "pipeline_override": {
+                        "RunRailwayBounty": {
+                            "enabled": true
+                        },
+                        "AddRailwaySweepCount": {
+                            "enabled": true,
+                            "repeat": 5
+                        }
+                    }
+                }
+            ]
+        },
+        "教室关号": {
+            "type": "select",
+            "default_case": "6",
+            "cases": [
+                {
+                    "name": "1",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^01$"
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^02$"
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^03$"
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^04$"
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^05$"
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^06$"
+                        }
+                    }
+                },
+                {
+                    "name": "7",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^07$"
+                        }
+                    }
+                },
+                {
+                    "name": "8",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^08$"
+                        }
+                    }
+                },
+                {
+                    "name": "9",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^09$"
+                        }
+                    }
+                },
+                {
+                    "name": "10",
+                    "pipeline_override": {
+                        "FindClassroomBountyStageNumber": {
+                            "expected": "^10$"
+                        }
+                    }
+                }
+            ]
+        },
+        "教室扫荡次数": {
+            "type": "select",
+            "default_case": "0",
+            "cases": [
+                {
+                    "name": "0",
+                    "label": "0 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": false
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "1",
+                    "label": "1 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "label": "2 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": true,
+                            "repeat": 1
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "label": "3 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": true,
+                            "repeat": 2
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "label": "4 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": true,
+                            "repeat": 3
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "label": "5 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": true,
+                            "repeat": 4
+                        }
+                    }
+                },
+                {
+                    "name": "6",
+                    "label": "6 次",
+                    "pipeline_override": {
+                        "RunClassroomBounty": {
+                            "enabled": true
+                        },
+                        "AddClassroomSweepCount": {
+                            "enabled": true,
+                            "repeat": 5
                         }
                     }
                 }

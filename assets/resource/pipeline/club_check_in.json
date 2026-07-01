@@ -1,0 +1,271 @@
+{
+  "StartClubCheckIn": {
+    "next": [
+      "OpenSocialFromMain",
+      "WaitSocialPageOpened"
+    ]
+  },
+  "OpenSocialFromMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/communication.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenSocialLoading",
+      "OpenSocialFromMain",
+      "WaitSocialPageOpened"
+    ]
+  },
+  "OpenSocialLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenSocialLoading",
+      "WaitSocialPageOpened"
+    ]
+  },
+  "WaitSocialPageOpened": {
+    "recognition": "TemplateMatch",
+    "template": "club/social_club_card.png",
+    "roi": [
+      150,
+      280,
+      350,
+      220
+    ],
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "OpenClubFromSocial"
+    ],
+    "on_error": [
+      "RetryOpenSocialFromMainAfterCheck"
+    ]
+  },
+  "RetryOpenSocialFromMainAfterCheck": {
+    "next": [
+      "OpenSocialFromMain"
+    ]
+  },
+  "OpenClubFromSocial": {
+    "recognition": "TemplateMatch",
+    "template": "club/social_club_card.png",
+    "roi": [
+      150,
+      280,
+      350,
+      220
+    ],
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1500,
+    "next": [
+      "OpenClubLoading",
+      "WaitClubPageOpened",
+      "OpenClubFromSocial"
+    ]
+  },
+  "OpenClubLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenClubLoading",
+      "WaitClubPageOpened"
+    ]
+  },
+  "WaitClubPageOpened": {
+    "recognition": "TemplateMatch",
+    "template": "club/club_page_title.png",
+    "roi": [
+      70,
+      0,
+      170,
+      70
+    ],
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "HandleClubSignInReward"
+    ],
+    "on_error": [
+      "RetryOpenClubFromSocialAfterCheck"
+    ]
+  },
+  "RetryOpenClubFromSocialAfterCheck": {
+    "next": [
+      "OpenClubFromSocial"
+    ]
+  },
+  "HandleClubSignInReward": {
+    "next": [
+      "ConfirmClubSignInReward",
+      "ReturnClubToMain"
+    ]
+  },
+  "ConfirmClubSignInReward": {
+    "recognition": "TemplateMatch",
+    "template": "club/signin_reward_confirm.png",
+    "roi": [
+      480,
+      420,
+      340,
+      130
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 500,
+    "post_wait_freezes": 1200,
+    "timeout": 2500,
+    "next": [
+      "WaitClubSignInRewardGone"
+    ]
+  },
+  "WaitClubSignInRewardGone": {
+    "recognition": "TemplateMatch",
+    "template": "club/signin_reward_title.png",
+    "roi": [
+      500,
+      120,
+      320,
+      100
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 4000,
+    "next": [
+      "ReturnClubToMain"
+    ],
+    "on_error": [
+      "RetryConfirmClubSignInRewardAfterStillVisible"
+    ]
+  },
+  "RetryConfirmClubSignInRewardAfterStillVisible": {
+    "next": [
+      "ConfirmClubSignInRewardSecond",
+      "ReturnClubToMainFallbackAfterRewardRetry"
+    ]
+  },
+  "ConfirmClubSignInRewardSecond": {
+    "recognition": "TemplateMatch",
+    "template": "club/signin_reward_confirm.png",
+    "roi": [
+      480,
+      420,
+      340,
+      130
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 500,
+    "post_wait_freezes": 1200,
+    "timeout": 2500,
+    "next": [
+      "WaitClubSignInRewardGoneAfterRetry"
+    ],
+    "on_error": [
+      "ReturnClubToMainFallbackAfterRewardRetry"
+    ]
+  },
+  "WaitClubSignInRewardGoneAfterRetry": {
+    "recognition": "TemplateMatch",
+    "template": "club/signin_reward_title.png",
+    "roi": [
+      500,
+      120,
+      320,
+      100
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 4000,
+    "next": [
+      "ReturnClubToMain"
+    ],
+    "on_error": [
+      "ReturnClubToMainFallbackAfterRewardRetry"
+    ]
+  },
+  "ReturnClubToMainFallbackAfterRewardRetry": {
+    "next": [
+      "ReturnClubToMain"
+    ]
+  },
+  "ReturnClubToMain": {
+    "action": "Click",
+    "target": [
+      55,
+      35
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnClubToMainLoading",
+      "WaitClubCheckInReturnedToMain"
+    ]
+  },
+  "ReturnClubToMainLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnClubToMainLoading",
+      "WaitClubCheckInReturnedToMain"
+    ]
+  },
+  "ConfirmClubSignInRewardAfterBackFailed": {
+    "recognition": "TemplateMatch",
+    "template": "club/signin_reward_confirm.png",
+    "roi": [
+      480,
+      420,
+      340,
+      130
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 500,
+    "post_wait_freezes": 1200,
+    "timeout": 2500,
+    "next": [
+      "ReturnClubToMain"
+    ],
+    "on_error": [
+      "ReturnClubToMainByHomeFallback"
+    ]
+  },
+  "ReturnClubToMainByHomeFallback": {
+    "action": "Click",
+    "target": [
+      1237,
+      31
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnClubToMainLoading",
+      "WaitClubCheckInReturnedToMain"
+    ]
+  },
+  "WaitClubCheckInReturnedToMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/communication.png",
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "ConfirmClubSignInRewardAfterBackFailed",
+      "RetryReturnClubToMainAfterCheck"
+    ]
+  },
+  "RetryReturnClubToMainAfterCheck": {
+    "next": [
+      "ReturnClubToMainByHomeFallback"
+    ]
+  }
+}

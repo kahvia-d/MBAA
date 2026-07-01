@@ -1,0 +1,564 @@
+{
+  "StartCafeDaily": {
+    "next": [
+      "ConfirmCafe1FirstEnterDialog",
+      "WaitCafeDailyOpened",
+      "OpenCafeDailyFromMain"
+    ]
+  },
+  "OpenCafeDailyFromMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/coffee_room.png",
+    "threshold": 0.7,
+    "green_mask": true,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenCafeDailyLoading",
+      "ConfirmCafe1FirstEnterDialog",
+      "WaitCafeDailyOpened",
+      "OpenCafeDailyFromMain"
+    ]
+  },
+  "OpenCafeDailyLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenCafeDailyLoading",
+      "ConfirmCafe1FirstEnterDialog",
+      "WaitCafeDailyOpened"
+    ]
+  },
+  "WaitCafeDailyOpened": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/cafe_title.png",
+    "roi": [
+      90,
+      0,
+      140,
+      65
+    ],
+    "threshold": 0.65,
+    "timeout": 5000,
+    "next": [
+      "HandleCafe1FirstEnterDialog"
+    ],
+    "on_error": [
+      "RetryOpenCafeDailyFromMainAfterCheck"
+    ]
+  },
+  "RetryOpenCafeDailyFromMainAfterCheck": {
+    "next": [
+      "OpenCafeDailyFromMain"
+    ]
+  },
+  "HandleCafe1FirstEnterDialog": {
+    "next": [
+      "ConfirmCafe1FirstEnterDialog",
+      "RunCafe1DailyPlan"
+    ]
+  },
+  "ConfirmCafe1FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 500,
+    "post_wait_freezes": 1000,
+    "timeout": 1500,
+    "next": [
+      "WaitCafe1OpenedAfterFirstEnterDialog"
+    ]
+  },
+  "WaitCafe1OpenedAfterFirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/cafe_title.png",
+    "roi": [
+      90,
+      0,
+      140,
+      65
+    ],
+    "threshold": 0.65,
+    "timeout": 5000,
+    "next": [
+      "RunCafe1DailyPlan"
+    ],
+    "on_error": [
+      "ContinueCafe1DailyPlanAfterFirstEnterCheckTimeout"
+    ]
+  },
+  "ContinueCafe1DailyPlanAfterFirstEnterCheckTimeout": {
+    "next": [
+      "RunCafe1DailyPlan"
+    ]
+  },
+  "RunCafe1DailyPlan": {
+    "next": [
+      "RunCafe1HeadPat",
+      "RunCafeIncomeClaim",
+      "RunCafe2HeadPatPlan",
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "RunCafe1HeadPat": {
+    "next": [
+      "FindCafe1HeadPatVoiceMark"
+    ]
+  },
+  "FindCafe1HeadPatVoiceMark": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/headpat_voice_mark.png",
+    "roi": [
+      180,
+      80,
+      1040,
+      520
+    ],
+    "threshold": 0.5,
+    "order_by": "Score",
+    "green_mask": true,
+    "max_hit": 12,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      55,
+      25,
+      -50,
+      20
+    ],
+    "post_wait_freezes": 1200,
+    "timeout": 1500,
+    "next": [
+      "HandleCafe1BondLevelUpAfterHeadPat"
+    ],
+    "on_error": [
+      "FinishCafe1HeadPat"
+    ]
+  },
+  "HandleCafe1BondLevelUpAfterHeadPat": {
+    "next": [
+      "CloseCafe1BondLevelUp",
+      "FindCafe1HeadPatVoiceMark",
+      "FinishCafe1HeadPat"
+    ]
+  },
+  "CloseCafe1BondLevelUp": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/bond_level_up_title.png",
+    "roi": [
+      450,
+      550,
+      390,
+      130
+    ],
+    "threshold": 0.7,
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 2500,
+    "next": [
+      "FindCafe1HeadPatVoiceMark"
+    ]
+  },
+  "FinishCafe1HeadPat": {
+    "next": [
+      "RunCafeIncomeClaim",
+      "RunCafe2HeadPatPlan",
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "RunCafeIncomeClaim": {
+    "next": [
+      "OpenCafeIncomeWindow"
+    ]
+  },
+  "OpenCafeIncomeWindow": {
+    "action": "Click",
+    "target": [
+      1175,
+      660
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "WaitCafeIncomeWindowOpened"
+    ]
+  },
+  "WaitCafeIncomeWindowOpened": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_title.png",
+    "roi": [
+      520,
+      100,
+      250,
+      100
+    ],
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "ClickCafeIncomeClaimButton"
+    ],
+    "on_error": [
+      "FinishCafeIncomeClaim"
+    ]
+  },
+  "ClickCafeIncomeClaimButton": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_claim_button.png",
+    "roi": [
+      480,
+      460,
+      330,
+      130
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 3000,
+    "next": [
+      "WaitCafeIncomeRewardSuccess"
+    ],
+    "on_error": [
+      "CloseCafeIncomeWindowNoClaim"
+    ]
+  },
+  "WaitCafeIncomeRewardSuccess": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/reward_success.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "timeout": 10000,
+    "next": [
+      "CloseCafeIncomeWindowAfterReward"
+    ],
+    "on_error": [
+      "ContinueCafeIncomeAfterRewardTimeout"
+    ]
+  },
+  "ContinueCafeIncomeAfterRewardTimeout": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "next": [
+      "CloseCafeIncomeWindowAfterReward"
+    ]
+  },
+  "CloseCafeIncomeWindowNoClaim": {
+    "next": [
+      "CloseCafeIncomeWindow"
+    ]
+  },
+  "CloseCafeIncomeWindowAfterReward": {
+    "next": [
+      "CloseCafeIncomeWindow"
+    ]
+  },
+  "CloseCafeIncomeWindow": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_close.png",
+    "roi": [
+      930,
+      100,
+      100,
+      100
+    ],
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 800,
+    "timeout": 3000,
+    "next": [
+      "WaitCafeIncomeWindowClosed"
+    ],
+    "on_error": [
+      "FinishCafeIncomeClaim"
+    ]
+  },
+  "WaitCafeIncomeWindowClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_title.png",
+    "roi": [
+      520,
+      100,
+      250,
+      100
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 4000,
+    "next": [
+      "FinishCafeIncomeClaim"
+    ],
+    "on_error": [
+      "ForceCloseCafeIncomeWindow"
+    ]
+  },
+  "ForceCloseCafeIncomeWindow": {
+    "action": "Click",
+    "target": [
+      980,
+      150
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "FinishCafeIncomeClaim"
+    ]
+  },
+  "FinishCafeIncomeClaim": {
+    "next": [
+      "RunCafe2HeadPatPlan",
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "RunCafe2HeadPatPlan": {
+    "next": [
+      "SwitchCafeDailyToCafe2"
+    ]
+  },
+  "SwitchCafeDailyToCafe2": {
+    "action": "Click",
+    "target": [
+      125,
+      103
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "SwitchCafeDailyToCafe2Loading",
+      "ConfirmCafe2FirstEnterDialog",
+      "WaitCafe2DailyOpened",
+      "SwitchCafeDailyToCafe2"
+    ]
+  },
+  "SwitchCafeDailyToCafe2Loading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "SwitchCafeDailyToCafe2Loading",
+      "ConfirmCafe2FirstEnterDialog",
+      "WaitCafe2DailyOpened"
+    ]
+  },
+  "WaitCafe2DailyOpened": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/cafe_title.png",
+    "roi": [
+      90,
+      0,
+      140,
+      65
+    ],
+    "threshold": 0.65,
+    "timeout": 5000,
+    "next": [
+      "HandleCafe2FirstEnterDialog"
+    ],
+    "on_error": [
+      "RetrySwitchCafeDailyToCafe2AfterCheck"
+    ]
+  },
+  "RetrySwitchCafeDailyToCafe2AfterCheck": {
+    "next": [
+      "SwitchCafeDailyToCafe2"
+    ]
+  },
+  "HandleCafe2FirstEnterDialog": {
+    "next": [
+      "ConfirmCafe2FirstEnterDialog",
+      "RunCafe2HeadPat"
+    ]
+  },
+  "ConfirmCafe2FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 500,
+    "post_wait_freezes": 1000,
+    "timeout": 2500,
+    "next": [
+      "WaitCafe2OpenedAfterFirstEnterDialog"
+    ]
+  },
+  "WaitCafe2OpenedAfterFirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/cafe_title.png",
+    "roi": [
+      90,
+      0,
+      140,
+      65
+    ],
+    "threshold": 0.65,
+    "timeout": 5000,
+    "next": [
+      "RunCafe2HeadPat"
+    ],
+    "on_error": [
+      "ContinueCafe2HeadPatAfterFirstEnterCheckTimeout"
+    ]
+  },
+  "ContinueCafe2HeadPatAfterFirstEnterCheckTimeout": {
+    "next": [
+      "RunCafe2HeadPat"
+    ]
+  },
+  "RunCafe2HeadPat": {
+    "next": [
+      "FindCafe2HeadPatVoiceMark"
+    ]
+  },
+  "FindCafe2HeadPatVoiceMark": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/headpat_voice_mark.png",
+    "roi": [
+      180,
+      80,
+      1040,
+      520
+    ],
+    "threshold": 0.65,
+    "order_by": "Score",
+    "green_mask": true,
+    "max_hit": 12,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      55,
+      25,
+      -50,
+      20
+    ],
+    "post_wait_freezes": 1200,
+    "timeout": 2500,
+    "next": [
+      "HandleCafe2BondLevelUpAfterHeadPat"
+    ],
+    "on_error": [
+      "FinishCafe2HeadPat"
+    ]
+  },
+  "HandleCafe2BondLevelUpAfterHeadPat": {
+    "next": [
+      "CloseCafe2BondLevelUp",
+      "FindCafe2HeadPatVoiceMark",
+      "FinishCafe2HeadPat"
+    ]
+  },
+  "CloseCafe2BondLevelUp": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/bond_level_up_title.png",
+    "roi": [
+      450,
+      550,
+      390,
+      130
+    ],
+    "threshold": 0.7,
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1000,
+    "timeout": 2500,
+    "next": [
+      "FindCafe2HeadPatVoiceMark"
+    ]
+  },
+  "FinishCafe2HeadPat": {
+    "next": [
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "ReturnCafeDailyToMain": {
+    "action": "Click",
+    "target": [
+      1237,
+      31
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnCafeDailyToMainLoading",
+      "WaitCafeDailyReturnedToMain"
+    ]
+  },
+  "ReturnCafeDailyToMainLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnCafeDailyToMainLoading",
+      "WaitCafeDailyReturnedToMain"
+    ]
+  },
+  "WaitCafeDailyReturnedToMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/coffee_room.png",
+    "threshold": 0.7,
+    "green_mask": true,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "RetryReturnCafeDailyToMainAfterCheck"
+    ]
+  },
+  "RetryReturnCafeDailyToMainAfterCheck": {
+    "action": "Click",
+    "target": [
+      1237,
+      31
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnCafeDailyToMainLoading",
+      "WaitCafeDailyReturnedToMainAfterRetry"
+    ]
+  },
+  "WaitCafeDailyReturnedToMainAfterRetry": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/coffee_room.png",
+    "threshold": 0.7,
+    "green_mask": true,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "StopCafeDailyAfterReturnCheckTimeout"
+    ]
+  },
+  "StopCafeDailyAfterReturnCheckTimeout": {
+    "next": [
+      "Stop"
+    ]
+  }
+}

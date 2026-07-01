@@ -1,0 +1,175 @@
+{
+  "StartMailboxClaim": {
+    "next": [
+      "WaitMailboxClaimPageOpened",
+      "OpenMailboxClaimFromMain"
+    ]
+  },
+  "OpenMailboxClaimFromMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/mail.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenMailboxClaimLoading",
+      "WaitMailboxClaimPageOpened",
+      "OpenMailboxClaimFromMain"
+    ]
+  },
+  "OpenMailboxClaimLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenMailboxClaimLoading",
+      "WaitMailboxClaimPageOpened"
+    ]
+  },
+  "WaitMailboxClaimPageOpened": {
+    "recognition": "TemplateMatch",
+    "template": "mail/mail_title.png",
+    "roi": [
+      80,
+      0,
+      140,
+      70
+    ],
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "ClickMailboxClaimAllButton"
+    ],
+    "on_error": [
+      "RetryOpenMailboxClaimFromMainAfterCheck"
+    ]
+  },
+  "RetryOpenMailboxClaimFromMainAfterCheck": {
+    "next": [
+      "OpenMailboxClaimFromMain"
+    ]
+  },
+  "ClickMailboxClaimAllButton": {
+    "recognition": "TemplateMatch",
+    "template": "mail/claim_all_button.png",
+    "roi": [
+      990,
+      615,
+      290,
+      105
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 3000,
+    "next": [
+      "WaitMailboxClaimRewardSuccess"
+    ],
+    "on_error": [
+      "ReturnMailboxClaimToMainNoClaim"
+    ]
+  },
+  "ReturnMailboxClaimToMainNoClaim": {
+    "next": [
+      "ReturnMailboxClaimToMain"
+    ]
+  },
+  "WaitMailboxClaimRewardSuccess": {
+    "recognition": "TemplateMatch",
+    "template": "mail/reward_success.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "timeout": 10000,
+    "next": [
+      "ReturnMailboxClaimToMainAfterReward"
+    ],
+    "on_error": [
+      "ContinueMailboxClaimAfterRewardTimeout"
+    ]
+  },
+  "ContinueMailboxClaimAfterRewardTimeout": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "next": [
+      "ReturnMailboxClaimToMainAfterReward"
+    ]
+  },
+  "ReturnMailboxClaimToMainAfterReward": {
+    "next": [
+      "ReturnMailboxClaimToMain"
+    ]
+  },
+  "ReturnMailboxClaimToMain": {
+    "action": "Click",
+    "target": [
+      55,
+      36
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnMailboxClaimToMainLoading",
+      "WaitMailboxClaimReturnedToMain"
+    ]
+  },
+  "ReturnMailboxClaimToMainLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnMailboxClaimToMainLoading",
+      "WaitMailboxClaimReturnedToMain"
+    ]
+  },
+  "WaitMailboxClaimReturnedToMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/mail.png",
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "ReturnMailboxClaimToMainByHomeFallback"
+    ]
+  },
+  "ReturnMailboxClaimToMainByHomeFallback": {
+    "action": "Click",
+    "target": [
+      1237,
+      36
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "ReturnMailboxClaimToMainLoading",
+      "WaitMailboxClaimReturnedToMainAfterHomeFallback"
+    ]
+  },
+  "WaitMailboxClaimReturnedToMainAfterHomeFallback": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/mail.png",
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "StopMailboxClaimAfterReturnCheckTimeout"
+    ]
+  },
+  "StopMailboxClaimAfterReturnCheckTimeout": {
+    "next": [
+      "Stop"
+    ]
+  }
+}

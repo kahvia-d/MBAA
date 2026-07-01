@@ -1,0 +1,254 @@
+{
+  "StartDailyFreePyroxenePack": {
+    "next": [
+      "WaitDailyFreePyroxenePackWindowOpened",
+      "OpenDailyFreePyroxenePackWindow"
+    ]
+  },
+  "OpenDailyFreePyroxenePackWindow": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/pyroxene_purchase.png",
+    "threshold": 0.7,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenDailyFreePyroxenePackLoading",
+      "WaitDailyFreePyroxenePackWindowOpened",
+      "OpenDailyFreePyroxenePackWindow"
+    ]
+  },
+  "OpenDailyFreePyroxenePackLoading": {
+    "recognition": "TemplateMatch",
+    "template": "loading.png",
+    "threshold": 0.7,
+    "post_wait_freezes": 1000,
+    "next": [
+      "OpenDailyFreePyroxenePackLoading",
+      "WaitDailyFreePyroxenePackWindowOpened"
+    ]
+  },
+  "WaitDailyFreePyroxenePackWindowOpened": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/purchase_title.png",
+    "roi": [
+      520,
+      70,
+      260,
+      90
+    ],
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "OpenDailyFreePyroxenePackBundleTab"
+    ],
+    "on_error": [
+      "RetryOpenDailyFreePyroxenePackWindowAfterCheck"
+    ]
+  },
+  "RetryOpenDailyFreePyroxenePackWindowAfterCheck": {
+    "next": [
+      "OpenDailyFreePyroxenePackWindow"
+    ]
+  },
+  "OpenDailyFreePyroxenePackBundleTab": {
+    "action": "Click",
+    "target": [
+      901,
+      181
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "WaitDailyFreePyroxenePackBundleTabOpened"
+    ]
+  },
+  "WaitDailyFreePyroxenePackBundleTabOpened": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/daily_free_pack_title.png",
+    "roi": [
+      250,
+      200,
+      310,
+      110
+    ],
+    "threshold": 0.75,
+    "timeout": 5000,
+    "next": [
+      "ClickDailyFreePyroxenePackBuyButton"
+    ],
+    "on_error": [
+      "RetryOpenDailyFreePyroxenePackBundleTab"
+    ]
+  },
+  "RetryOpenDailyFreePyroxenePackBundleTab": {
+    "next": [
+      "OpenDailyFreePyroxenePackBundleTab"
+    ]
+  },
+  "ClickDailyFreePyroxenePackBuyButton": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/daily_free_buy_button.png",
+    "roi": [
+      250,
+      420,
+      270,
+      130
+    ],
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 3000,
+    "next": [
+      "ConfirmDailyFreePyroxenePackPurchase"
+    ],
+    "on_error": [
+      "CloseDailyFreePyroxenePackWindowAlreadyClaimed"
+    ]
+  },
+  "ConfirmDailyFreePyroxenePackPurchase": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/confirm_button.png",
+    "roi": [
+      620,
+      535,
+      300,
+      120
+    ],
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 1000,
+    "timeout": 5000,
+    "next": [
+      "WaitDailyFreePyroxenePackPurchaseSuccess"
+    ],
+    "on_error": [
+      "CloseDailyFreePyroxenePackPurchaseDialogAfterConfirmTimeout"
+    ]
+  },
+  "WaitDailyFreePyroxenePackPurchaseSuccess": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/purchase_success.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "timeout": 10000,
+    "next": [
+      "CloseDailyFreePyroxenePackWindowAfterSuccess"
+    ],
+    "on_error": [
+      "ContinueDailyFreePyroxenePackAfterSuccessTimeout"
+    ]
+  },
+  "ContinueDailyFreePyroxenePackAfterSuccessTimeout": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 1200,
+    "next": [
+      "CloseDailyFreePyroxenePackWindowAfterSuccess"
+    ]
+  },
+  "CloseDailyFreePyroxenePackPurchaseDialogAfterConfirmTimeout": {
+    "action": "Click",
+    "target": [
+      985,
+      87
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "CloseDailyFreePyroxenePackWindowAlreadyClaimed"
+    ]
+  },
+  "CloseDailyFreePyroxenePackWindowAfterSuccess": {
+    "next": [
+      "CloseDailyFreePyroxenePackWindowAlreadyClaimed"
+    ]
+  },
+  "CloseDailyFreePyroxenePackWindowAlreadyClaimed": {
+    "action": "Click",
+    "target": [
+      1010,
+      112
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "WaitDailyFreePyroxenePackWindowClosed"
+    ]
+  },
+  "WaitDailyFreePyroxenePackWindowClosed": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/purchase_title.png",
+    "roi": [
+      520,
+      70,
+      260,
+      90
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 5000,
+    "next": [
+      "WaitDailyFreePyroxenePackReturnedToMain"
+    ],
+    "on_error": [
+      "ForceCloseDailyFreePyroxenePackWindow"
+    ]
+  },
+  "ForceCloseDailyFreePyroxenePackWindow": {
+    "action": "Click",
+    "target": [
+      1010,
+      112
+    ],
+    "post_wait_freezes": 1000,
+    "next": [
+      "WaitDailyFreePyroxenePackWindowClosedAfterForce"
+    ]
+  },
+  "WaitDailyFreePyroxenePackWindowClosedAfterForce": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/purchase_title.png",
+    "roi": [
+      520,
+      70,
+      260,
+      90
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 5000,
+    "next": [
+      "WaitDailyFreePyroxenePackReturnedToMain"
+    ],
+    "on_error": [
+      "StopDailyFreePyroxenePackAfterCloseTimeout"
+    ]
+  },
+  "WaitDailyFreePyroxenePackReturnedToMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/pyroxene_purchase.png",
+    "threshold": 0.7,
+    "timeout": 5000,
+    "next": [
+      "Stop"
+    ],
+    "on_error": [
+      "StopDailyFreePyroxenePackAfterReturnCheckTimeout"
+    ]
+  },
+  "StopDailyFreePyroxenePackAfterCloseTimeout": {
+    "next": [
+      "Stop"
+    ]
+  },
+  "StopDailyFreePyroxenePackAfterReturnCheckTimeout": {
+    "next": [
+      "Stop"
+    ]
+  }
+}

@@ -69,7 +69,7 @@
     "enabled": false,
     "timeout": 3000,
     "next": [
-      "ResetShopCategoryListTopForGeneral"
+      "OpenGeneralShopCategory"
     ],
     "on_error": [
       "RunTacticalContestShopPurchase",
@@ -102,7 +102,7 @@
     ],
     "post_wait_freezes": 600,
     "next": [
-      "ResetGeneralShopGoodsListTop"
+      "GeneralShopPage1Item1"
     ],
     "timeout": 1500
   },
@@ -804,7 +804,7 @@
     "enabled": false,
     "timeout": 3000,
     "next": [
-      "ResetShopCategoryListTopForTacticalContest"
+      "ScrollShopCategoryListToTacticalContest"
     ],
     "on_error": [
       "ReturnShopToMain"
@@ -857,7 +857,7 @@
     "action": "Click",
     "post_wait_freezes": 600,
     "next": [
-      "ResetTacticalContestShopGoodsListTop"
+      "TacticalContestShopPage1Item1"
     ],
     "on_error": [
       "OpenTacticalContestShopCategoryByCoordinate"
@@ -872,7 +872,7 @@
     ],
     "post_wait_freezes": 600,
     "next": [
-      "ResetTacticalContestShopGoodsListTop"
+      "TacticalContestShopPage1Item1"
     ],
     "timeout": 1500
   },

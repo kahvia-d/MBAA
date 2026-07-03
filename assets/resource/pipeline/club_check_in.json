@@ -3,9 +3,9 @@
     "timeout": 8000,
     "rate_limit": 250,
     "next": [
-      "[JumpBack]NavOpenCommunication",
       "[JumpBack]NavLoading",
-      "WaitSocialPageOpened"
+      "WaitSocialPageOpened",
+      "[JumpBack]NavOpenCommunication"
     ],
     "on_error": [
       "ReturnClubToMain"
@@ -53,7 +53,7 @@
       350,
       220
     ],
-    "threshold": 0.7,
+    "threshold": 0.65,
     "timeout": 1500,
     "next": [
       "OpenClubFromSocial"
@@ -73,7 +73,7 @@
       350,
       220
     ],
-    "threshold": 0.7,
+    "threshold": 0.65,
     "action": "Click",
     "post_wait_freezes": 700,
     "next": [

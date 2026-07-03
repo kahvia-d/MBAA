@@ -58,10 +58,10 @@
     "recognition": "TemplateMatch",
     "template": "nav/home.png",
     "roi": [
-      1180,
+      1215,
       0,
-      100,
-      90
+      65,
+      65
     ],
     "threshold": 0.7,
     "green_mask": true,

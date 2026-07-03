@@ -1,42 +1,56 @@
 {
   "StartShopPurchase": {
+    "timeout": 8000,
+    "rate_limit": 250,
     "next": [
-      "OpenShopFromMain",
+      "[JumpBack]NavOpenShop",
+      "[JumpBack]NavLoading",
       "WaitShopOpened"
+    ],
+    "on_error": [
+      "ReturnShopToMain"
     ]
   },
   "OpenShopFromMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/shop.png",
-    "threshold": 0.7,
+    "threshold": 0.6,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 500,
     "next": [
-      "OpenShopLoading",
-      "OpenShopFromMain",
-      "WaitShopOpened"
-    ]
+      "[JumpBack]NavLoading",
+      "WaitShopOpened",
+      "OpenShopFromMain"
+    ],
+    "roi": [
+      735,
+      600,
+      120,
+      120
+    ],
+    "green_mask": true,
+    "timeout": 1200,
+    "rate_limit": 150
   },
   "OpenShopLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "OpenShopLoading",
       "WaitShopOpened"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitShopOpened": {
     "recognition": "TemplateMatch",
     "template": "shop/general_tab.png",
     "threshold": 0.7,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
       "RunShopPurchasePlan"
-    ],
-    "on_error": [
-      "RetryOpenShopFromMainAfterOpenCheck"
     ]
   },
   "RetryOpenShopFromMainAfterOpenCheck": {
@@ -86,10 +100,11 @@
       80,
       140
     ],
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 600,
     "next": [
       "ResetGeneralShopGoodsListTop"
-    ]
+    ],
+    "timeout": 1500
   },
   "ResetGeneralShopGoodsListTop": {
     "action": "Swipe",
@@ -104,7 +119,7 @@
     "duration": 500,
     "repeat": 3,
     "repeat_delay": 150,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "GeneralShopPage1Item1"
     ]
@@ -265,8 +280,8 @@
     "template": "shop/select_purchase.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 2000,
     "next": [
       "ConfirmGeneralShopPurchasePage1"
     ],
@@ -279,8 +294,8 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage1"
     ],
@@ -308,7 +323,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "ScrollGeneralShopGoodsToPage2"
@@ -333,7 +348,7 @@
       250
     ],
     "duration": 500,
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 500,
     "next": [
       "GeneralShopPage2Item1"
     ]
@@ -494,8 +509,8 @@
     "template": "shop/select_purchase.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 2000,
     "next": [
       "ConfirmGeneralShopPurchasePage2"
     ],
@@ -508,8 +523,8 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage2"
     ],
@@ -537,7 +552,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "ScrollGeneralShopGoodsToPage3"
@@ -562,7 +577,7 @@
       250
     ],
     "duration": 500,
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 500,
     "next": [
       "GeneralShopPage3Item1"
     ]
@@ -724,8 +739,8 @@
     "template": "shop/select_purchase.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 2000,
     "next": [
       "ConfirmGeneralShopPurchasePage3"
     ],
@@ -739,8 +754,8 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage3"
     ],
@@ -769,7 +784,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "RunTacticalContestShopPurchase",
@@ -824,7 +839,7 @@
       185
     ],
     "duration": 500,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "OpenTacticalContestShopCategory"
     ]
@@ -840,13 +855,14 @@
     ],
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 600,
     "next": [
       "ResetTacticalContestShopGoodsListTop"
     ],
     "on_error": [
       "OpenTacticalContestShopCategoryByCoordinate"
-    ]
+    ],
+    "timeout": 1500
   },
   "OpenTacticalContestShopCategoryByCoordinate": {
     "action": "Click",
@@ -854,10 +870,11 @@
       96,
       348
     ],
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 600,
     "next": [
       "ResetTacticalContestShopGoodsListTop"
-    ]
+    ],
+    "timeout": 1500
   },
   "ResetTacticalContestShopGoodsListTop": {
     "action": "Swipe",
@@ -872,7 +889,7 @@
     "duration": 500,
     "repeat": 3,
     "repeat_delay": 150,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "TacticalContestShopPage1Item1"
     ]
@@ -1033,8 +1050,8 @@
     "template": "shop/select_purchase.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 2000,
     "next": [
       "ConfirmTacticalContestShopPurchasePage1"
     ],
@@ -1047,8 +1064,8 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage1"
     ],
@@ -1076,7 +1093,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "ScrollTacticalContestShopGoodsToPage2"
@@ -1101,7 +1118,7 @@
       250
     ],
     "duration": 500,
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 500,
     "next": [
       "TacticalContestShopPage2Item1"
     ]
@@ -1262,8 +1279,8 @@
     "template": "shop/select_purchase.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 2000,
     "next": [
       "ConfirmTacticalContestShopPurchasePage2"
     ],
@@ -1276,8 +1293,8 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage2"
     ],
@@ -1305,7 +1322,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "ReturnShopToMain"
@@ -1320,31 +1337,33 @@
     ]
   },
   "ReturnShopToMain": {
-    "action": "Click",
-    "target": [
-      56,
-      37
-    ],
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "timeout": 8000,
+    "rate_limit": 250,
     "next": [
-      "WaitShopReturnedToMain"
+      "NavReturnToMain"
     ],
     "on_error": [
-      "Stop"
+      "StopAfterShopReturnCheckTimeout"
     ]
   },
   "WaitShopReturnedToMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/shop.png",
-    "threshold": 0.7,
-    "timeout": 5000,
+    "threshold": 0.6,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "StopAfterShopReturnCheckTimeout"
-    ]
+    ],
+    "roi": [
+      735,
+      600,
+      120,
+      120
+    ],
+    "green_mask": true
   },
   "StopAfterShopReturnCheckTimeout": {
     "next": [

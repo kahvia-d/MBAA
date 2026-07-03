@@ -1,31 +1,48 @@
 {
   "StartMailboxClaim": {
+    "timeout": 8000,
+    "rate_limit": 250,
     "next": [
-      "WaitMailboxClaimPageOpened",
-      "OpenMailboxClaimFromMain"
+      "[JumpBack]NavOpenMailbox",
+      "[JumpBack]NavLoading",
+      "WaitMailboxClaimPageOpened"
+    ],
+    "on_error": [
+      "ReturnMailboxClaimToMain"
     ]
   },
   "OpenMailboxClaimFromMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/mail.png",
-    "threshold": 0.7,
+    "threshold": 0.58,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 500,
     "next": [
-      "OpenMailboxClaimLoading",
+      "[JumpBack]NavLoading",
       "WaitMailboxClaimPageOpened",
       "OpenMailboxClaimFromMain"
-    ]
+    ],
+    "roi": [
+      1080,
+      0,
+      120,
+      90
+    ],
+    "green_mask": true,
+    "timeout": 1200,
+    "rate_limit": 150
   },
   "OpenMailboxClaimLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "OpenMailboxClaimLoading",
       "WaitMailboxClaimPageOpened"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitMailboxClaimPageOpened": {
     "recognition": "TemplateMatch",
@@ -37,12 +54,10 @@
       70
     ],
     "threshold": 0.7,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
-      "ClickMailboxClaimAllButton"
-    ],
-    "on_error": [
-      "RetryOpenMailboxClaimFromMainAfterCheck"
+      "ClickMailboxClaimAllButton",
+      "ReturnMailboxClaimToMainNoClaim"
     ]
   },
   "RetryOpenMailboxClaimFromMainAfterCheck": {
@@ -61,8 +76,8 @@
     ],
     "threshold": 0.75,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 1200,
     "next": [
       "WaitMailboxClaimRewardSuccess"
     ],
@@ -84,7 +99,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "ReturnMailboxClaimToMainAfterReward"
@@ -99,7 +114,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "next": [
       "ReturnMailboxClaimToMainAfterReward"
     ]
@@ -110,38 +125,56 @@
     ]
   },
   "ReturnMailboxClaimToMain": {
+    "timeout": 8000,
+    "rate_limit": 250,
+    "next": [
+      "WaitMailboxClaimReturnedToMain",
+      "[JumpBack]NavLoading",
+      "[JumpBack]NavHomeButton",
+      "[JumpBack]ClickMailboxClaimReturnBack"
+    ],
+    "on_error": [
+      "StopMailboxClaimAfterReturnCheckTimeout"
+    ]
+  },
+  "ClickMailboxClaimReturnBack": {
     "action": "Click",
     "target": [
       55,
       36
     ],
-    "post_wait_freezes": 1000,
-    "next": [
-      "ReturnMailboxClaimToMainLoading",
-      "WaitMailboxClaimReturnedToMain"
-    ]
+    "post_wait_freezes": 700
   },
   "ReturnMailboxClaimToMainLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "ReturnMailboxClaimToMainLoading",
       "WaitMailboxClaimReturnedToMain"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitMailboxClaimReturnedToMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/mail.png",
-    "threshold": 0.7,
-    "timeout": 5000,
+    "threshold": 0.58,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "ReturnMailboxClaimToMainByHomeFallback"
-    ]
+    ],
+    "roi": [
+      1080,
+      0,
+      120,
+      90
+    ],
+    "green_mask": true
   },
   "ReturnMailboxClaimToMainByHomeFallback": {
     "action": "Click",
@@ -149,7 +182,7 @@
       1237,
       36
     ],
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 700,
     "next": [
       "ReturnMailboxClaimToMainLoading",
       "WaitMailboxClaimReturnedToMainAfterHomeFallback"
@@ -158,14 +191,21 @@
   "WaitMailboxClaimReturnedToMainAfterHomeFallback": {
     "recognition": "TemplateMatch",
     "template": "main_ui/mail.png",
-    "threshold": 0.7,
-    "timeout": 5000,
+    "threshold": 0.58,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "StopMailboxClaimAfterReturnCheckTimeout"
-    ]
+    ],
+    "roi": [
+      1080,
+      0,
+      120,
+      90
+    ],
+    "green_mask": true
   },
   "StopMailboxClaimAfterReturnCheckTimeout": {
     "next": [

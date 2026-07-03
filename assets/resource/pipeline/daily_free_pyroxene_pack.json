@@ -1,31 +1,48 @@
 {
   "StartDailyFreePyroxenePack": {
+    "timeout": 8000,
+    "rate_limit": 250,
     "next": [
       "WaitDailyFreePyroxenePackWindowOpened",
-      "OpenDailyFreePyroxenePackWindow"
+      "[JumpBack]NavLoading",
+      "[JumpBack]NavOpenPyroxenePurchase"
+    ],
+    "on_error": [
+      "CloseDailyFreePyroxenePackWindowAlreadyClaimed"
     ]
   },
   "OpenDailyFreePyroxenePackWindow": {
     "recognition": "TemplateMatch",
     "template": "main_ui/pyroxene_purchase.png",
-    "threshold": 0.7,
+    "threshold": 0.58,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 700,
     "next": [
-      "OpenDailyFreePyroxenePackLoading",
+      "[JumpBack]NavLoading",
       "WaitDailyFreePyroxenePackWindowOpened",
       "OpenDailyFreePyroxenePackWindow"
-    ]
+    ],
+    "roi": [
+      95,
+      190,
+      130,
+      120
+    ],
+    "green_mask": true,
+    "timeout": 1200,
+    "rate_limit": 150
   },
   "OpenDailyFreePyroxenePackLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "OpenDailyFreePyroxenePackLoading",
       "WaitDailyFreePyroxenePackWindowOpened"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitDailyFreePyroxenePackWindowOpened": {
     "recognition": "TemplateMatch",
@@ -37,12 +54,9 @@
       90
     ],
     "threshold": 0.7,
-    "timeout": 5000,
+    "timeout": 2000,
     "next": [
       "OpenDailyFreePyroxenePackBundleTab"
-    ],
-    "on_error": [
-      "RetryOpenDailyFreePyroxenePackWindowAfterCheck"
     ]
   },
   "RetryOpenDailyFreePyroxenePackWindowAfterCheck": {
@@ -56,7 +70,7 @@
       901,
       181
     ],
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 700,
     "next": [
       "WaitDailyFreePyroxenePackBundleTabOpened"
     ]
@@ -71,7 +85,7 @@
       110
     ],
     "threshold": 0.75,
-    "timeout": 5000,
+    "timeout": 2500,
     "next": [
       "ClickDailyFreePyroxenePackBuyButton"
     ],
@@ -95,8 +109,8 @@
     ],
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 3000,
+    "post_wait_freezes": 500,
+    "timeout": 1200,
     "next": [
       "ConfirmDailyFreePyroxenePackPurchase"
     ],
@@ -115,8 +129,8 @@
     ],
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 5000,
+    "post_wait_freezes": 600,
+    "timeout": 3000,
     "next": [
       "WaitDailyFreePyroxenePackPurchaseSuccess"
     ],
@@ -133,7 +147,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
       "CloseDailyFreePyroxenePackWindowAfterSuccess"
@@ -148,7 +162,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "next": [
       "CloseDailyFreePyroxenePackWindowAfterSuccess"
     ]
@@ -175,7 +189,7 @@
       1010,
       112
     ],
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 700,
     "next": [
       "WaitDailyFreePyroxenePackWindowClosed"
     ]
@@ -191,7 +205,7 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 5000,
+    "timeout": 2000,
     "next": [
       "WaitDailyFreePyroxenePackReturnedToMain"
     ],
@@ -205,7 +219,7 @@
       1010,
       112
     ],
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 700,
     "next": [
       "WaitDailyFreePyroxenePackWindowClosedAfterForce"
     ]
@@ -221,7 +235,7 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 5000,
+    "timeout": 2000,
     "next": [
       "WaitDailyFreePyroxenePackReturnedToMain"
     ],
@@ -232,14 +246,21 @@
   "WaitDailyFreePyroxenePackReturnedToMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/pyroxene_purchase.png",
-    "threshold": 0.7,
-    "timeout": 5000,
+    "threshold": 0.58,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "StopDailyFreePyroxenePackAfterReturnCheckTimeout"
-    ]
+    ],
+    "roi": [
+      95,
+      190,
+      130,
+      120
+    ],
+    "green_mask": true
   },
   "StopDailyFreePyroxenePackAfterCloseTimeout": {
     "next": [

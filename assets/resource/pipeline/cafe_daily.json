@@ -1,35 +1,51 @@
 {
   "StartCafeDaily": {
+    "timeout": 10000,
+    "rate_limit": 250,
     "next": [
+      "[JumpBack]NavOpenCafe",
+      "[JumpBack]NavLoading",
       "ConfirmCafe1FirstEnterDialog",
-      "WaitCafeDailyOpened",
-      "OpenCafeDailyFromMain"
+      "WaitCafeDailyOpened"
+    ],
+    "on_error": [
+      "ReturnCafeDailyToMain"
     ]
   },
   "OpenCafeDailyFromMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/coffee_room.png",
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "action": "Click",
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 600,
     "next": [
-      "OpenCafeDailyLoading",
+      "[JumpBack]NavLoading",
       "ConfirmCafe1FirstEnterDialog",
       "WaitCafeDailyOpened",
       "OpenCafeDailyFromMain"
-    ]
+    ],
+    "roi": [
+      30,
+      600,
+      130,
+      120
+    ],
+    "timeout": 1200,
+    "rate_limit": 150
   },
   "OpenCafeDailyLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "OpenCafeDailyLoading",
       "ConfirmCafe1FirstEnterDialog",
       "WaitCafeDailyOpened"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitCafeDailyOpened": {
     "recognition": "TemplateMatch",
@@ -41,12 +57,9 @@
       65
     ],
     "threshold": 0.65,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
       "HandleCafe1FirstEnterDialog"
-    ],
-    "on_error": [
-      "RetryOpenCafeDailyFromMainAfterCheck"
     ]
   },
   "RetryOpenCafeDailyFromMainAfterCheck": {
@@ -71,9 +84,9 @@
     ],
     "threshold": 0.75,
     "action": "Click",
-    "pre_wait_freezes": 500,
-    "post_wait_freezes": 1000,
-    "timeout": 1500,
+    "pre_wait_freezes": 200,
+    "post_wait_freezes": 600,
+    "timeout": 1000,
     "next": [
       "WaitCafe1OpenedAfterFirstEnterDialog"
     ]
@@ -88,7 +101,7 @@
       65
     ],
     "threshold": 0.65,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
       "RunCafe1DailyPlan"
     ],
@@ -112,7 +125,13 @@
   "RunCafe1HeadPat": {
     "next": [
       "FindCafe1HeadPatVoiceMark"
-    ]
+    ],
+    "timeout": 80,
+    "rate_limit": 80,
+    "on_error": [
+      "FinishCafe1HeadPat"
+    ],
+    "enabled": true
   },
   "FindCafe1HeadPatVoiceMark": {
     "recognition": "TemplateMatch",
@@ -135,8 +154,8 @@
       -50,
       20
     ],
-    "post_wait_freezes": 1200,
-    "timeout": 1500,
+    "post_delay": 300,
+    "timeout": 1000,
     "next": [
       "HandleCafe1BondLevelUpAfterHeadPat"
     ],
@@ -147,7 +166,11 @@
   "HandleCafe1BondLevelUpAfterHeadPat": {
     "next": [
       "CloseCafe1BondLevelUp",
-      "FindCafe1HeadPatVoiceMark",
+      "FindCafe1HeadPatVoiceMark"
+    ],
+    "timeout": 80,
+    "rate_limit": 80,
+    "on_error": [
       "FinishCafe1HeadPat"
     ]
   },
@@ -166,10 +189,13 @@
       640,
       650
     ],
-    "post_wait_freezes": 1000,
-    "timeout": 2500,
+    "post_delay": 500,
+    "timeout": 80,
     "next": [
       "FindCafe1HeadPatVoiceMark"
+    ],
+    "on_error": [
+      "FinishCafe1HeadPat"
     ]
   },
   "FinishCafe1HeadPat": {
@@ -182,7 +208,8 @@
   "RunCafeIncomeClaim": {
     "next": [
       "OpenCafeIncomeWindow"
-    ]
+    ],
+    "enabled": true
   },
   "OpenCafeIncomeWindow": {
     "action": "Click",
@@ -190,7 +217,7 @@
       1175,
       660
     ],
-    "post_wait_freezes": 800,
+    "post_wait_freezes": 600,
     "next": [
       "WaitCafeIncomeWindowOpened"
     ]
@@ -205,8 +232,9 @@
       100
     ],
     "threshold": 0.7,
-    "timeout": 5000,
+    "timeout": 2000,
     "next": [
+      "CloseCafeIncomeWindowNoClaimState",
       "ClickCafeIncomeClaimButton"
     ],
     "on_error": [
@@ -224,8 +252,8 @@
     ],
     "threshold": 0.75,
     "action": "Click",
-    "post_wait_freezes": 1000,
-    "timeout": 3000,
+    "post_wait_freezes": 600,
+    "timeout": 1500,
     "next": [
       "WaitCafeIncomeRewardSuccess"
     ],
@@ -242,7 +270,7 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_delay": 300,
     "timeout": 10000,
     "next": [
       "CloseCafeIncomeWindowAfterReward"
@@ -257,9 +285,33 @@
       640,
       650
     ],
-    "post_wait_freezes": 1200,
+    "post_wait_freezes": 800,
     "next": [
       "CloseCafeIncomeWindowAfterReward"
+    ]
+  },
+  "CloseCafeIncomeWindowNoClaimState": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_no_claim_button.png",
+    "roi": [
+      480,
+      460,
+      330,
+      130
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "target": [
+      982,
+      148
+    ],
+    "post_delay": 300,
+    "timeout": 1000,
+    "next": [
+      "WaitCafeIncomeWindowClosed"
+    ],
+    "on_error": [
+      "ForceCloseCafeIncomeWindow"
     ]
   },
   "CloseCafeIncomeWindowNoClaim": {
@@ -283,13 +335,13 @@
     ],
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 800,
-    "timeout": 3000,
+    "post_wait_freezes": 600,
+    "timeout": 1500,
     "next": [
       "WaitCafeIncomeWindowClosed"
     ],
     "on_error": [
-      "FinishCafeIncomeClaim"
+      "ForceCloseCafeIncomeWindow"
     ]
   },
   "WaitCafeIncomeWindowClosed": {
@@ -303,7 +355,7 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 4000,
+    "timeout": 1500,
     "next": [
       "FinishCafeIncomeClaim"
     ],
@@ -317,7 +369,31 @@
       980,
       150
     ],
-    "post_wait_freezes": 800,
+    "post_delay": 300,
+    "next": [
+      "WaitCafeIncomeWindowClosedAfterForce"
+    ]
+  },
+  "WaitCafeIncomeWindowClosedAfterForce": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_title.png",
+    "roi": [
+      520,
+      100,
+      250,
+      100
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 1500,
+    "next": [
+      "FinishCafeIncomeClaim"
+    ],
+    "on_error": [
+      "ContinueCafeIncomeClaimAfterForceCloseTimeout"
+    ]
+  },
+  "ContinueCafeIncomeClaimAfterForceCloseTimeout": {
     "next": [
       "FinishCafeIncomeClaim"
     ]
@@ -331,7 +407,8 @@
   "RunCafe2HeadPatPlan": {
     "next": [
       "SwitchCafeDailyToCafe2"
-    ]
+    ],
+    "enabled": true
   },
   "SwitchCafeDailyToCafe2": {
     "action": "Click",
@@ -339,7 +416,7 @@
       125,
       103
     ],
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 800,
     "next": [
       "SwitchCafeDailyToCafe2Loading",
       "ConfirmCafe2FirstEnterDialog",
@@ -349,14 +426,16 @@
   },
   "SwitchCafeDailyToCafe2Loading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "SwitchCafeDailyToCafe2Loading",
       "ConfirmCafe2FirstEnterDialog",
       "WaitCafe2DailyOpened"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitCafe2DailyOpened": {
     "recognition": "TemplateMatch",
@@ -368,7 +447,7 @@
       65
     ],
     "threshold": 0.65,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
       "HandleCafe2FirstEnterDialog"
     ],
@@ -398,9 +477,9 @@
     ],
     "threshold": 0.75,
     "action": "Click",
-    "pre_wait_freezes": 500,
-    "post_wait_freezes": 1000,
-    "timeout": 2500,
+    "pre_wait_freezes": 200,
+    "post_wait_freezes": 600,
+    "timeout": 1000,
     "next": [
       "WaitCafe2OpenedAfterFirstEnterDialog"
     ]
@@ -415,7 +494,7 @@
       65
     ],
     "threshold": 0.65,
-    "timeout": 5000,
+    "timeout": 1500,
     "next": [
       "RunCafe2HeadPat"
     ],
@@ -431,6 +510,11 @@
   "RunCafe2HeadPat": {
     "next": [
       "FindCafe2HeadPatVoiceMark"
+    ],
+    "timeout": 80,
+    "rate_limit": 80,
+    "on_error": [
+      "FinishCafe2HeadPat"
     ]
   },
   "FindCafe2HeadPatVoiceMark": {
@@ -442,7 +526,7 @@
       1040,
       520
     ],
-    "threshold": 0.65,
+    "threshold": 0.5,
     "order_by": "Score",
     "green_mask": true,
     "max_hit": 12,
@@ -454,8 +538,8 @@
       -50,
       20
     ],
-    "post_wait_freezes": 1200,
-    "timeout": 2500,
+    "post_delay": 300,
+    "timeout": 1000,
     "next": [
       "HandleCafe2BondLevelUpAfterHeadPat"
     ],
@@ -466,7 +550,11 @@
   "HandleCafe2BondLevelUpAfterHeadPat": {
     "next": [
       "CloseCafe2BondLevelUp",
-      "FindCafe2HeadPatVoiceMark",
+      "FindCafe2HeadPatVoiceMark"
+    ],
+    "timeout": 80,
+    "rate_limit": 80,
+    "on_error": [
       "FinishCafe2HeadPat"
     ]
   },
@@ -485,10 +573,13 @@
       640,
       650
     ],
-    "post_wait_freezes": 1000,
-    "timeout": 2500,
+    "post_delay": 500,
+    "timeout": 80,
     "next": [
       "FindCafe2HeadPatVoiceMark"
+    ],
+    "on_error": [
+      "FinishCafe2HeadPat"
     ]
   },
   "FinishCafe2HeadPat": {
@@ -497,38 +588,44 @@
     ]
   },
   "ReturnCafeDailyToMain": {
-    "action": "Click",
-    "target": [
-      1237,
-      31
-    ],
-    "post_wait_freezes": 1000,
+    "timeout": 8000,
+    "rate_limit": 250,
     "next": [
-      "ReturnCafeDailyToMainLoading",
-      "WaitCafeDailyReturnedToMain"
+      "NavReturnToMain"
+    ],
+    "on_error": [
+      "StopCafeDailyAfterReturnCheckTimeout"
     ]
   },
   "ReturnCafeDailyToMainLoading": {
     "recognition": "TemplateMatch",
-    "template": "loading.png",
+    "template": "nav/loading.png",
     "threshold": 0.7,
-    "post_wait_freezes": 1000,
+    "post_wait_freezes": 300,
     "next": [
       "ReturnCafeDailyToMainLoading",
       "WaitCafeDailyReturnedToMain"
-    ]
+    ],
+    "timeout": 700,
+    "rate_limit": 100
   },
   "WaitCafeDailyReturnedToMain": {
     "recognition": "TemplateMatch",
     "template": "main_ui/coffee_room.png",
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
-    "timeout": 5000,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "RetryReturnCafeDailyToMainAfterCheck"
+    ],
+    "roi": [
+      30,
+      600,
+      130,
+      120
     ]
   },
   "RetryReturnCafeDailyToMainAfterCheck": {
@@ -537,7 +634,7 @@
       1237,
       31
     ],
-    "post_wait_freezes": 1000,
+    "post_delay": 300,
     "next": [
       "ReturnCafeDailyToMainLoading",
       "WaitCafeDailyReturnedToMainAfterRetry"
@@ -546,14 +643,20 @@
   "WaitCafeDailyReturnedToMainAfterRetry": {
     "recognition": "TemplateMatch",
     "template": "main_ui/coffee_room.png",
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
-    "timeout": 5000,
+    "timeout": 1000,
     "next": [
       "Stop"
     ],
     "on_error": [
       "StopCafeDailyAfterReturnCheckTimeout"
+    ],
+    "roi": [
+      30,
+      600,
+      130,
+      120
     ]
   },
   "StopCafeDailyAfterReturnCheckTimeout": {

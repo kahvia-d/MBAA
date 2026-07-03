@@ -157,16 +157,16 @@
             ]
         },
         "咖啡厅功能": {
-            "type": "checkbox",
-            "default_case": [
-                "摸头",
-                "领取收益"
-            ],
+            "type": "select",
+            "default_case": "摸头和领取收益",
             "cases": [
                 {
-                    "name": "摸头",
+                    "name": "摸头和领取收益",
                     "pipeline_override": {
                         "RunCafe1HeadPat": {
+                            "enabled": true
+                        },
+                        "RunCafeIncomeClaim": {
                             "enabled": true
                         },
                         "RunCafe2HeadPatPlan": {
@@ -175,10 +175,44 @@
                     }
                 },
                 {
-                    "name": "领取收益",
+                    "name": "仅摸头",
                     "pipeline_override": {
+                        "RunCafe1HeadPat": {
+                            "enabled": true
+                        },
+                        "RunCafeIncomeClaim": {
+                            "enabled": false
+                        },
+                        "RunCafe2HeadPatPlan": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "仅领取收益",
+                    "pipeline_override": {
+                        "RunCafe1HeadPat": {
+                            "enabled": false
+                        },
                         "RunCafeIncomeClaim": {
                             "enabled": true
+                        },
+                        "RunCafe2HeadPatPlan": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "全部跳过",
+                    "pipeline_override": {
+                        "RunCafe1HeadPat": {
+                            "enabled": false
+                        },
+                        "RunCafeIncomeClaim": {
+                            "enabled": false
+                        },
+                        "RunCafe2HeadPatPlan": {
+                            "enabled": false
                         }
                     }
                 }

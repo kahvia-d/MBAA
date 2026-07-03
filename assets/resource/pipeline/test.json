@@ -28,7 +28,14 @@
   "OpenShop": {
     "recognition": "TemplateMatch",
     "template": "main_ui/shop.png",
-    "threshold": 0.7,
+    "roi": [
+      735,
+      600,
+      120,
+      120
+    ],
+    "threshold": 0.6,
+    "green_mask": true,
     "action": "Click",
     "post_wait_freezes": 0,
     "next": [

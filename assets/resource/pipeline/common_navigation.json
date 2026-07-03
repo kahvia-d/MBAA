@@ -1,0 +1,187 @@
+{
+  "NavLoading": {
+    "recognition": "TemplateMatch",
+    "template": "nav/loading.png",
+    "threshold": 0.7,
+    "timeout": 700,
+    "rate_limit": 100,
+    "post_wait_freezes": 300
+  },
+  "NavConfirmMain": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/students.png",
+    "roi": [
+      260,
+      590,
+      140,
+      130
+    ],
+    "threshold": 0.58,
+    "green_mask": true,
+    "timeout": 1000,
+    "rate_limit": 150
+  },
+  "NavConfirmMainThenStop": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/students.png",
+    "roi": [
+      260,
+      590,
+      140,
+      130
+    ],
+    "threshold": 0.58,
+    "green_mask": true,
+    "timeout": 1000,
+    "rate_limit": 150,
+    "next": [
+      "Stop"
+    ]
+  },
+  "NavBackButton": {
+    "recognition": "TemplateMatch",
+    "template": "nav/back.png",
+    "roi": [
+      0,
+      0,
+      120,
+      100
+    ],
+    "threshold": 0.7,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 500
+  },
+  "NavHomeButton": {
+    "recognition": "TemplateMatch",
+    "template": "nav/home.png",
+    "roi": [
+      1180,
+      0,
+      100,
+      90
+    ],
+    "threshold": 0.7,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 600
+  },
+  "NavReturnToMain": {
+    "timeout": 8000,
+    "rate_limit": 250,
+    "next": [
+      "NavConfirmMainThenStop",
+      "[JumpBack]NavLoading",
+      "[JumpBack]NavHomeButton",
+      "[JumpBack]NavBackButton"
+    ],
+    "on_error": [
+      "NavReturnToMainStopAfterTimeout"
+    ]
+  },
+  "NavReturnToMainStopAfterTimeout": {
+    "next": [
+      "Stop"
+    ]
+  },
+  "NavOpenTasks": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/tasks.png",
+    "roi": [
+      1110,
+      485,
+      170,
+      160
+    ],
+    "threshold": 0.58,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 600
+  },
+  "NavOpenShop": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/shop.png",
+    "roi": [
+      735,
+      600,
+      120,
+      120
+    ],
+    "threshold": 0.6,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 500
+  },
+  "NavOpenCafe": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/coffee_room.png",
+    "roi": [
+      30,
+      600,
+      130,
+      120
+    ],
+    "threshold": 0.6,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 600
+  },
+  "NavOpenMailbox": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/mail.png",
+    "roi": [
+      1080,
+      0,
+      120,
+      90
+    ],
+    "threshold": 0.58,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 500
+  },
+  "NavOpenCommunication": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/communication.png",
+    "roi": [
+      500,
+      600,
+      140,
+      120
+    ],
+    "threshold": 0.6,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 500
+  },
+  "NavOpenPyroxenePurchase": {
+    "recognition": "TemplateMatch",
+    "template": "main_ui/pyroxene_purchase.png",
+    "roi": [
+      95,
+      190,
+      130,
+      120
+    ],
+    "threshold": 0.58,
+    "green_mask": true,
+    "action": "Click",
+    "timeout": 1200,
+    "rate_limit": 150,
+    "post_wait_freezes": 700
+  }
+}

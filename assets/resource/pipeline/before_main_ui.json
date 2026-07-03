@@ -30,7 +30,7 @@
       "ActivityCheckIn",
       "JumpToMainUI"
     ]
-  },  
+  },
   "ActivityCheckIn": {
     "recognition": "TemplateMatch",
     "template": "before_main_ui/activity_check_in.png",
@@ -55,10 +55,18 @@
   "JumpToMainUISuccess": {
     "recognition": "TemplateMatch",
     "template": "main_ui/students.png",
-    "threshold": 0.7,
+    "threshold": 0.58,
     "post_wait_freezes": 0,
     "next": [
       "Stop"
-    ]
+    ],
+    "roi": [
+      260,
+      590,
+      140,
+      130
+    ],
+    "green_mask": true,
+    "timeout": 1000
   }
 }

@@ -102,10 +102,34 @@
     "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
-      "ReturnMailboxClaimToMainAfterReward"
+      "WaitMailboxClaimRewardSuccessClosed"
     ],
     "on_error": [
       "ContinueMailboxClaimAfterRewardTimeout"
+    ]
+  },
+  "WaitMailboxClaimRewardSuccessClosed": {
+    "recognition": "TemplateMatch",
+    "template": "mail/reward_success.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "ReturnMailboxClaimToMainAfterReward"
+    ],
+    "on_error": [
+      "RetryCloseMailboxClaimRewardSuccess"
+    ]
+  },
+  "RetryCloseMailboxClaimRewardSuccess": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "WaitMailboxClaimRewardSuccessClosed"
     ]
   },
   "ContinueMailboxClaimAfterRewardTimeout": {

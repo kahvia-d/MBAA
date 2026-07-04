@@ -88,6 +88,46 @@
     "post_wait_freezes": 600,
     "timeout": 1000,
     "next": [
+      "WaitCafe1FirstEnterDialogClosed"
+    ]
+  },
+  "WaitCafe1FirstEnterDialogClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
+      "WaitCafe1OpenedAfterFirstEnterDialog"
+    ],
+    "on_error": [
+      "RetryConfirmCafe1FirstEnterDialog"
+    ]
+  },
+  "RetryConfirmCafe1FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 300,
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitCafe1FirstEnterDialogClosed"
+    ],
+    "on_error": [
       "WaitCafe1OpenedAfterFirstEnterDialog"
     ]
   },
@@ -192,10 +232,29 @@
     "post_delay": 500,
     "timeout": 80,
     "next": [
-      "FindCafe1HeadPatVoiceMark"
+      "WaitCafe1BondLevelUpClosed"
     ],
     "on_error": [
       "FinishCafe1HeadPat"
+    ]
+  },
+  "WaitCafe1BondLevelUpClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/bond_level_up_title.png",
+    "roi": [
+      450,
+      550,
+      390,
+      130
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "FindCafe1HeadPatVoiceMark"
+    ],
+    "on_error": [
+      "CloseCafe1BondLevelUp"
     ]
   },
   "FinishCafe1HeadPat": {
@@ -273,10 +332,34 @@
     "post_delay": 300,
     "timeout": 10000,
     "next": [
-      "CloseCafeIncomeWindowAfterReward"
+      "WaitCafeIncomeRewardSuccessClosed"
     ],
     "on_error": [
       "ContinueCafeIncomeAfterRewardTimeout"
+    ]
+  },
+  "WaitCafeIncomeRewardSuccessClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/reward_success.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "CloseCafeIncomeWindowAfterReward"
+    ],
+    "on_error": [
+      "RetryCloseCafeIncomeRewardSuccess"
+    ]
+  },
+  "RetryCloseCafeIncomeRewardSuccess": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "WaitCafeIncomeRewardSuccessClosed"
     ]
   },
   "ContinueCafeIncomeAfterRewardTimeout": {
@@ -481,6 +564,46 @@
     "post_wait_freezes": 600,
     "timeout": 1000,
     "next": [
+      "WaitCafe2FirstEnterDialogClosed"
+    ]
+  },
+  "WaitCafe2FirstEnterDialogClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
+      "WaitCafe2OpenedAfterFirstEnterDialog"
+    ],
+    "on_error": [
+      "RetryConfirmCafe2FirstEnterDialog"
+    ]
+  },
+  "RetryConfirmCafe2FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm.png",
+    "roi": [
+      480,
+      390,
+      330,
+      140
+    ],
+    "threshold": 0.75,
+    "action": "Click",
+    "pre_wait_freezes": 300,
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitCafe2FirstEnterDialogClosed"
+    ],
+    "on_error": [
       "WaitCafe2OpenedAfterFirstEnterDialog"
     ]
   },
@@ -576,10 +699,29 @@
     "post_delay": 500,
     "timeout": 80,
     "next": [
-      "FindCafe2HeadPatVoiceMark"
+      "WaitCafe2BondLevelUpClosed"
     ],
     "on_error": [
       "FinishCafe2HeadPat"
+    ]
+  },
+  "WaitCafe2BondLevelUpClosed": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/bond_level_up_title.png",
+    "roi": [
+      450,
+      550,
+      390,
+      130
+    ],
+    "threshold": 0.7,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "FindCafe2HeadPatVoiceMark"
+    ],
+    "on_error": [
+      "CloseCafe2BondLevelUp"
     ]
   },
   "FinishCafe2HeadPat": {

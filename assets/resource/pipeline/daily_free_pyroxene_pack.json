@@ -132,7 +132,46 @@
     "post_wait_freezes": 600,
     "timeout": 3000,
     "next": [
+      "WaitDailyFreePyroxenePackPurchaseDialogClosed"
+    ],
+    "on_error": [
+      "CloseDailyFreePyroxenePackPurchaseDialogAfterConfirmTimeout"
+    ]
+  },
+  "WaitDailyFreePyroxenePackPurchaseDialogClosed": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/confirm_button.png",
+    "roi": [
+      620,
+      535,
+      300,
+      120
+    ],
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
       "WaitDailyFreePyroxenePackPurchaseSuccess"
+    ],
+    "on_error": [
+      "RetryConfirmDailyFreePyroxenePackPurchase"
+    ]
+  },
+  "RetryConfirmDailyFreePyroxenePackPurchase": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/confirm_button.png",
+    "roi": [
+      620,
+      535,
+      300,
+      120
+    ],
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitDailyFreePyroxenePackPurchaseDialogClosed"
     ],
     "on_error": [
       "CloseDailyFreePyroxenePackPurchaseDialogAfterConfirmTimeout"
@@ -150,10 +189,34 @@
     "post_wait_freezes": 800,
     "timeout": 10000,
     "next": [
-      "CloseDailyFreePyroxenePackWindowAfterSuccess"
+      "WaitDailyFreePyroxenePackPurchaseSuccessClosed"
     ],
     "on_error": [
       "ContinueDailyFreePyroxenePackAfterSuccessTimeout"
+    ]
+  },
+  "WaitDailyFreePyroxenePackPurchaseSuccessClosed": {
+    "recognition": "TemplateMatch",
+    "template": "pyroxene_purchase/purchase_success.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "CloseDailyFreePyroxenePackWindowAfterSuccess"
+    ],
+    "on_error": [
+      "RetryCloseDailyFreePyroxenePackPurchaseSuccess"
+    ]
+  },
+  "RetryCloseDailyFreePyroxenePackPurchaseSuccess": {
+    "action": "Click",
+    "target": [
+      640,
+      650
+    ],
+    "post_wait_freezes": 800,
+    "next": [
+      "WaitDailyFreePyroxenePackPurchaseSuccessClosed"
     ]
   },
   "ContinueDailyFreePyroxenePackAfterSuccessTimeout": {

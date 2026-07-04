@@ -202,7 +202,34 @@
     "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
+      "WaitRoadSweepStartConfirmClosed"
+    ],
+    "on_error": [
+      "CloseRoadBountyInfo"
+    ]
+  },
+  "WaitRoadSweepStartConfirmClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
       "ConfirmRoadSweepComplete"
+    ],
+    "on_error": [
+      "RetryConfirmRoadSweepStart"
+    ]
+  },
+  "RetryConfirmRoadSweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 500,
+    "timeout": 1500,
+    "next": [
+      "WaitRoadSweepStartConfirmClosed"
     ],
     "on_error": [
       "CloseRoadBountyInfo"
@@ -222,6 +249,39 @@
     "post_wait_freezes": 800,
     "timeout": 30000,
     "next": [
+      "WaitRoadSweepCompleteClosed"
+    ]
+  },
+  "WaitRoadSweepCompleteClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
+      "CloseRoadBountyInfo"
+    ],
+    "on_error": [
+      "RetryConfirmRoadSweepComplete"
+    ]
+  },
+  "RetryConfirmRoadSweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 800,
+    "timeout": 1500,
+    "next": [
+      "WaitRoadSweepCompleteClosed"
+    ],
+    "on_error": [
       "CloseRoadBountyInfo"
     ]
   },
@@ -232,9 +292,36 @@
     "action": "Click",
     "post_wait_freezes": 600,
     "next": [
-      "ReturnRoadBountyListToCategory"
+      "WaitRoadBountyInfoClosed"
     ],
     "timeout": 2000
+  },
+  "WaitRoadBountyInfoClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "ReturnRoadBountyListToCategory"
+    ],
+    "on_error": [
+      "RetryCloseRoadBountyInfo"
+    ]
+  },
+  "RetryCloseRoadBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitRoadBountyInfoClosed"
+    ],
+    "on_error": [
+      "ReturnRoadBountyListToCategory"
+    ]
   },
   "ReturnRoadBountyListToCategory": {
     "action": "Click",
@@ -377,7 +464,34 @@
     "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
+      "WaitRailwaySweepStartConfirmClosed"
+    ],
+    "on_error": [
+      "CloseRailwayBountyInfo"
+    ]
+  },
+  "WaitRailwaySweepStartConfirmClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
       "ConfirmRailwaySweepComplete"
+    ],
+    "on_error": [
+      "RetryConfirmRailwaySweepStart"
+    ]
+  },
+  "RetryConfirmRailwaySweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 500,
+    "timeout": 1500,
+    "next": [
+      "WaitRailwaySweepStartConfirmClosed"
     ],
     "on_error": [
       "CloseRailwayBountyInfo"
@@ -397,6 +511,39 @@
     "post_wait_freezes": 800,
     "timeout": 30000,
     "next": [
+      "WaitRailwaySweepCompleteClosed"
+    ]
+  },
+  "WaitRailwaySweepCompleteClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
+      "CloseRailwayBountyInfo"
+    ],
+    "on_error": [
+      "RetryConfirmRailwaySweepComplete"
+    ]
+  },
+  "RetryConfirmRailwaySweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 800,
+    "timeout": 1500,
+    "next": [
+      "WaitRailwaySweepCompleteClosed"
+    ],
+    "on_error": [
       "CloseRailwayBountyInfo"
     ]
   },
@@ -407,9 +554,36 @@
     "action": "Click",
     "post_wait_freezes": 600,
     "next": [
-      "ReturnRailwayBountyListToCategory"
+      "WaitRailwayBountyInfoClosed"
     ],
     "timeout": 2000
+  },
+  "WaitRailwayBountyInfoClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "ReturnRailwayBountyListToCategory"
+    ],
+    "on_error": [
+      "RetryCloseRailwayBountyInfo"
+    ]
+  },
+  "RetryCloseRailwayBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitRailwayBountyInfoClosed"
+    ],
+    "on_error": [
+      "ReturnRailwayBountyListToCategory"
+    ]
   },
   "ReturnRailwayBountyListToCategory": {
     "action": "Click",
@@ -550,7 +724,34 @@
     "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
+      "WaitClassroomSweepStartConfirmClosed"
+    ],
+    "on_error": [
+      "CloseClassroomBountyInfo"
+    ]
+  },
+  "WaitClassroomSweepStartConfirmClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
       "ConfirmClassroomSweepComplete"
+    ],
+    "on_error": [
+      "RetryConfirmClassroomSweepStart"
+    ]
+  },
+  "RetryConfirmClassroomSweepStart": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_start_confirm.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 500,
+    "timeout": 1500,
+    "next": [
+      "WaitClassroomSweepStartConfirmClosed"
     ],
     "on_error": [
       "CloseClassroomBountyInfo"
@@ -570,6 +771,39 @@
     "post_wait_freezes": 800,
     "timeout": 30000,
     "next": [
+      "WaitClassroomSweepCompleteClosed"
+    ]
+  },
+  "WaitClassroomSweepCompleteClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1200,
+    "next": [
+      "CloseClassroomBountyInfo"
+    ],
+    "on_error": [
+      "RetryConfirmClassroomSweepComplete"
+    ]
+  },
+  "RetryConfirmClassroomSweepComplete": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_complete_final.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "target": [
+      545,
+      555,
+      190,
+      50
+    ],
+    "post_wait_freezes": 800,
+    "timeout": 1500,
+    "next": [
+      "WaitClassroomSweepCompleteClosed"
+    ],
+    "on_error": [
       "CloseClassroomBountyInfo"
     ]
   },
@@ -580,9 +814,36 @@
     "action": "Click",
     "post_wait_freezes": 600,
     "next": [
-      "ReturnClassroomBountyListToCategory"
+      "WaitClassroomBountyInfoClosed"
     ],
     "timeout": 2000
+  },
+  "WaitClassroomBountyInfoClosed": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "inverse": true,
+    "timeout": 1000,
+    "next": [
+      "ReturnClassroomBountyListToCategory"
+    ],
+    "on_error": [
+      "RetryCloseClassroomBountyInfo"
+    ]
+  },
+  "RetryCloseClassroomBountyInfo": {
+    "recognition": "TemplateMatch",
+    "template": "bounty/sweep_info_close.png",
+    "threshold": 0.8,
+    "action": "Click",
+    "post_wait_freezes": 600,
+    "timeout": 1500,
+    "next": [
+      "WaitClassroomBountyInfoClosed"
+    ],
+    "on_error": [
+      "ReturnClassroomBountyListToCategory"
+    ]
   },
   "ReturnClassroomBountyListToCategory": {
     "action": "Click",

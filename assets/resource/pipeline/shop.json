@@ -343,26 +343,38 @@
   },
   "WaitGeneralShopPurchaseSuccessPage1": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "template": "shop/purchase_success_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 12000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage1Closed"
     ],
     "on_error": [
-      "ContinueGeneralShopAfterPage1SuccessTimeout"
+      "RetryCloseGeneralShopPurchaseSuccessPage1"
     ]
   },
   "WaitGeneralShopPurchaseSuccessPage1Closed": {
     "recognition": "TemplateMatch",
     "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
     "inverse": true,
     "timeout": 1000,
     "next": [
@@ -376,7 +388,7 @@
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
     "next": [
@@ -623,26 +635,38 @@
   },
   "WaitGeneralShopPurchaseSuccessPage2": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "template": "shop/purchase_success_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 12000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage2Closed"
     ],
     "on_error": [
-      "ContinueGeneralShopAfterPage2SuccessTimeout"
+      "RetryCloseGeneralShopPurchaseSuccessPage2"
     ]
   },
   "WaitGeneralShopPurchaseSuccessPage2Closed": {
     "recognition": "TemplateMatch",
     "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
     "inverse": true,
     "timeout": 1000,
     "next": [
@@ -656,7 +680,7 @@
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
     "next": [
@@ -906,26 +930,38 @@
   },
   "WaitGeneralShopPurchaseSuccessPage3": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "template": "shop/purchase_success_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 12000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage3Closed"
     ],
     "on_error": [
-      "ContinueGeneralShopAfterPage3SuccessTimeout"
+      "RetryCloseGeneralShopPurchaseSuccessPage3"
     ]
   },
   "WaitGeneralShopPurchaseSuccessPage3Closed": {
     "recognition": "TemplateMatch",
     "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
     "inverse": true,
     "timeout": 1000,
     "next": [
@@ -940,7 +976,7 @@
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
     "next": [
@@ -1266,26 +1302,38 @@
   },
   "WaitTacticalContestShopPurchaseSuccessPage1": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "template": "shop/purchase_success_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 12000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage1Closed"
     ],
     "on_error": [
-      "ContinueTacticalContestShopAfterPage1SuccessTimeout"
+      "RetryCloseTacticalContestShopPurchaseSuccessPage1"
     ]
   },
   "WaitTacticalContestShopPurchaseSuccessPage1Closed": {
     "recognition": "TemplateMatch",
     "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
     "inverse": true,
     "timeout": 1000,
     "next": [
@@ -1299,7 +1347,7 @@
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
     "next": [
@@ -1546,26 +1594,38 @@
   },
   "WaitTacticalContestShopPurchaseSuccessPage2": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "template": "shop/purchase_success_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 12000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage2Closed"
     ],
     "on_error": [
-      "ContinueTacticalContestShopAfterPage2SuccessTimeout"
+      "RetryCloseTacticalContestShopPurchaseSuccessPage2"
     ]
   },
   "WaitTacticalContestShopPurchaseSuccessPage2Closed": {
     "recognition": "TemplateMatch",
     "template": "shop/purchase_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
     "inverse": true,
     "timeout": 1000,
     "next": [
@@ -1579,7 +1639,7 @@
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
     "next": [

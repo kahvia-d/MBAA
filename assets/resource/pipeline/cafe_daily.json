@@ -5,7 +5,7 @@
     "next": [
       "[JumpBack]NavOpenCafe",
       "[JumpBack]NavLoading",
-      "ConfirmCafe1FirstEnterDialog",
+      "DetectCafe1FirstEnterDialog",
       "WaitCafeDailyOpened"
     ],
     "on_error": [
@@ -21,7 +21,7 @@
     "post_wait_freezes": 600,
     "next": [
       "[JumpBack]NavLoading",
-      "ConfirmCafe1FirstEnterDialog",
+      "DetectCafe1FirstEnterDialog",
       "WaitCafeDailyOpened",
       "OpenCafeDailyFromMain"
     ],
@@ -41,7 +41,7 @@
     "post_wait_freezes": 300,
     "next": [
       "OpenCafeDailyLoading",
-      "ConfirmCafe1FirstEnterDialog",
+      "DetectCafe1FirstEnterDialog",
       "WaitCafeDailyOpened"
     ],
     "timeout": 700,
@@ -69,8 +69,29 @@
   },
   "HandleCafe1FirstEnterDialog": {
     "next": [
-      "ConfirmCafe1FirstEnterDialog",
+      "DetectCafe1FirstEnterDialog",
       "RunCafe1DailyPlan"
+    ]
+  },
+  "DetectCafe1FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
+    ],
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
+    "timeout": 1200,
+    "next": [
+      "ConfirmCafe1FirstEnterDialog"
     ]
   },
   "ConfirmCafe1FirstEnterDialog": {
@@ -86,23 +107,32 @@
     "action": "Click",
     "pre_wait_freezes": 200,
     "post_wait_freezes": 600,
-    "timeout": 1000,
+    "timeout": 12000,
     "next": [
       "WaitCafe1FirstEnterDialogClosed"
+    ],
+    "on_error": [
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout"
     ]
   },
   "WaitCafe1FirstEnterDialogClosed": {
     "recognition": "TemplateMatch",
-    "template": "cafe/first_enter_confirm.png",
-    "roi": [
-      480,
-      390,
-      330,
-      140
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
     ],
-    "threshold": 0.75,
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 1500,
     "next": [
       "WaitCafe1OpenedAfterFirstEnterDialog"
     ],
@@ -123,9 +153,33 @@
     "action": "Click",
     "pre_wait_freezes": 300,
     "post_wait_freezes": 600,
-    "timeout": 1500,
+    "timeout": 12000,
     "next": [
       "WaitCafe1FirstEnterDialogClosed"
+    ],
+    "on_error": [
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout"
+    ]
+  },
+  "RecheckCafe1FirstEnterDialogAfterConfirmTimeout": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
+    ],
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
+    "timeout": 1000,
+    "next": [
+      "ConfirmCafe1FirstEnterDialog"
     ],
     "on_error": [
       "WaitCafe1OpenedAfterFirstEnterDialog"
@@ -502,7 +556,7 @@
     "post_wait_freezes": 800,
     "next": [
       "SwitchCafeDailyToCafe2Loading",
-      "ConfirmCafe2FirstEnterDialog",
+      "DetectCafe2FirstEnterDialog",
       "WaitCafe2DailyOpened",
       "SwitchCafeDailyToCafe2"
     ]
@@ -514,7 +568,7 @@
     "post_wait_freezes": 300,
     "next": [
       "SwitchCafeDailyToCafe2Loading",
-      "ConfirmCafe2FirstEnterDialog",
+      "DetectCafe2FirstEnterDialog",
       "WaitCafe2DailyOpened"
     ],
     "timeout": 700,
@@ -545,8 +599,29 @@
   },
   "HandleCafe2FirstEnterDialog": {
     "next": [
-      "ConfirmCafe2FirstEnterDialog",
+      "DetectCafe2FirstEnterDialog",
       "RunCafe2HeadPat"
+    ]
+  },
+  "DetectCafe2FirstEnterDialog": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
+    ],
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
+    "timeout": 1200,
+    "next": [
+      "ConfirmCafe2FirstEnterDialog"
     ]
   },
   "ConfirmCafe2FirstEnterDialog": {
@@ -562,23 +637,32 @@
     "action": "Click",
     "pre_wait_freezes": 200,
     "post_wait_freezes": 600,
-    "timeout": 1000,
+    "timeout": 12000,
     "next": [
       "WaitCafe2FirstEnterDialogClosed"
+    ],
+    "on_error": [
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout"
     ]
   },
   "WaitCafe2FirstEnterDialogClosed": {
     "recognition": "TemplateMatch",
-    "template": "cafe/first_enter_confirm.png",
-    "roi": [
-      480,
-      390,
-      330,
-      140
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
     ],
-    "threshold": 0.75,
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 1500,
     "next": [
       "WaitCafe2OpenedAfterFirstEnterDialog"
     ],
@@ -599,9 +683,33 @@
     "action": "Click",
     "pre_wait_freezes": 300,
     "post_wait_freezes": 600,
-    "timeout": 1500,
+    "timeout": 12000,
     "next": [
       "WaitCafe2FirstEnterDialogClosed"
+    ],
+    "on_error": [
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout"
+    ]
+  },
+  "RecheckCafe2FirstEnterDialogAfterConfirmTimeout": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "cafe/first_enter_dialog_title.png",
+      "cafe/first_enter_dialog_subtitle.png"
+    ],
+    "roi": [
+      500,
+      145,
+      300,
+      160
+    ],
+    "threshold": [
+      0.75,
+      0.75
+    ],
+    "timeout": 1000,
+    "next": [
+      "ConfirmCafe2FirstEnterDialog"
     ],
     "on_error": [
       "WaitCafe2OpenedAfterFirstEnterDialog"

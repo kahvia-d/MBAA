@@ -259,13 +259,12 @@
   },
   "HandleCafe1BondLevelUpAfterHeadPat": {
     "next": [
-      "CloseCafe1BondLevelUp",
-      "FindCafe1HeadPatVoiceMark"
+      "CloseCafe1BondLevelUp"
     ],
-    "timeout": 80,
-    "rate_limit": 80,
+    "timeout": 3800,
+    "rate_limit": 150,
     "on_error": [
-      "FinishCafe1HeadPat"
+      "FindCafe1HeadPatVoiceMark"
     ]
   },
   "CloseCafe1BondLevelUp": {
@@ -284,7 +283,7 @@
       650
     ],
     "post_delay": 500,
-    "timeout": 80,
+    "timeout": 1200,
     "next": [
       "WaitCafe1BondLevelUpClosed"
     ],
@@ -322,17 +321,38 @@
     "next": [
       "OpenCafeIncomeWindow"
     ],
+    "timeout": 1500,
+    "rate_limit": 150,
+    "on_error": [
+      "FinishCafeIncomeClaim"
+    ],
     "enabled": true
   },
   "OpenCafeIncomeWindow": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_entry.png",
+    "roi": [
+      1080,
+      600,
+      200,
+      110
+    ],
+    "threshold": 0.68,
     "action": "Click",
-    "target": [
-      1175,
-      660
+    "target": true,
+    "target_offset": [
+      0,
+      18,
+      0,
+      20
     ],
     "post_wait_freezes": 600,
+    "timeout": 1200,
     "next": [
       "WaitCafeIncomeWindowOpened"
+    ],
+    "on_error": [
+      "FinishCafeIncomeClaim"
     ]
   },
   "WaitCafeIncomeWindowOpened": {
@@ -346,6 +366,98 @@
     ],
     "threshold": 0.7,
     "timeout": 2000,
+    "next": [
+      "CloseCafeIncomeWindowNoClaimState",
+      "ClickCafeIncomeClaimButton"
+    ],
+    "on_error": [
+      "OpenCafeIncomeWindowRetry1"
+    ]
+  },
+  "OpenCafeIncomeWindowRetry1": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_entry.png",
+    "roi": [
+      1080,
+      600,
+      200,
+      110
+    ],
+    "threshold": 0.68,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      0,
+      18,
+      0,
+      20
+    ],
+    "post_wait_freezes": 600,
+    "timeout": 1200,
+    "next": [
+      "WaitCafeIncomeWindowOpenedAfterRetry1"
+    ],
+    "on_error": [
+      "FinishCafeIncomeClaim"
+    ]
+  },
+  "WaitCafeIncomeWindowOpenedAfterRetry1": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_title.png",
+    "roi": [
+      520,
+      100,
+      250,
+      100
+    ],
+    "threshold": 0.7,
+    "timeout": 1500,
+    "next": [
+      "CloseCafeIncomeWindowNoClaimState",
+      "ClickCafeIncomeClaimButton"
+    ],
+    "on_error": [
+      "OpenCafeIncomeWindowRetry2"
+    ]
+  },
+  "OpenCafeIncomeWindowRetry2": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_entry.png",
+    "roi": [
+      1080,
+      600,
+      200,
+      110
+    ],
+    "threshold": 0.68,
+    "action": "Click",
+    "target": true,
+    "target_offset": [
+      0,
+      18,
+      0,
+      20
+    ],
+    "post_wait_freezes": 600,
+    "timeout": 1200,
+    "next": [
+      "WaitCafeIncomeWindowOpenedAfterRetry2"
+    ],
+    "on_error": [
+      "FinishCafeIncomeClaim"
+    ]
+  },
+  "WaitCafeIncomeWindowOpenedAfterRetry2": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/income_title.png",
+    "roi": [
+      520,
+      100,
+      250,
+      100
+    ],
+    "threshold": 0.7,
+    "timeout": 1500,
     "next": [
       "CloseCafeIncomeWindowNoClaimState",
       "ClickCafeIncomeClaimButton"
@@ -780,13 +892,12 @@
   },
   "HandleCafe2BondLevelUpAfterHeadPat": {
     "next": [
-      "CloseCafe2BondLevelUp",
-      "FindCafe2HeadPatVoiceMark"
+      "CloseCafe2BondLevelUp"
     ],
-    "timeout": 80,
-    "rate_limit": 80,
+    "timeout": 3800,
+    "rate_limit": 150,
     "on_error": [
-      "FinishCafe2HeadPat"
+      "FindCafe2HeadPatVoiceMark"
     ]
   },
   "CloseCafe2BondLevelUp": {
@@ -805,7 +916,7 @@
       650
     ],
     "post_delay": 500,
-    "timeout": 80,
+    "timeout": 1200,
     "next": [
       "WaitCafe2BondLevelUpClosed"
     ],

@@ -11,39 +11,6 @@
       "ReturnShopToMain"
     ]
   },
-  "OpenShopFromMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/shop.png",
-    "threshold": 0.6,
-    "action": "Click",
-    "post_wait_freezes": 500,
-    "next": [
-      "[JumpBack]NavLoading",
-      "WaitShopOpened",
-      "OpenShopFromMain"
-    ],
-    "roi": [
-      735,
-      600,
-      120,
-      120
-    ],
-    "green_mask": true,
-    "timeout": 1200,
-    "rate_limit": 150
-  },
-  "OpenShopLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "OpenShopLoading",
-      "WaitShopOpened"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
   "WaitShopOpened": {
     "recognition": "TemplateMatch",
     "template": "shop/general_tab.png",
@@ -51,11 +18,6 @@
     "timeout": 1500,
     "next": [
       "RunShopPurchasePlan"
-    ]
-  },
-  "RetryOpenShopFromMainAfterOpenCheck": {
-    "next": [
-      "OpenShopFromMain"
     ]
   },
   "RunShopPurchasePlan": {
@@ -76,24 +38,6 @@
       "ReturnShopToMain"
     ]
   },
-  "ResetShopCategoryListTopForGeneral": {
-    "action": "Swipe",
-    "begin": [
-      120,
-      180
-    ],
-    "end": [
-      120,
-      560
-    ],
-    "duration": 500,
-    "repeat": 2,
-    "repeat_delay": 150,
-    "post_wait_freezes": 500,
-    "next": [
-      "OpenGeneralShopCategory"
-    ]
-  },
   "OpenGeneralShopCategory": {
     "action": "Click",
     "target": [
@@ -105,24 +49,6 @@
       "GeneralShopPage1Item1"
     ],
     "timeout": 1500
-  },
-  "ResetGeneralShopGoodsListTop": {
-    "action": "Swipe",
-    "begin": [
-      960,
-      250
-    ],
-    "end": [
-      960,
-      650
-    ],
-    "duration": 500,
-    "repeat": 3,
-    "repeat_delay": 150,
-    "post_wait_freezes": 500,
-    "next": [
-      "GeneralShopPage1Item1"
-    ]
   },
   "GeneralShopPage1Item1": {
     "next": [
@@ -393,11 +319,6 @@
     "post_wait_freezes": 800,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage1Closed"
-    ]
-  },
-  "ContinueGeneralShopAfterPage1SuccessTimeout": {
-    "next": [
-      "ScrollGeneralShopGoodsToPage2"
     ]
   },
   "ScrollGeneralShopGoodsToPage2": {
@@ -685,11 +606,6 @@
     "post_wait_freezes": 800,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage2Closed"
-    ]
-  },
-  "ContinueGeneralShopAfterPage2SuccessTimeout": {
-    "next": [
-      "ScrollGeneralShopGoodsToPage3"
     ]
   },
   "ScrollGeneralShopGoodsToPage3": {
@@ -983,12 +899,6 @@
       "WaitGeneralShopPurchaseSuccessPage3Closed"
     ]
   },
-  "ContinueGeneralShopAfterPage3SuccessTimeout": {
-    "next": [
-      "RunTacticalContestShopPurchase",
-      "ReturnShopToMain"
-    ]
-  },
   "RunTacticalContestShopPurchase": {
     "enabled": false,
     "timeout": 3000,
@@ -997,24 +907,6 @@
     ],
     "on_error": [
       "ReturnShopToMain"
-    ]
-  },
-  "ResetShopCategoryListTopForTacticalContest": {
-    "action": "Swipe",
-    "begin": [
-      120,
-      180
-    ],
-    "end": [
-      120,
-      560
-    ],
-    "duration": 500,
-    "repeat": 2,
-    "repeat_delay": 150,
-    "post_wait_freezes": 500,
-    "next": [
-      "ScrollShopCategoryListToTacticalContest"
     ]
   },
   "ScrollShopCategoryListToTacticalContest": {
@@ -1064,24 +956,6 @@
       "TacticalContestShopPage1Item1"
     ],
     "timeout": 1500
-  },
-  "ResetTacticalContestShopGoodsListTop": {
-    "action": "Swipe",
-    "begin": [
-      960,
-      250
-    ],
-    "end": [
-      960,
-      650
-    ],
-    "duration": 500,
-    "repeat": 3,
-    "repeat_delay": 150,
-    "post_wait_freezes": 500,
-    "next": [
-      "TacticalContestShopPage1Item1"
-    ]
   },
   "TacticalContestShopPage1Item1": {
     "next": [
@@ -1352,11 +1226,6 @@
     "post_wait_freezes": 800,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage1Closed"
-    ]
-  },
-  "ContinueTacticalContestShopAfterPage1SuccessTimeout": {
-    "next": [
-      "ScrollTacticalContestShopGoodsToPage2"
     ]
   },
   "ScrollTacticalContestShopGoodsToPage2": {
@@ -1646,43 +1515,9 @@
       "WaitTacticalContestShopPurchaseSuccessPage2Closed"
     ]
   },
-  "ContinueTacticalContestShopAfterPage2SuccessTimeout": {
-    "next": [
-      "ReturnShopToMain"
-    ]
-  },
   "ReturnShopToMain": {
-    "timeout": 8000,
-    "rate_limit": 250,
     "next": [
       "NavReturnToMain"
-    ],
-    "on_error": [
-      "StopAfterShopReturnCheckTimeout"
-    ]
-  },
-  "WaitShopReturnedToMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/shop.png",
-    "threshold": 0.6,
-    "timeout": 1000,
-    "next": [
-      "Stop"
-    ],
-    "on_error": [
-      "StopAfterShopReturnCheckTimeout"
-    ],
-    "roi": [
-      735,
-      600,
-      120,
-      120
-    ],
-    "green_mask": true
-  },
-  "StopAfterShopReturnCheckTimeout": {
-    "next": [
-      "Stop"
     ]
   }
 }

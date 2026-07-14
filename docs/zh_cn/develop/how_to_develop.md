@@ -43,6 +43,8 @@
 
 3. 进行开发工作。请参考 [MaaFramework 相关文档](https://maafw.com/docs/1.1-QuickStarted)，并按您的业务需求修改 `assets` 目录下的 `resource` 资源文件以及 `interface.json` 文件，然后使用 [开发工具](https://maafw.com/docs/1.1-QuickStarted#%E8%B0%83%E8%AF%95)进行调试。
 
+    开始编写 Pipeline 前，请先阅读本项目的 [Pipeline 开发规范与最佳实践](./pipeline_best_practices.md)，尤其注意 `timeout`、有限重试、弹窗关闭验证和返回主界面约束。
+
     通常来说，您**不需要**为您的项目单独开发一套 UI ，本模板附带了自动配置 _通用 UI_ 的持续集成（CI），使用方法请参考后续步骤。
 
 4. 完成开发后，上传您的代码并发布版本。

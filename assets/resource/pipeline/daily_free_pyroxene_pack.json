@@ -11,39 +11,6 @@
       "CloseDailyFreePyroxenePackWindowAlreadyClaimed"
     ]
   },
-  "OpenDailyFreePyroxenePackWindow": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/pyroxene_purchase.png",
-    "threshold": 0.58,
-    "action": "Click",
-    "post_wait_freezes": 700,
-    "next": [
-      "[JumpBack]NavLoading",
-      "WaitDailyFreePyroxenePackWindowOpened",
-      "OpenDailyFreePyroxenePackWindow"
-    ],
-    "roi": [
-      95,
-      190,
-      130,
-      120
-    ],
-    "green_mask": true,
-    "timeout": 1200,
-    "rate_limit": 150
-  },
-  "OpenDailyFreePyroxenePackLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "OpenDailyFreePyroxenePackLoading",
-      "WaitDailyFreePyroxenePackWindowOpened"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
   "WaitDailyFreePyroxenePackWindowOpened": {
     "recognition": "TemplateMatch",
     "template": "pyroxene_purchase/purchase_title.png",
@@ -57,11 +24,6 @@
     "timeout": 2000,
     "next": [
       "OpenDailyFreePyroxenePackBundleTab"
-    ]
-  },
-  "RetryOpenDailyFreePyroxenePackWindowAfterCheck": {
-    "next": [
-      "OpenDailyFreePyroxenePackWindow"
     ]
   },
   "OpenDailyFreePyroxenePackBundleTab": {
@@ -270,7 +232,7 @@
     "inverse": true,
     "timeout": 2000,
     "next": [
-      "WaitDailyFreePyroxenePackReturnedToMain"
+      "NavReturnToMain"
     ],
     "on_error": [
       "ForceCloseDailyFreePyroxenePackWindow"
@@ -300,39 +262,7 @@
     "inverse": true,
     "timeout": 2000,
     "next": [
-      "WaitDailyFreePyroxenePackReturnedToMain"
-    ],
-    "on_error": [
-      "StopDailyFreePyroxenePackAfterCloseTimeout"
-    ]
-  },
-  "WaitDailyFreePyroxenePackReturnedToMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/pyroxene_purchase.png",
-    "threshold": 0.58,
-    "timeout": 1000,
-    "next": [
-      "Stop"
-    ],
-    "on_error": [
-      "StopDailyFreePyroxenePackAfterReturnCheckTimeout"
-    ],
-    "roi": [
-      95,
-      190,
-      130,
-      120
-    ],
-    "green_mask": true
-  },
-  "StopDailyFreePyroxenePackAfterCloseTimeout": {
-    "next": [
-      "Stop"
-    ]
-  },
-  "StopDailyFreePyroxenePackAfterReturnCheckTimeout": {
-    "next": [
-      "Stop"
+      "NavReturnToMain"
     ]
   }
 }

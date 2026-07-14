@@ -11,39 +11,6 @@
       "ReturnClubToMain"
     ]
   },
-  "OpenSocialFromMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/communication.png",
-    "threshold": 0.6,
-    "action": "Click",
-    "post_wait_freezes": 500,
-    "next": [
-      "[JumpBack]NavLoading",
-      "WaitSocialPageOpened",
-      "OpenSocialFromMain"
-    ],
-    "roi": [
-      500,
-      600,
-      140,
-      120
-    ],
-    "green_mask": true,
-    "timeout": 1200,
-    "rate_limit": 150
-  },
-  "OpenSocialLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "OpenSocialLoading",
-      "WaitSocialPageOpened"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
   "WaitSocialPageOpened": {
     "recognition": "TemplateMatch",
     "template": "club/social_club_card.png",
@@ -57,11 +24,6 @@
     "timeout": 1500,
     "next": [
       "OpenClubFromSocial"
-    ]
-  },
-  "RetryOpenSocialFromMainAfterCheck": {
-    "next": [
-      "OpenSocialFromMain"
     ]
   },
   "OpenClubFromSocial": {
@@ -213,83 +175,8 @@
     ]
   },
   "ReturnClubToMain": {
-    "timeout": 8000,
-    "rate_limit": 250,
     "next": [
       "NavReturnToMain"
-    ],
-    "on_error": [
-      "RetryReturnClubToMainAfterCheck"
-    ]
-  },
-  "ReturnClubToMainLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "ReturnClubToMainLoading",
-      "WaitClubCheckInReturnedToMain"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
-  "ConfirmClubSignInRewardAfterBackFailed": {
-    "recognition": "TemplateMatch",
-    "template": "club/signin_reward_confirm.png",
-    "roi": [
-      480,
-      420,
-      340,
-      130
-    ],
-    "threshold": 0.75,
-    "action": "Click",
-    "pre_wait_freezes": 500,
-    "post_wait_freezes": 800,
-    "timeout": 1500,
-    "next": [
-      "ReturnClubToMain"
-    ],
-    "on_error": [
-      "ReturnClubToMainByHomeFallback"
-    ]
-  },
-  "ReturnClubToMainByHomeFallback": {
-    "action": "Click",
-    "target": [
-      1237,
-      31
-    ],
-    "post_wait_freezes": 700,
-    "next": [
-      "ReturnClubToMainLoading",
-      "WaitClubCheckInReturnedToMain"
-    ]
-  },
-  "WaitClubCheckInReturnedToMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/communication.png",
-    "threshold": 0.6,
-    "timeout": 1000,
-    "next": [
-      "Stop"
-    ],
-    "on_error": [
-      "ConfirmClubSignInRewardAfterBackFailed",
-      "RetryReturnClubToMainAfterCheck"
-    ],
-    "roi": [
-      500,
-      600,
-      140,
-      120
-    ],
-    "green_mask": true
-  },
-  "RetryReturnClubToMainAfterCheck": {
-    "next": [
-      "ReturnClubToMainByHomeFallback"
     ]
   }
 }

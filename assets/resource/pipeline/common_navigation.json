@@ -3,37 +3,36 @@
     "recognition": "TemplateMatch",
     "template": "nav/loading.png",
     "threshold": 0.7,
-    "timeout": 700,
-    "rate_limit": 100,
     "post_wait_freezes": 300
   },
-  "NavConfirmMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/students.png",
-    "roi": [
-      260,
-      590,
-      140,
-      130
-    ],
-    "threshold": 0.58,
-    "green_mask": true,
-    "timeout": 1000,
-    "rate_limit": 150
-  },
   "NavConfirmMainThenStop": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/students.png",
-    "roi": [
-      260,
-      590,
-      140,
-      130
+    "recognition": "Or",
+    "any_of": [
+      {
+        "recognition": "TemplateMatch",
+        "template": "main_ui/students.png",
+        "roi": [
+          260,
+          590,
+          140,
+          130
+        ],
+        "threshold": 0.58,
+        "green_mask": true
+      },
+      {
+        "recognition": "TemplateMatch",
+        "template": "main_ui/tasks.png",
+        "roi": [
+          1110,
+          485,
+          170,
+          160
+        ],
+        "threshold": 0.58,
+        "green_mask": true
+      }
     ],
-    "threshold": 0.58,
-    "green_mask": true,
-    "timeout": 1000,
-    "rate_limit": 150,
     "next": [
       "Stop"
     ]
@@ -50,8 +49,7 @@
     "threshold": 0.7,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 5,
     "post_wait_freezes": 500
   },
   "NavHomeButton": {
@@ -66,26 +64,17 @@
     "threshold": 0.7,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 2,
     "post_wait_freezes": 600
   },
   "NavReturnToMain": {
-    "timeout": 8000,
+    "timeout": 15000,
     "rate_limit": 250,
     "next": [
       "NavConfirmMainThenStop",
       "[JumpBack]NavLoading",
       "[JumpBack]NavHomeButton",
       "[JumpBack]NavBackButton"
-    ],
-    "on_error": [
-      "NavReturnToMainStopAfterTimeout"
-    ]
-  },
-  "NavReturnToMainStopAfterTimeout": {
-    "next": [
-      "Stop"
     ]
   },
   "NavOpenTasks": {
@@ -100,8 +89,7 @@
     "threshold": 0.58,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 600
   },
   "NavOpenShop": {
@@ -116,8 +104,7 @@
     "threshold": 0.6,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 500
   },
   "NavOpenCafe": {
@@ -132,8 +119,7 @@
     "threshold": 0.6,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 600
   },
   "NavOpenMailbox": {
@@ -148,8 +134,7 @@
     "threshold": 0.58,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 500
   },
   "NavOpenCommunication": {
@@ -164,8 +149,7 @@
     "threshold": 0.6,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 500
   },
   "NavOpenPyroxenePurchase": {
@@ -180,8 +164,7 @@
     "threshold": 0.58,
     "green_mask": true,
     "action": "Click",
-    "timeout": 1200,
-    "rate_limit": 150,
+    "max_hit": 3,
     "post_wait_freezes": 700
   }
 }

@@ -12,41 +12,6 @@
       "ReturnCafeDailyToMain"
     ]
   },
-  "OpenCafeDailyFromMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/coffee_room.png",
-    "threshold": 0.6,
-    "green_mask": true,
-    "action": "Click",
-    "post_wait_freezes": 600,
-    "next": [
-      "[JumpBack]NavLoading",
-      "DetectCafe1FirstEnterDialog",
-      "WaitCafeDailyOpened",
-      "OpenCafeDailyFromMain"
-    ],
-    "roi": [
-      30,
-      600,
-      130,
-      120
-    ],
-    "timeout": 1200,
-    "rate_limit": 150
-  },
-  "OpenCafeDailyLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "OpenCafeDailyLoading",
-      "DetectCafe1FirstEnterDialog",
-      "WaitCafeDailyOpened"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
   "WaitCafeDailyOpened": {
     "recognition": "TemplateMatch",
     "template": "cafe/cafe_title.png",
@@ -60,11 +25,6 @@
     "timeout": 1500,
     "next": [
       "HandleCafe1FirstEnterDialog"
-    ]
-  },
-  "RetryOpenCafeDailyFromMainAfterCheck": {
-    "next": [
-      "OpenCafeDailyFromMain"
     ]
   },
   "HandleCafe1FirstEnterDialog": {
@@ -949,80 +909,8 @@
     ]
   },
   "ReturnCafeDailyToMain": {
-    "timeout": 8000,
-    "rate_limit": 250,
     "next": [
       "NavReturnToMain"
-    ],
-    "on_error": [
-      "StopCafeDailyAfterReturnCheckTimeout"
-    ]
-  },
-  "ReturnCafeDailyToMainLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "ReturnCafeDailyToMainLoading",
-      "WaitCafeDailyReturnedToMain"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
-  "WaitCafeDailyReturnedToMain": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/coffee_room.png",
-    "threshold": 0.6,
-    "green_mask": true,
-    "timeout": 1000,
-    "next": [
-      "Stop"
-    ],
-    "on_error": [
-      "RetryReturnCafeDailyToMainAfterCheck"
-    ],
-    "roi": [
-      30,
-      600,
-      130,
-      120
-    ]
-  },
-  "RetryReturnCafeDailyToMainAfterCheck": {
-    "action": "Click",
-    "target": [
-      1237,
-      31
-    ],
-    "post_delay": 300,
-    "next": [
-      "ReturnCafeDailyToMainLoading",
-      "WaitCafeDailyReturnedToMainAfterRetry"
-    ]
-  },
-  "WaitCafeDailyReturnedToMainAfterRetry": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/coffee_room.png",
-    "threshold": 0.6,
-    "green_mask": true,
-    "timeout": 1000,
-    "next": [
-      "Stop"
-    ],
-    "on_error": [
-      "StopCafeDailyAfterReturnCheckTimeout"
-    ],
-    "roi": [
-      30,
-      600,
-      130,
-      120
-    ]
-  },
-  "StopCafeDailyAfterReturnCheckTimeout": {
-    "next": [
-      "Stop"
     ]
   }
 }

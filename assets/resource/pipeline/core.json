@@ -1,0 +1,10 @@
+{
+  "Start": {
+    "next": [
+      "JumpToMainUI"
+    ]
+  },
+  "Stop": {
+    "action": "StopTask"
+  }
+}

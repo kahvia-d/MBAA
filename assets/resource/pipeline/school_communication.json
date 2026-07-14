@@ -8,42 +8,12 @@
       "JumpToSchoolCommunication"
     ]
   },
-  "FromMainJumpToTasksSchoolCommunication": {
-    "recognition": "TemplateMatch",
-    "template": "main_ui/tasks.png",
-    "threshold": 0.58,
-    "action": "Click",
-    "post_wait_freezes": 600,
-    "next": [
-      "FromMainJumpToTasksSchoolCommunicationLoading",
-      "FromMainJumpToTasksSchoolCommunication",
-      "JumpToSchoolCommunication"
-    ],
-    "roi": [
-      1110,
-      485,
-      170,
-      160
-    ],
-    "green_mask": true
-  },
-  "FromMainJumpToTasksSchoolCommunicationLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "FromMainJumpToTasksSchoolCommunicationLoading",
-      "JumpToSchoolCommunication"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
-  },
   "JumpToSchoolCommunication": {
     "recognition": "TemplateMatch",
     "template": "tasks/school_communication.png",
     "threshold": 0.7,
     "action": "Click",
+    "max_hit": 3,
     "post_wait_freezes": 600,
     "next": [
       "[JumpBack]NavLoading",
@@ -52,19 +22,6 @@
     ],
     "timeout": 1200,
     "rate_limit": 150
-  },
-  "JumpToSchoolCommunicationLoading": {
-    "recognition": "TemplateMatch",
-    "template": "nav/loading.png",
-    "threshold": 0.7,
-    "post_wait_freezes": 300,
-    "next": [
-      "JumpToSchoolCommunicationLoading",
-      "JumpToSchoolCommunication",
-      "RunSchoolCommunicationSweepPlan"
-    ],
-    "timeout": 700,
-    "rate_limit": 100
   },
   "RunSchoolCommunicationSweepPlan": {
     "next": [
@@ -869,7 +826,7 @@
       "WaitSchoolCommunicationReturnedToTasks"
     ],
     "on_error": [
-      "Stop"
+      "NavReturnToMain"
     ]
   },
   "WaitSchoolCommunicationReturnedToTasks": {
@@ -877,7 +834,7 @@
     "template": "tasks/school_communication.png",
     "threshold": 0.7,
     "next": [
-      "Stop"
+      "NavReturnToMain"
     ]
   }
 }

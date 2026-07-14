@@ -1,0 +1,131 @@
+{
+  "interface": {
+    "interface_version": 2,
+    "name": "MBAA",
+    "description": "这是一个使用 MaaFramework 创建的新项目。",
+    "contact": "QQ群: 123456789",
+    "license": "MIT",
+    "welcome": "首次使用！欢迎使用 MBAA!",
+    "github": "https://github.com/kahvia-d/MBAA",
+    "version": "0.1.7",
+    "controller": [
+      {
+        "name": "安卓端",
+        "type": "Adb",
+        "display_short_side": 720
+      },
+      {
+        "name": "桌面端",
+        "type": "Win32",
+        "win32": {
+          "class_regex": ".*",
+          "window_regex": "Blue Archive",
+          "screencap": "PrintWindow",
+          "mouse": "PostMessageWithCursorPos",
+          "keyboard": "PostMessageWithCursorPos"
+        },
+        "display_short_side": 720
+      }
+    ],
+    "resource": [
+      {
+        "name": "官服",
+        "path": ["./resource"]
+      },
+      {
+        "name": "B 服",
+        "path": ["./resource"]
+      }
+    ],
+    "static_tasks": [
+      {"name": "社团签到", "entry": "StartClubCheckIn"},
+      {"name": "购买每日免费组合包", "entry": "StartDailyFreePyroxenePack"},
+      {"name": "信箱领取", "entry": "StartMailboxClaim"},
+      {"name": "咖啡厅日常", "entry": "StartCafeDaily", "option": ["咖啡厅功能"]}
+    ],
+    "cafe_option": {
+      "type": "select",
+      "default_case": "摸头和领取收益",
+      "cases": [
+        {"name": "摸头和领取收益", "headpat": true, "income": true, "cafe2": true},
+        {"name": "仅摸头", "headpat": true, "income": false, "cafe2": true},
+        {"name": "仅领取收益", "headpat": false, "income": true, "cafe2": false},
+        {"name": "全部跳过", "headpat": false, "income": false, "cafe2": false}
+      ]
+    }
+  },
+  "sweeps": [
+    {
+      "output": "assets/resource/pipeline/bounty.json",
+      "task_name": "悬赏通缉",
+      "entry": "StartBounty",
+      "root": "Bounty",
+      "flow_suffix": "Bounty",
+      "plan": "RunBountySweepPlan",
+      "task_template": "tasks/bounty.png",
+      "task_roi": [600, 320, 230, 150],
+      "jump_node": "JumpToBounty",
+      "return_node": "ReturnBountyListToTasks",
+      "returned_node": "WaitBountyReturnedToTasks",
+      "stage_count": 10,
+      "default_stage": 6,
+      "max_scroll": 12,
+      "categories": [
+        {"label": "高架公路", "prefix": "Road", "template": "bounty/road.png", "roi": [630, 130, 640, 140]},
+        {"label": "沙漠铁道", "prefix": "Railway", "template": "bounty/railway.png", "roi": [630, 250, 640, 140]},
+        {"label": "教室", "prefix": "Classroom", "template": "bounty/classroom.png", "roi": [630, 370, 640, 140]}
+      ]
+    },
+    {
+      "output": "assets/resource/pipeline/school_communication.json",
+      "task_name": "学园交流会",
+      "entry": "StartSchoolCommunication",
+      "root": "SchoolCommunication",
+      "flow_suffix": "Communication",
+      "plan": "RunSchoolCommunicationSweepPlan",
+      "task_template": "tasks/school_communication.png",
+      "task_roi": [590, 510, 250, 140],
+      "jump_node": "JumpToSchoolCommunication",
+      "return_node": "ReturnSchoolCommunicationListToTasks",
+      "returned_node": "WaitSchoolCommunicationReturnedToTasks",
+      "stage_count": 4,
+      "default_stage": 4,
+      "max_scroll": 6,
+      "categories": [
+        {"label": "三一", "prefix": "Trinity", "template": "school_communication/trinity.png", "roi": [630, 130, 640, 130]},
+        {"label": "格黑娜", "prefix": "Gehenna", "template": "school_communication/gehenna.png", "roi": [630, 245, 640, 130]},
+        {"label": "千禧", "prefix": "Millennium", "template": "school_communication/millennium.png", "roi": [630, 360, 640, 130]}
+      ]
+    }
+  ],
+  "shop": {
+    "output": "assets/resource/pipeline/shop.json",
+    "task_name": "商店购买",
+    "entry": "StartShopPurchase",
+    "columns": [648, 798, 948, 1100],
+    "visible_rows": [200, 449],
+    "categories": [
+      {
+        "label": "一般",
+        "prefix": "General",
+        "option_name": "一般商店商品",
+        "rows": 6,
+        "columns": 4,
+        "open": {"type": "coordinate", "target": [80, 140]}
+      },
+      {
+        "label": "战术大赛",
+        "prefix": "TacticalContest",
+        "option_name": "战术大赛商店商品",
+        "rows": 4,
+        "columns": 4,
+        "open": {
+          "type": "scroll_template",
+          "template": "shop/tactical_contest_tab.png",
+          "roi": [0, 230, 230, 130],
+          "fallback_target": [96, 348]
+        }
+      }
+    ]
+  }
+}

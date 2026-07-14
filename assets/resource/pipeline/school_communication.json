@@ -14,14 +14,20 @@
     "threshold": 0.7,
     "action": "Click",
     "max_hit": 3,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "[JumpBack]NavLoading",
       "JumpToSchoolCommunication",
       "RunSchoolCommunicationSweepPlan"
     ],
     "timeout": 1200,
-    "rate_limit": 150
+    "rate_limit": 150,
+    "roi": [
+      590,
+      510,
+      250,
+      140
+    ]
   },
   "RunSchoolCommunicationSweepPlan": {
     "next": [
@@ -48,11 +54,17 @@
     "template": "school_communication/trinity.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindTrinityCommunicationStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      130,
+      640,
+      130
+    ]
   },
   "FindTrinityCommunicationStage": {
     "timeout": 2000,
@@ -92,7 +104,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitTrinitySweepInfo"
     ]
@@ -116,18 +128,24 @@
   },
   "WaitTrinitySweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddTrinitySweepCount",
       "StartTrinitySweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddTrinitySweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -135,11 +153,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartTrinitySweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartTrinitySweep": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -149,11 +173,17 @@
     ],
     "on_error": [
       "CloseTrinityCommunicationInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmTrinitySweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -163,11 +193,17 @@
     ],
     "on_error": [
       "CloseTrinityCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitTrinitySweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -176,11 +212,17 @@
     ],
     "on_error": [
       "RetryConfirmTrinitySweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmTrinitySweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -190,11 +232,17 @@
     ],
     "on_error": [
       "CloseTrinityCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmTrinitySweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -207,11 +255,17 @@
     "timeout": 30000,
     "next": [
       "WaitTrinitySweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitTrinitySweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -220,11 +274,17 @@
     ],
     "on_error": [
       "RetryConfirmTrinitySweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmTrinitySweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -240,22 +300,34 @@
     ],
     "on_error": [
       "CloseTrinityCommunicationInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseTrinityCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitTrinityCommunicationInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitTrinityCommunicationInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -264,20 +336,32 @@
     ],
     "on_error": [
       "RetryCloseTrinityCommunicationInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseTrinityCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitTrinityCommunicationInfoClosed"
     ],
     "on_error": [
       "ReturnTrinityCommunicationListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnTrinityCommunicationListToCategory": {
@@ -286,7 +370,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "RunGehennaCommunication",
       "RunMillenniumCommunication",
@@ -310,11 +394,17 @@
     "template": "school_communication/gehenna.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindGehennaCommunicationStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      245,
+      640,
+      130
+    ]
   },
   "FindGehennaCommunicationStage": {
     "timeout": 2000,
@@ -354,7 +444,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitGehennaSweepInfo"
     ]
@@ -378,18 +468,24 @@
   },
   "WaitGehennaSweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddGehennaSweepCount",
       "StartGehennaSweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddGehennaSweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -397,11 +493,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartGehennaSweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartGehennaSweep": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -411,11 +513,17 @@
     ],
     "on_error": [
       "CloseGehennaCommunicationInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmGehennaSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -425,11 +533,17 @@
     ],
     "on_error": [
       "CloseGehennaCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitGehennaSweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -438,11 +552,17 @@
     ],
     "on_error": [
       "RetryConfirmGehennaSweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmGehennaSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -452,11 +572,17 @@
     ],
     "on_error": [
       "CloseGehennaCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmGehennaSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -469,11 +595,17 @@
     "timeout": 30000,
     "next": [
       "WaitGehennaSweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitGehennaSweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -482,11 +614,17 @@
     ],
     "on_error": [
       "RetryConfirmGehennaSweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmGehennaSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -502,22 +640,34 @@
     ],
     "on_error": [
       "CloseGehennaCommunicationInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseGehennaCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitGehennaCommunicationInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitGehennaCommunicationInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -526,20 +676,32 @@
     ],
     "on_error": [
       "RetryCloseGehennaCommunicationInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseGehennaCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitGehennaCommunicationInfoClosed"
     ],
     "on_error": [
       "ReturnGehennaCommunicationListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnGehennaCommunicationListToCategory": {
@@ -548,7 +710,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "RunMillenniumCommunication",
       "ReturnSchoolCommunicationListToTasks"
@@ -570,11 +732,17 @@
     "template": "school_communication/millennium.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindMillenniumCommunicationStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      360,
+      640,
+      130
+    ]
   },
   "FindMillenniumCommunicationStage": {
     "timeout": 2000,
@@ -614,7 +782,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitMillenniumSweepInfo"
     ]
@@ -638,18 +806,24 @@
   },
   "WaitMillenniumSweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddMillenniumSweepCount",
       "StartMillenniumSweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddMillenniumSweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -657,11 +831,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartMillenniumSweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartMillenniumSweep": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -671,11 +851,17 @@
     ],
     "on_error": [
       "CloseMillenniumCommunicationInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmMillenniumSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -685,11 +871,17 @@
     ],
     "on_error": [
       "CloseMillenniumCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitMillenniumSweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -698,11 +890,17 @@
     ],
     "on_error": [
       "RetryConfirmMillenniumSweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmMillenniumSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -712,11 +910,17 @@
     ],
     "on_error": [
       "CloseMillenniumCommunicationInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmMillenniumSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -729,11 +933,17 @@
     "timeout": 30000,
     "next": [
       "WaitMillenniumSweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitMillenniumSweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -742,11 +952,17 @@
     ],
     "on_error": [
       "RetryConfirmMillenniumSweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmMillenniumSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -762,22 +978,34 @@
     ],
     "on_error": [
       "CloseMillenniumCommunicationInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseMillenniumCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitMillenniumCommunicationInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitMillenniumCommunicationInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -786,20 +1014,32 @@
     ],
     "on_error": [
       "RetryCloseMillenniumCommunicationInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseMillenniumCommunicationInfo": {
     "recognition": "TemplateMatch",
-    "template": "school_communication/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitMillenniumCommunicationInfoClosed"
     ],
     "on_error": [
       "ReturnMillenniumCommunicationListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnMillenniumCommunicationListToCategory": {
@@ -808,7 +1048,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "ReturnSchoolCommunicationListToTasks"
     ],
@@ -820,7 +1060,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
       "WaitSchoolCommunicationReturnedToTasks"
@@ -835,6 +1075,12 @@
     "threshold": 0.7,
     "next": [
       "NavReturnToMain"
+    ],
+    "roi": [
+      590,
+      510,
+      250,
+      140
     ]
   }
 }

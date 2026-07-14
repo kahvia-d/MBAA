@@ -18,6 +18,12 @@
     "next": [
       "DailyCheckIn",
       "JumpToMainUI"
+    ],
+    "roi": [
+      320,
+      450,
+      640,
+      270
     ]
   },
   "DailyCheckIn": {
@@ -29,6 +35,12 @@
     "next": [
       "ActivityCheckIn",
       "JumpToMainUI"
+    ],
+    "roi": [
+      100,
+      80,
+      1080,
+      560
     ]
   },
   "ActivityCheckIn": {
@@ -40,6 +52,12 @@
     "next": [
       "JumpToMainUI",
       "CloseNews"
+    ],
+    "roi": [
+      100,
+      80,
+      1080,
+      560
     ]
   },
   "CloseNews": {
@@ -50,6 +68,12 @@
     "post_wait_freezes": 0,
     "next": [
       "JumpToMainUI"
+    ],
+    "roi": [
+      850,
+      40,
+      400,
+      300
     ]
   },
   "JumpToMainUISuccess": {

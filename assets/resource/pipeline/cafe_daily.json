@@ -66,7 +66,7 @@
     "threshold": 0.75,
     "action": "Click",
     "pre_wait_freezes": 200,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 12000,
     "next": [
       "WaitCafe1FirstEnterDialogClosed"
@@ -112,7 +112,7 @@
     "threshold": 0.75,
     "action": "Click",
     "pre_wait_freezes": 300,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 12000,
     "next": [
       "WaitCafe1FirstEnterDialogClosed"
@@ -306,7 +306,7 @@
       0,
       20
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1200,
     "next": [
       "WaitCafeIncomeWindowOpened"
@@ -352,7 +352,7 @@
       0,
       20
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1200,
     "next": [
       "WaitCafeIncomeWindowOpenedAfterRetry1"
@@ -398,7 +398,7 @@
       0,
       20
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1200,
     "next": [
       "WaitCafeIncomeWindowOpenedAfterRetry2"
@@ -437,7 +437,7 @@
     ],
     "threshold": 0.75,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitCafeIncomeRewardSuccess"
@@ -448,7 +448,7 @@
   },
   "WaitCafeIncomeRewardSuccess": {
     "recognition": "TemplateMatch",
-    "template": "cafe/reward_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -462,11 +462,17 @@
     ],
     "on_error": [
       "ContinueCafeIncomeAfterRewardTimeout"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "WaitCafeIncomeRewardSuccessClosed": {
     "recognition": "TemplateMatch",
-    "template": "cafe/reward_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -475,6 +481,12 @@
     ],
     "on_error": [
       "RetryCloseCafeIncomeRewardSuccess"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "RetryCloseCafeIncomeRewardSuccess": {
@@ -544,7 +556,7 @@
     ],
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitCafeIncomeWindowClosed"
@@ -708,7 +720,7 @@
     "threshold": 0.75,
     "action": "Click",
     "pre_wait_freezes": 200,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 12000,
     "next": [
       "WaitCafe2FirstEnterDialogClosed"
@@ -754,7 +766,7 @@
     "threshold": 0.75,
     "action": "Click",
     "pre_wait_freezes": 300,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 12000,
     "next": [
       "WaitCafe2FirstEnterDialogClosed"

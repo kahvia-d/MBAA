@@ -14,14 +14,20 @@
     "threshold": 0.7,
     "action": "Click",
     "max_hit": 3,
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "[JumpBack]NavLoading",
       "JumpToBounty",
       "RunBountySweepPlan"
     ],
     "timeout": 1200,
-    "rate_limit": 150
+    "rate_limit": 150,
+    "roi": [
+      600,
+      320,
+      230,
+      150
+    ]
   },
   "RunBountySweepPlan": {
     "next": [
@@ -48,11 +54,17 @@
     "template": "bounty/road.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindRoadBountyStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      130,
+      640,
+      140
+    ]
   },
   "FindRoadBountyStage": {
     "timeout": 2000,
@@ -92,7 +104,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitRoadSweepInfo"
     ]
@@ -116,18 +128,24 @@
   },
   "WaitRoadSweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddRoadSweepCount",
       "StartRoadSweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddRoadSweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -135,11 +153,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartRoadSweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartRoadSweep": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -149,11 +173,17 @@
     ],
     "on_error": [
       "CloseRoadBountyInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmRoadSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -163,11 +193,17 @@
     ],
     "on_error": [
       "CloseRoadBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitRoadSweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -176,11 +212,17 @@
     ],
     "on_error": [
       "RetryConfirmRoadSweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmRoadSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -190,11 +232,17 @@
     ],
     "on_error": [
       "CloseRoadBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmRoadSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -207,11 +255,17 @@
     "timeout": 30000,
     "next": [
       "WaitRoadSweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitRoadSweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -220,11 +274,17 @@
     ],
     "on_error": [
       "RetryConfirmRoadSweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmRoadSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -240,22 +300,34 @@
     ],
     "on_error": [
       "CloseRoadBountyInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseRoadBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitRoadBountyInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitRoadBountyInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -264,20 +336,32 @@
     ],
     "on_error": [
       "RetryCloseRoadBountyInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseRoadBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitRoadBountyInfoClosed"
     ],
     "on_error": [
       "ReturnRoadBountyListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnRoadBountyListToCategory": {
@@ -286,7 +370,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "RunRailwayBounty",
       "RunClassroomBounty",
@@ -310,11 +394,17 @@
     "template": "bounty/railway.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindRailwayBountyStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      250,
+      640,
+      140
+    ]
   },
   "FindRailwayBountyStage": {
     "timeout": 2000,
@@ -354,7 +444,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitRailwaySweepInfo"
     ]
@@ -378,18 +468,24 @@
   },
   "WaitRailwaySweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddRailwaySweepCount",
       "StartRailwaySweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddRailwaySweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -397,11 +493,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartRailwaySweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartRailwaySweep": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -411,11 +513,17 @@
     ],
     "on_error": [
       "CloseRailwayBountyInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmRailwaySweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -425,11 +533,17 @@
     ],
     "on_error": [
       "CloseRailwayBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitRailwaySweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -438,11 +552,17 @@
     ],
     "on_error": [
       "RetryConfirmRailwaySweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmRailwaySweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -452,11 +572,17 @@
     ],
     "on_error": [
       "CloseRailwayBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmRailwaySweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -469,11 +595,17 @@
     "timeout": 30000,
     "next": [
       "WaitRailwaySweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitRailwaySweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -482,11 +614,17 @@
     ],
     "on_error": [
       "RetryConfirmRailwaySweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmRailwaySweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -502,22 +640,34 @@
     ],
     "on_error": [
       "CloseRailwayBountyInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseRailwayBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitRailwayBountyInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitRailwayBountyInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -526,20 +676,32 @@
     ],
     "on_error": [
       "RetryCloseRailwayBountyInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseRailwayBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitRailwayBountyInfoClosed"
     ],
     "on_error": [
       "ReturnRailwayBountyListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnRailwayBountyListToCategory": {
@@ -548,7 +710,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "RunClassroomBounty",
       "ReturnBountyListToTasks"
@@ -570,11 +732,17 @@
     "template": "bounty/classroom.png",
     "threshold": 0.7,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "FindClassroomBountyStage"
     ],
-    "timeout": 1500
+    "timeout": 1500,
+    "roi": [
+      630,
+      370,
+      640,
+      140
+    ]
   },
   "FindClassroomBountyStage": {
     "timeout": 2000,
@@ -614,7 +782,7 @@
       75,
       35
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitClassroomSweepInfo"
     ]
@@ -638,18 +806,24 @@
   },
   "WaitClassroomSweepInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "timeout": 3000,
     "next": [
       "AddClassroomSweepCount",
       "StartClassroomSweep"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "AddClassroomSweepCount": {
     "enabled": false,
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_plus.png",
+    "template": "common/sweep_plus.png",
     "threshold": 0.8,
     "action": "Click",
     "repeat": 1,
@@ -657,11 +831,17 @@
     "post_wait_freezes": 300,
     "next": [
       "StartClassroomSweep"
+    ],
+    "roi": [
+      950,
+      235,
+      130,
+      120
     ]
   },
   "StartClassroomSweep": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start.png",
+    "template": "common/sweep_start.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -671,11 +851,17 @@
     ],
     "on_error": [
       "CloseClassroomBountyInfo"
+    ],
+    "roi": [
+      700,
+      335,
+      470,
+      130
     ]
   },
   "ConfirmClassroomSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -685,11 +871,17 @@
     ],
     "on_error": [
       "CloseClassroomBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "WaitClassroomSweepStartConfirmClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -698,11 +890,17 @@
     ],
     "on_error": [
       "RetryConfirmClassroomSweepStart"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "RetryConfirmClassroomSweepStart": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_start_confirm.png",
+    "template": "common/sweep_start_confirm.png",
     "threshold": 0.8,
     "action": "Click",
     "post_wait_freezes": 500,
@@ -712,11 +910,17 @@
     ],
     "on_error": [
       "CloseClassroomBountyInfo"
+    ],
+    "roi": [
+      600,
+      430,
+      340,
+      140
     ]
   },
   "ConfirmClassroomSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -729,11 +933,17 @@
     "timeout": 30000,
     "next": [
       "WaitClassroomSweepCompleteClosed"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "WaitClassroomSweepCompleteClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1200,
@@ -742,11 +952,17 @@
     ],
     "on_error": [
       "RetryConfirmClassroomSweepComplete"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "RetryConfirmClassroomSweepComplete": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_complete_final.png",
+    "template": "common/sweep_complete_final.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -762,22 +978,34 @@
     ],
     "on_error": [
       "CloseClassroomBountyInfo"
+    ],
+    "roi": [
+      160,
+      410,
+      950,
+      130
     ]
   },
   "CloseClassroomBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "WaitClassroomBountyInfoClosed"
     ],
-    "timeout": 2000
+    "timeout": 2000,
+    "roi": [
+      1040,
+      50,
+      150,
+      140
+    ]
   },
   "WaitClassroomBountyInfoClosed": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -786,20 +1014,32 @@
     ],
     "on_error": [
       "RetryCloseClassroomBountyInfo"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "RetryCloseClassroomBountyInfo": {
     "recognition": "TemplateMatch",
-    "template": "bounty/sweep_info_close.png",
+    "template": "common/sweep_info_close.png",
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitClassroomBountyInfoClosed"
     ],
     "on_error": [
       "ReturnClassroomBountyListToCategory"
+    ],
+    "roi": [
+      1040,
+      50,
+      150,
+      140
     ]
   },
   "ReturnClassroomBountyListToCategory": {
@@ -808,7 +1048,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "next": [
       "ReturnBountyListToTasks"
     ],
@@ -820,7 +1060,7 @@
       56,
       37
     ],
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
       "WaitBountyReturnedToTasks"
@@ -835,6 +1075,12 @@
     "threshold": 0.7,
     "next": [
       "NavReturnToMain"
+    ],
+    "roi": [
+      600,
+      320,
+      230,
+      150
     ]
   }
 }

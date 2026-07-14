@@ -32,7 +32,7 @@
       901,
       181
     ],
-    "post_wait_freezes": 700,
+    "post_wait_freezes": 500,
     "next": [
       "WaitDailyFreePyroxenePackBundleTabOpened"
     ]
@@ -91,7 +91,7 @@
     ],
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 3000,
     "next": [
       "WaitDailyFreePyroxenePackPurchaseDialogClosed"
@@ -130,7 +130,7 @@
     ],
     "threshold": 0.8,
     "action": "Click",
-    "post_wait_freezes": 600,
+    "post_wait_freezes": 500,
     "timeout": 1500,
     "next": [
       "WaitDailyFreePyroxenePackPurchaseDialogClosed"
@@ -141,7 +141,7 @@
   },
   "WaitDailyFreePyroxenePackPurchaseSuccess": {
     "recognition": "TemplateMatch",
-    "template": "pyroxene_purchase/purchase_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -155,11 +155,17 @@
     ],
     "on_error": [
       "ContinueDailyFreePyroxenePackAfterSuccessTimeout"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "WaitDailyFreePyroxenePackPurchaseSuccessClosed": {
     "recognition": "TemplateMatch",
-    "template": "pyroxene_purchase/purchase_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -168,6 +174,12 @@
     ],
     "on_error": [
       "RetryCloseDailyFreePyroxenePackPurchaseSuccess"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "RetryCloseDailyFreePyroxenePackPurchaseSuccess": {
@@ -214,7 +226,7 @@
       1010,
       112
     ],
-    "post_wait_freezes": 700,
+    "post_wait_freezes": 500,
     "next": [
       "WaitDailyFreePyroxenePackWindowClosed"
     ]
@@ -244,7 +256,7 @@
       1010,
       112
     ],
-    "post_wait_freezes": 700,
+    "post_wait_freezes": 500,
     "next": [
       "WaitDailyFreePyroxenePackWindowClosedAfterForce"
     ]

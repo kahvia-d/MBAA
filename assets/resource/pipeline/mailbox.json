@@ -54,7 +54,7 @@
   },
   "WaitMailboxClaimRewardSuccess": {
     "recognition": "TemplateMatch",
-    "template": "mail/reward_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "action": "Click",
     "target": [
@@ -68,11 +68,17 @@
     ],
     "on_error": [
       "ContinueMailboxClaimAfterRewardTimeout"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "WaitMailboxClaimRewardSuccessClosed": {
     "recognition": "TemplateMatch",
-    "template": "mail/reward_success.png",
+    "template": "common/reward_success.png",
     "threshold": 0.8,
     "inverse": true,
     "timeout": 1000,
@@ -81,6 +87,12 @@
     ],
     "on_error": [
       "RetryCloseMailboxClaimRewardSuccess"
+    ],
+    "roi": [
+      350,
+      60,
+      580,
+      220
     ]
   },
   "RetryCloseMailboxClaimRewardSuccess": {

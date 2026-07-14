@@ -45,6 +45,15 @@
 
     开始编写 Pipeline 前，请先阅读本项目的 [Pipeline 开发规范与最佳实践](./pipeline_best_practices.md)，尤其注意 `timeout`、有限重试、弹窗关闭验证和返回主界面约束。
 
+    `bounty.json`、`school_communication.json`、`shop.json` 和 `assets/interface.json` 是生成文件。修改这些任务时应编辑 `tools/resource_specs/resources.json` 和生成器，不要直接修改生成结果：
+
+    ```bash
+    python tools/generate_resources.py --write
+    python tools/generate_resources.py --check
+    python tools/check_pipeline.py
+    python tools/check_docs.py
+    ```
+
     通常来说，您**不需要**为您的项目单独开发一套 UI ，本模板附带了自动配置 _通用 UI_ 的持续集成（CI），使用方法请参考后续步骤。
 
 4. 完成开发后，上传您的代码并发布版本。

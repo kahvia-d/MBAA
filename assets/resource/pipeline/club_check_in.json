@@ -37,6 +37,7 @@
     ],
     "threshold": 0.65,
     "action": "Click",
+    "max_hit": 3,
     "post_wait_freezes": 500,
     "next": [
       "OpenClubLoading",
@@ -51,7 +52,6 @@
     "threshold": 0.7,
     "post_wait_freezes": 300,
     "next": [
-      "OpenClubLoading",
       "WaitClubPageOpened"
     ],
     "timeout": 700,

@@ -1,0 +1,18 @@
+{
+  "interface_version": 2,
+  "name": "MBAA Resource Check",
+  "controller": [
+    {
+      "name": "检查控制器",
+      "type": "Adb",
+      "display_short_side": 720
+    }
+  ],
+  "resource": [
+    {
+      "name": "检查资源",
+      "path": ["./resource"]
+    }
+  ],
+  "import": ["interface.json"]
+}

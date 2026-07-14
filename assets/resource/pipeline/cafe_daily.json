@@ -633,6 +633,7 @@
   },
   "SwitchCafeDailyToCafe2": {
     "action": "Click",
+    "max_hit": 3,
     "target": [
       125,
       103
@@ -651,7 +652,6 @@
     "threshold": 0.7,
     "post_wait_freezes": 300,
     "next": [
-      "SwitchCafeDailyToCafe2Loading",
       "DetectCafe2FirstEnterDialog",
       "WaitCafe2DailyOpened"
     ],

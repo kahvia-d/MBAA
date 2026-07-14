@@ -2,8 +2,8 @@
 {
   "interface_version": 2,
   "name": "MBAA",
-  "description": "这是一个使用 MaaFramework 创建的新项目。",
-  "contact": "QQ群: 123456789",
+  "description": "基于 MaaFramework 的蔚蓝档案日常自动化项目。",
+  "contact": "https://github.com/kahvia-d/MBAA/issues",
   "license": "MIT",
   "welcome": "首次使用！欢迎使用 MBAA!",
   "github": "https://github.com/kahvia-d/MBAA",

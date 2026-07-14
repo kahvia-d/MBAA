@@ -7,14 +7,26 @@ on:
     paths:
       - ".github/workflows/check.yml"
       - "assets/**"
-      - "**.py"
+      - "deps/tools/*.schema.json"
+      - "docs/**"
+      - "tools/**"
+      - "README.md"
+      - "maatools.config.mts"
+      - "package.json"
+      - "package-lock.json"
   pull_request:
     branches:
       - "**"
     paths:
       - ".github/workflows/check.yml"
       - "assets/**"
-      - "**.py"
+      - "deps/tools/*.schema.json"
+      - "docs/**"
+      - "tools/**"
+      - "README.md"
+      - "maatools.config.mts"
+      - "package.json"
+      - "package-lock.json"
   workflow_dispatch:
 
 jobs:
@@ -30,17 +42,22 @@ jobs:
         with:
           node-version: 22
 
-      - name: Run maa-checker
-        run: |
-          npm ci
-          npx @nekosu/maa-tools check
+      - name: Install Node dependencies
+        run: npm ci
 
-      - name: Install maafw
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade maafw --pre
+      - name: Run maa-tools checker
+        run: npx @nekosu/maa-tools check
+
+      - name: Check generated resources
+        run: python tools/generate_resources.py --check
+
+      - name: Check Pipeline graph
+        run: python tools/check_pipeline.py
 
       - name: Validate JSON Schema
         run: |
           python -m pip install jsonschema==4.26.0 referencing==0.37.0
-          python tools/validate_schema.py --schema-dir deps/tools --resource-dirs assets/resource --exclude-dirs assets/resource/announcement --interface-files assets/interface.json
+          python tools/validate_schema.py --schema-dir deps/tools --resource-dirs assets/resource --interface-files assets/interface.json assets/interface.check.json
+
+      - name: Check documentation
+        run: python tools/check_docs.py

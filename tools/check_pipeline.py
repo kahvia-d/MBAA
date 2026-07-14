@@ -98,7 +98,7 @@ def visit_recognition_objects(value: Any, callback: Any) -> None:
         for item in value:
             visit_recognition_objects(item, callback)
     elif isinstance(value, dict):
-        if value.get("recognition") == "TemplateMatch":
+        if value.get("recognition") in {"TemplateMatch", "FeatureMatch"}:
             callback(value)
         for child in value.values():
             visit_recognition_objects(child, callback)
@@ -162,16 +162,23 @@ def main() -> int:
                 errors.append(f"{name}: unlimited direct self-loop {raw_route}")
 
         def check_template(recognition: dict[str, Any]) -> None:
+            recognition_type = recognition.get("recognition")
             raw_templates = recognition.get("template", [])
             templates = raw_templates if isinstance(raw_templates, list) else [raw_templates]
             for template in templates:
                 if not isinstance(template, str):
                     errors.append(f"{name}: non-string template value")
                     continue
-                if not (IMAGE_DIR / template).is_file():
+                template_path = IMAGE_DIR / template
+                exists = (
+                    template_path.exists()
+                    if recognition_type == "FeatureMatch"
+                    else template_path.is_file()
+                )
+                if not exists:
                     errors.append(f"{name}: missing template {template}")
                 if "roi" not in recognition and template not in FULLSCREEN_TEMPLATE_ALLOWLIST:
-                    errors.append(f"{name}: TemplateMatch {template} has no ROI")
+                    errors.append(f"{name}: {recognition_type} {template} has no ROI")
 
         visit_recognition_objects(node, check_template)
 

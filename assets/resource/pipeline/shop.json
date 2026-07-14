@@ -253,9 +253,9 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
-      "WaitGeneralShopPurchaseSuccessPage1"
+      "WaitGeneralShopPurchaseRewardPage1"
     ],
     "on_error": [
       "RetryConfirmGeneralShopPurchasePage1"
@@ -298,9 +298,28 @@
       "ScrollGeneralShopGoodsToPage2"
     ]
   },
+  "WaitGeneralShopPurchaseRewardPage1": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_success.png",
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "WaitGeneralShopPurchaseSuccessPage1"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage1"
+    ]
+  },
   "WaitGeneralShopPurchaseSuccessPage1": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success_continue.png",
+    "template": "common/reward_continue.png",
     "roi": [
       480,
       590,
@@ -314,7 +333,7 @@
       632
     ],
     "post_wait_freezes": 800,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage1Closed"
     ],
@@ -333,36 +352,37 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "ScrollGeneralShopGoodsToPage2"
-    ],
-    "on_error": [
-      "RetryCloseGeneralShopPurchaseSuccessPage1"
     ]
   },
   "RetryCloseGeneralShopPurchaseSuccessPage1": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
       632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage1Closed"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage1"
     ]
   },
   "ScrollGeneralShopGoodsToPage2": {
     "action": "Swipe",
     "begin": [
-      960,
-      650
+      1180,
+      580
     ],
     "end": [
-      960,
-      250
+      1180,
+      80
     ],
-    "duration": 500,
+    "duration": 700,
     "post_wait_freezes": 500,
     "next": [
       "GeneralShopPage2Item1"
@@ -564,9 +584,9 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
-      "WaitGeneralShopPurchaseSuccessPage2"
+      "WaitGeneralShopPurchaseRewardPage2"
     ],
     "on_error": [
       "RetryConfirmGeneralShopPurchasePage2"
@@ -609,9 +629,28 @@
       "ScrollGeneralShopGoodsToPage3"
     ]
   },
+  "WaitGeneralShopPurchaseRewardPage2": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_success.png",
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "WaitGeneralShopPurchaseSuccessPage2"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage2"
+    ]
+  },
   "WaitGeneralShopPurchaseSuccessPage2": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success_continue.png",
+    "template": "common/reward_continue.png",
     "roi": [
       480,
       590,
@@ -625,7 +664,7 @@
       632
     ],
     "post_wait_freezes": 800,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage2Closed"
     ],
@@ -644,36 +683,37 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "ScrollGeneralShopGoodsToPage3"
-    ],
-    "on_error": [
-      "RetryCloseGeneralShopPurchaseSuccessPage2"
     ]
   },
   "RetryCloseGeneralShopPurchaseSuccessPage2": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
       632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage2Closed"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage2"
     ]
   },
   "ScrollGeneralShopGoodsToPage3": {
     "action": "Swipe",
     "begin": [
-      960,
-      650
+      1180,
+      580
     ],
     "end": [
-      960,
-      250
+      1180,
+      80
     ],
-    "duration": 500,
+    "duration": 700,
     "post_wait_freezes": 500,
     "next": [
       "GeneralShopPage3Item1"
@@ -877,9 +917,9 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
-      "WaitGeneralShopPurchaseSuccessPage3"
+      "WaitGeneralShopPurchaseRewardPage3"
     ],
     "on_error": [
       "RetryConfirmGeneralShopPurchasePage3"
@@ -923,9 +963,28 @@
       "ReturnShopToMain"
     ]
   },
+  "WaitGeneralShopPurchaseRewardPage3": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_success.png",
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "WaitGeneralShopPurchaseSuccessPage3"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage3"
+    ]
+  },
   "WaitGeneralShopPurchaseSuccessPage3": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success_continue.png",
+    "template": "common/reward_continue.png",
     "roi": [
       480,
       590,
@@ -939,7 +998,7 @@
       632
     ],
     "post_wait_freezes": 800,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage3Closed"
     ],
@@ -958,24 +1017,25 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "RunTacticalContestShopPurchase",
       "ReturnShopToMain"
-    ],
-    "on_error": [
-      "RetryCloseGeneralShopPurchaseSuccessPage3"
     ]
   },
   "RetryCloseGeneralShopPurchaseSuccessPage3": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
       632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitGeneralShopPurchaseSuccessPage3Closed"
+    ],
+    "on_error": [
+      "RetryCloseGeneralShopPurchaseSuccessPage3"
     ]
   },
   "RunTacticalContestShopPurchase": {
@@ -1232,9 +1292,9 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
-      "WaitTacticalContestShopPurchaseSuccessPage1"
+      "WaitTacticalContestShopPurchaseRewardPage1"
     ],
     "on_error": [
       "RetryConfirmTacticalContestShopPurchasePage1"
@@ -1277,9 +1337,28 @@
       "ScrollTacticalContestShopGoodsToPage2"
     ]
   },
+  "WaitTacticalContestShopPurchaseRewardPage1": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_success.png",
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "WaitTacticalContestShopPurchaseSuccessPage1"
+    ],
+    "on_error": [
+      "RetryCloseTacticalContestShopPurchaseSuccessPage1"
+    ]
+  },
   "WaitTacticalContestShopPurchaseSuccessPage1": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success_continue.png",
+    "template": "common/reward_continue.png",
     "roi": [
       480,
       590,
@@ -1293,7 +1372,7 @@
       632
     ],
     "post_wait_freezes": 800,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage1Closed"
     ],
@@ -1312,36 +1391,37 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "ScrollTacticalContestShopGoodsToPage2"
-    ],
-    "on_error": [
-      "RetryCloseTacticalContestShopPurchaseSuccessPage1"
     ]
   },
   "RetryCloseTacticalContestShopPurchaseSuccessPage1": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
       632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage1Closed"
+    ],
+    "on_error": [
+      "RetryCloseTacticalContestShopPurchaseSuccessPage1"
     ]
   },
   "ScrollTacticalContestShopGoodsToPage2": {
     "action": "Swipe",
     "begin": [
-      960,
-      650
+      1180,
+      580
     ],
     "end": [
-      960,
-      250
+      1180,
+      80
     ],
-    "duration": 500,
+    "duration": 700,
     "post_wait_freezes": 500,
     "next": [
       "TacticalContestShopPage2Item1"
@@ -1543,9 +1623,9 @@
     "template": "shop/purchase_confirm.png",
     "threshold": 0.8,
     "inverse": true,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
-      "WaitTacticalContestShopPurchaseSuccessPage2"
+      "WaitTacticalContestShopPurchaseRewardPage2"
     ],
     "on_error": [
       "RetryConfirmTacticalContestShopPurchasePage2"
@@ -1588,9 +1668,28 @@
       "ReturnShopToMain"
     ]
   },
+  "WaitTacticalContestShopPurchaseRewardPage2": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_success.png",
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "WaitTacticalContestShopPurchaseSuccessPage2"
+    ],
+    "on_error": [
+      "RetryCloseTacticalContestShopPurchaseSuccessPage2"
+    ]
+  },
   "WaitTacticalContestShopPurchaseSuccessPage2": {
     "recognition": "TemplateMatch",
-    "template": "shop/purchase_success_continue.png",
+    "template": "common/reward_continue.png",
     "roi": [
       480,
       590,
@@ -1604,7 +1703,7 @@
       632
     ],
     "post_wait_freezes": 800,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage2Closed"
     ],
@@ -1623,23 +1722,24 @@
     ],
     "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "ReturnShopToMain"
-    ],
-    "on_error": [
-      "RetryCloseTacticalContestShopPurchaseSuccessPage2"
     ]
   },
   "RetryCloseTacticalContestShopPurchaseSuccessPage2": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
       632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitTacticalContestShopPurchaseSuccessPage2Closed"
+    ],
+    "on_error": [
+      "RetryCloseTacticalContestShopPurchaseSuccessPage2"
     ]
   },
   "ReturnShopToMain": {

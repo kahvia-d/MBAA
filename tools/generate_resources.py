@@ -319,6 +319,7 @@ def add_shop_page(
     wait_confirm = f"Wait{prefix}ShopPurchaseConfirmPage{page}Closed"
     retry_confirm = f"RetryConfirm{prefix}ShopPurchasePage{page}"
     cancel = f"Cancel{prefix}ShopPurchasePage{page}"
+    wait_reward = f"Wait{prefix}ShopPurchaseRewardPage{page}"
     wait_success = f"Wait{prefix}ShopPurchaseSuccessPage{page}"
     wait_success_closed = f"Wait{prefix}ShopPurchaseSuccessPage{page}Closed"
     retry_success = f"RetryClose{prefix}ShopPurchaseSuccessPage{page}"
@@ -352,8 +353,8 @@ def add_shop_page(
         "template": "shop/purchase_confirm.png",
         "threshold": 0.8,
         "inverse": True,
-        "timeout": 1200,
-        "next": [wait_success],
+        "timeout": spec["reward_page_open_timeout"],
+        "next": [wait_reward],
         "on_error": [retry_confirm],
         "roi": [600, 450, 340, 170],
     }
@@ -374,15 +375,25 @@ def add_shop_page(
         "post_wait_freezes": 500,
         "next": continuation,
     }
+    out[wait_reward] = {
+        "recognition": "TemplateMatch",
+        "template": "common/reward_success.png",
+        "roi": [430, 95, 450, 170],
+        "threshold": 0.7,
+        "timeout": spec["reward_animation_timeout"],
+        "rate_limit": 250,
+        "next": [wait_success],
+        "on_error": [retry_success],
+    }
     out[wait_success] = {
         "recognition": "TemplateMatch",
-        "template": "shop/purchase_success_continue.png",
+        "template": "common/reward_continue.png",
         "roi": [480, 590, 330, 80],
         "threshold": 0.75,
         "action": "Click",
         "target": [640, 632],
         "post_wait_freezes": 800,
-        "timeout": 12000,
+        "timeout": 3000,
         "next": [wait_success_closed],
         "on_error": [retry_success],
     }
@@ -392,24 +403,26 @@ def add_shop_page(
         "roi": [430, 95, 450, 170],
         "threshold": 0.7,
         "inverse": True,
-        "timeout": 1000,
         "next": continuation,
-        "on_error": [retry_success],
     }
     out[retry_success] = {
+        "max_hit": 5,
         "action": "Click",
         "target": [640, 632],
         "post_wait_freezes": 800,
+        "timeout": 2000,
         "next": [wait_success_closed],
+        "on_error": [retry_success],
     }
 
     pages = (category["rows"] + 1) // 2
     if page < pages:
+        scroll = spec["goods_scroll"]
         out[continuation[0]] = {
             "action": "Swipe",
-            "begin": [960, 650],
-            "end": [960, 250],
-            "duration": 500,
+            "begin": scroll["begin"],
+            "end": scroll["end"],
+            "duration": scroll["duration"],
             "post_wait_freezes": 500,
             "next": [f"{prefix}ShopPage{page + 1}Item1"],
         }
@@ -500,6 +513,611 @@ def generate_shop(spec: dict[str, Any]) -> OrderedDict[str, Any]:
             add_shop_page(out, spec, category, index, page)
 
     out["ReturnShopToMain"] = {"next": ["NavReturnToMain"]}
+    return out
+
+
+def schedule_candidate_gate(round_prefix: str, index: int) -> str:
+    return f"{round_prefix}ScheduleCandidate{index}Plan"
+
+
+def add_schedule_candidate(
+    out: OrderedDict[str, Any],
+    spec: dict[str, Any],
+    round_prefix: str,
+    candidate_kind: str,
+    index: int,
+    candidate_count: int,
+    finish_node: str,
+) -> None:
+    templates = spec["templates"]
+    roi = spec["roi"]
+    prefix = f"{round_prefix}ScheduleCandidate{index}"
+    gate = schedule_candidate_gate(round_prefix, index)
+    next_gate = (
+        schedule_candidate_gate(round_prefix, index + 1)
+        if index + 1 < candidate_count
+        else finish_node
+    )
+    find = f"Find{prefix}"
+    verify_heart = f"Verify{prefix}Heart"
+    verify_available = f"Verify{prefix}NotCompleted"
+    wait_info = f"Wait{prefix}InfoOpened"
+    retry_open = f"RetryOpen{prefix}Info"
+    click_start = f"Start{prefix}Lesson"
+    retry_start1 = f"RetryStart{prefix}Lesson1"
+    retry_start2 = f"RetryStart{prefix}Lesson2"
+    report_visible = f"Wait{prefix}Report"
+    confirm_report = f"Confirm{prefix}Report"
+    wait_report_closed = f"Wait{prefix}ReportClosed"
+    retry_report1 = f"RetryConfirm{prefix}Report1"
+    retry_report2 = f"RetryConfirm{prefix}Report2"
+    close_bond = f"Close{prefix}BondLevelUp"
+    wait_bond_closed = f"Wait{prefix}BondLevelUpClosed"
+    retry_bond1 = f"RetryClose{prefix}BondLevelUp1"
+    retry_bond2 = f"RetryClose{prefix}BondLevelUp2"
+    wait_after_report = f"Wait{prefix}AllScheduleAfterReport"
+    close_info = f"Close{prefix}UnavailableInfo"
+    wait_info_closed = f"Wait{prefix}InfoClosed"
+    retry_close_info = f"RetryClose{prefix}Info"
+    wait_after_info = f"Wait{prefix}AllScheduleAfterInfo"
+
+    out[gate] = {
+        "timeout": 1000,
+        "next": ["ScheduleTicketsEmpty", find, finish_node],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+
+    if candidate_kind == "special":
+        out[find] = {
+            "recognition": "FeatureMatch",
+            "template": spec["special_student_dir"],
+            "roi": roi["students"],
+            "count": 5,
+            "ratio": 0.72,
+            "detector": "SIFT",
+            "order_by": "Vertical",
+            "index": index,
+            "timeout": 800,
+            "next": [verify_heart],
+            "on_error": [next_gate],
+        }
+        out[verify_heart] = {
+            "recognition": "TemplateMatch",
+            "template": templates["heart"],
+            "roi": find,
+            "roi_offset": [-8, -8, 35, 35],
+            "threshold": spec["special_heart_threshold"],
+            "green_mask": True,
+            "timeout": 800,
+            "next": [verify_available],
+            "on_error": [next_gate],
+        }
+        completed_roi = find
+        completed_offset = [-8, -8, 35, 35]
+        click_target = find
+        click_offset = None
+    else:
+        out[find] = {
+            "recognition": "TemplateMatch",
+            "template": templates["heart"],
+            "roi": roi["students"],
+            "threshold": spec["heart_threshold"],
+            "green_mask": True,
+            "order_by": "Vertical",
+            "index": index,
+            "timeout": 800,
+            "next": [verify_available],
+            "on_error": [next_gate],
+        }
+        completed_roi = find
+        completed_offset = [-5, -42, 12, 45]
+        click_target = find
+        click_offset = [-34, -18, 0, 0]
+
+    verify_node: dict[str, Any] = {
+        "recognition": "TemplateMatch",
+        "template": templates["completed_check"],
+        "roi": completed_roi,
+        "roi_offset": completed_offset,
+        "threshold": 0.65,
+        "green_mask": True,
+        "inverse": True,
+        "action": "Click",
+        "target": click_target,
+        "post_wait_freezes": 300,
+        "timeout": 3000,
+        "next": [wait_info],
+        "on_error": [retry_open],
+    }
+    if click_offset is not None:
+        verify_node["target_offset"] = click_offset
+    out[verify_available] = verify_node
+
+    out[retry_open] = {
+        "action": "Click",
+        "target": click_target,
+        "post_wait_freezes": 300,
+        "timeout": 3000,
+        "next": [wait_info],
+        "on_error": [close_info],
+    }
+    if click_offset is not None:
+        out[retry_open]["target_offset"] = click_offset
+
+    out[wait_info] = {
+        "recognition": "TemplateMatch",
+        "template": templates["info_title"],
+        "roi": roi["info_title"],
+        "threshold": 0.75,
+        "timeout": 3000,
+        "next": [click_start],
+        "on_error": [close_info],
+    }
+    out[click_start] = {
+        "recognition": "TemplateMatch",
+        "template": templates["start_button"],
+        "roi": roi["start_button"],
+        "threshold": 0.75,
+        "action": "Click",
+        "post_wait_freezes": 500,
+        "timeout": 10000,
+        "next": [close_bond, report_visible, "[JumpBack]NavLoading", retry_start1],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[retry_start1] = {
+        "recognition": "TemplateMatch",
+        "template": templates["start_button"],
+        "roi": roi["start_button"],
+        "threshold": 0.75,
+        "action": "Click",
+        "post_wait_freezes": 500,
+        "timeout": 10000,
+        "next": [close_bond, report_visible, "[JumpBack]NavLoading", retry_start2],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[retry_start2] = {
+        "recognition": "TemplateMatch",
+        "template": templates["start_button"],
+        "roi": roi["start_button"],
+        "threshold": 0.75,
+        "action": "Click",
+        "post_wait_freezes": 500,
+        "timeout": 10000,
+        "next": [close_bond, report_visible, "[JumpBack]NavLoading"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[report_visible] = {
+        "recognition": "TemplateMatch",
+        "template": templates["report_title"],
+        "roi": roi["report_title"],
+        "threshold": 0.75,
+        "timeout": 15000,
+        "next": [confirm_report],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[confirm_report] = {
+        "recognition": "TemplateMatch",
+        "template": templates["report_confirm"],
+        "roi": roi["report_confirm"],
+        "threshold": 0.75,
+        "action": "Click",
+        "post_wait_freezes": 700,
+        "timeout": 2500,
+        "next": [wait_report_closed],
+        "on_error": [retry_report1],
+    }
+    out[wait_report_closed] = {
+        "recognition": "TemplateMatch",
+        "template": templates["report_title"],
+        "roi": roi["report_title"],
+        "threshold": 0.75,
+        "inverse": True,
+        "timeout": 3000,
+        "next": [wait_after_report],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[retry_report1] = {
+        "action": "Click",
+        "target": [640, 555],
+        "post_wait_freezes": 700,
+        "timeout": 2500,
+        "next": [wait_report_closed],
+        "on_error": [retry_report2],
+    }
+    out[retry_report2] = {
+        "action": "Click",
+        "target": [640, 555],
+        "post_wait_freezes": 700,
+        "timeout": 2500,
+        "next": [wait_report_closed],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[close_bond] = {
+        "recognition": "TemplateMatch",
+        "template": templates["bond_level_up_title"],
+        "roi": roi["bond_level_up_title"],
+        "threshold": 0.7,
+        "action": "Click",
+        "target": [640, 650],
+        "post_delay": 500,
+        "timeout": 1200,
+        "next": [wait_bond_closed],
+        "on_error": [retry_bond1],
+    }
+    out[wait_bond_closed] = {
+        "recognition": "TemplateMatch",
+        "template": templates["bond_level_up_title"],
+        "roi": roi["bond_level_up_title"],
+        "threshold": 0.7,
+        "inverse": True,
+        "timeout": 15000,
+        "rate_limit": 200,
+        "next": [report_visible, "[JumpBack]NavLoading"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[retry_bond1] = {
+        "action": "Click",
+        "target": [640, 650],
+        "post_delay": 500,
+        "timeout": 1200,
+        "next": [wait_bond_closed],
+        "on_error": [retry_bond2],
+    }
+    out[retry_bond2] = {
+        "action": "Click",
+        "target": [640, 650],
+        "post_delay": 500,
+        "timeout": 1200,
+        "next": [wait_bond_closed],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[wait_after_report] = {
+        "recognition": "TemplateMatch",
+        "template": templates["all_schedule_title"],
+        "roi": roi["all_schedule_title"],
+        "threshold": 0.75,
+        "next": [next_gate],
+    }
+
+    out[close_info] = {
+        "action": "Click",
+        "target": [964, 114],
+        "post_wait_freezes": 300,
+        "timeout": 2000,
+        "next": [wait_info_closed],
+        "on_error": [retry_close_info],
+    }
+    out[wait_info_closed] = {
+        "recognition": "TemplateMatch",
+        "template": templates["info_title"],
+        "roi": roi["info_title"],
+        "threshold": 0.75,
+        "inverse": True,
+        "timeout": 2500,
+        "next": [wait_after_info],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[retry_close_info] = {
+        "action": "Click",
+        "target": [964, 114],
+        "post_wait_freezes": 300,
+        "timeout": 2000,
+        "next": [wait_info_closed],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out[wait_after_info] = {
+        "recognition": "TemplateMatch",
+        "template": templates["all_schedule_title"],
+        "roi": roi["all_schedule_title"],
+        "threshold": 0.75,
+        "next": [next_gate],
+    }
+
+
+def generate_schedule(spec: dict[str, Any]) -> OrderedDict[str, Any]:
+    out: OrderedDict[str, Any] = OrderedDict()
+    templates = spec["templates"]
+    roi = spec["roi"]
+    first_gate = schedule_candidate_gate("FirstRound", 0)
+    second_gate = schedule_candidate_gate("SecondRound", 0)
+
+    out[spec["entry"]] = {
+        "timeout": 10000,
+        "rate_limit": 250,
+        "next": [
+            "[JumpBack]NavOpenSchedule",
+            "[JumpBack]NavLoading",
+            "WaitScheduleHomeOpened",
+        ],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out["WaitScheduleHomeOpened"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["home_title"],
+        "roi": roi["home_title"],
+        "threshold": 0.75,
+        "timeout": 3000,
+        "next": ["ScheduleHomeTicketsEmpty", "OpenScheduleFirstRegionFirstRound"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out["ScheduleHomeTicketsEmpty"] = {
+        "recognition": "OCR",
+        "roi": roi["home_tickets"],
+        "expected": spec["ticket_empty_expected"],
+        "replace": [["O", "0"], ["o", "0"], [" ", ""]],
+        "threshold": 0.3,
+        "next": ["NavReturnToMain"],
+    }
+    out["ScheduleTicketsEmpty"] = {
+        "recognition": "OCR",
+        "roi": roi["all_schedule_tickets"],
+        "expected": spec["ticket_empty_expected"],
+        "replace": [["O", "0"], ["o", "0"], [" ", ""]],
+        "threshold": 0.3,
+        "next": ["CloseScheduleAllForNoTickets"],
+    }
+
+    for round_prefix, open_first, wait_first, open_all, wait_all, run_region in (
+        (
+            "FirstRound",
+            "OpenScheduleFirstRegionFirstRound",
+            "WaitScheduleFirstRegionFirstRound",
+            "OpenScheduleFirstRoundAllSchedule",
+            "WaitScheduleFirstRoundAllScheduleOpened",
+            "RunScheduleFirstRoundRegion",
+        ),
+        (
+            "SecondRound",
+            "OpenScheduleFirstRegionSecondRound",
+            "WaitScheduleFirstRegionSecondRound",
+            "OpenScheduleSecondRoundAllSchedule",
+            "WaitScheduleSecondRoundAllScheduleOpened",
+            "RunScheduleSecondRoundRegion",
+        ),
+    ):
+        retry_first = f"Retry{open_first}"
+        retry_all = f"Retry{open_all}"
+        gate = first_gate if round_prefix == "FirstRound" else second_gate
+        out[open_first] = {
+            "recognition": "TemplateMatch",
+            "template": templates["first_region_card"],
+            "roi": roi["first_region_card"],
+            "threshold": 0.75,
+            "action": "Click",
+            "post_wait_freezes": 500,
+            "timeout": 5000,
+            "next": [wait_first, "[JumpBack]NavLoading", retry_first],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[retry_first] = {
+            "recognition": "TemplateMatch",
+            "template": templates["first_region_card"],
+            "roi": roi["first_region_card"],
+            "threshold": 0.75,
+            "action": "Click",
+            "post_wait_freezes": 500,
+            "timeout": 5000,
+            "next": [wait_first, "[JumpBack]NavLoading"],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[wait_first] = {
+            "recognition": "TemplateMatch",
+            "template": templates["first_region_title"],
+            "roi": roi["region_name"],
+            "threshold": 0.75,
+            "timeout": 5000,
+            "next": [open_all],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[open_all] = {
+            "recognition": "TemplateMatch",
+            "template": templates["all_schedule_button"],
+            "roi": roi["all_schedule_button"],
+            "threshold": 0.75,
+            "action": "Click",
+            "post_wait_freezes": 500,
+            "timeout": 5000,
+            "next": [wait_all, "[JumpBack]NavLoading", retry_all],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[retry_all] = {
+            "recognition": "TemplateMatch",
+            "template": templates["all_schedule_button"],
+            "roi": roi["all_schedule_button"],
+            "threshold": 0.75,
+            "action": "Click",
+            "post_wait_freezes": 500,
+            "timeout": 5000,
+            "next": [wait_all, "[JumpBack]NavLoading"],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[wait_all] = {
+            "recognition": "TemplateMatch",
+            "template": templates["all_schedule_title"],
+            "roi": roi["all_schedule_title"],
+            "threshold": 0.75,
+            "timeout": 2000,
+            "next": [run_region],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+        out[run_region] = {
+            "next": ["ScheduleTicketsEmpty", gate],
+        }
+
+    for round_prefix, finish_node, candidate_kind, candidate_count in (
+        (
+            "FirstRound",
+            "FinishScheduleFirstRoundRegion",
+            "special",
+            spec["special_candidate_count"],
+        ),
+        (
+            "SecondRound",
+            "FinishScheduleSecondRoundRegion",
+            "heart",
+            spec["heart_candidate_count"],
+        ),
+    ):
+        for index in range(candidate_count):
+            add_schedule_candidate(
+                out,
+                spec,
+                round_prefix,
+                candidate_kind,
+                index,
+                candidate_count,
+                finish_node,
+            )
+
+    for round_prefix, finish, wait_closed, retry_close, decide in (
+        (
+            "FirstRound",
+            "FinishScheduleFirstRoundRegion",
+            "WaitScheduleFirstRoundAllScheduleClosed",
+            "RetryCloseScheduleFirstRoundAllSchedule",
+            "DecideScheduleFirstRoundRegion",
+        ),
+        (
+            "SecondRound",
+            "FinishScheduleSecondRoundRegion",
+            "WaitScheduleSecondRoundAllScheduleClosed",
+            "RetryCloseScheduleSecondRoundAllSchedule",
+            "DecideScheduleSecondRoundRegion",
+        ),
+    ):
+        out[finish] = {
+            "recognition": "TemplateMatch",
+            "template": templates["all_schedule_close"],
+            "roi": roi["all_schedule_close"],
+            "threshold": 0.75,
+            "action": "Click",
+            "post_wait_freezes": 300,
+            "timeout": 2000,
+            "next": [wait_closed],
+            "on_error": [retry_close],
+        }
+        out[wait_closed] = {
+            "recognition": "TemplateMatch",
+            "template": templates["all_schedule_title"],
+            "roi": roi["all_schedule_title"],
+            "threshold": 0.75,
+            "inverse": True,
+            "next": [decide],
+        }
+        out[retry_close] = {
+            "action": "Click",
+            "target": [1138, 100],
+            "post_wait_freezes": 300,
+            "timeout": 2000,
+            "next": [wait_closed],
+            "on_error": ["RecoverScheduleToMain"],
+        }
+
+    out["DecideScheduleFirstRoundRegion"] = {
+        "timeout": 1000,
+        "next": [
+            "ScheduleFirstRoundAtLastRegion",
+            "AdvanceScheduleFirstRoundRegion",
+            "RecoverScheduleToMain",
+        ],
+    }
+    out["ScheduleFirstRoundAtLastRegion"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["last_region_title"],
+        "roi": roi["region_name"],
+        "threshold": 0.75,
+        "next": ["ReturnScheduleFirstRoundToHome"],
+    }
+    out["AdvanceScheduleFirstRoundRegion"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["next_region_arrow"],
+        "roi": roi["next_region_arrow"],
+        "threshold": 0.75,
+        "green_mask": True,
+        "action": "Click",
+        "max_hit": spec["max_region_hops"],
+        "post_wait_freezes": 500,
+        "next": ["OpenScheduleFirstRoundAllSchedule"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out["ReturnScheduleFirstRoundToHome"] = {
+        "recognition": "TemplateMatch",
+        "template": "nav/back.png",
+        "roi": [0, 0, 120, 100],
+        "threshold": 0.7,
+        "green_mask": True,
+        "action": "Click",
+        "post_wait_freezes": 500,
+        "timeout": 5000,
+        "next": ["WaitScheduleHomeForSecondRound", "[JumpBack]NavLoading"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out["WaitScheduleHomeForSecondRound"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["home_title"],
+        "roi": roi["home_title"],
+        "threshold": 0.75,
+        "timeout": 3000,
+        "next": ["ScheduleHomeTicketsEmpty", "OpenScheduleFirstRegionSecondRound"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+
+    out["DecideScheduleSecondRoundRegion"] = {
+        "timeout": 1000,
+        "next": [
+            "ScheduleSecondRoundAtLastRegion",
+            "AdvanceScheduleSecondRoundRegion",
+            "RecoverScheduleToMain",
+        ],
+    }
+    out["ScheduleSecondRoundAtLastRegion"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["last_region_title"],
+        "roi": roi["region_name"],
+        "threshold": 0.75,
+        "next": ["NavReturnToMain"],
+    }
+    out["AdvanceScheduleSecondRoundRegion"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["next_region_arrow"],
+        "roi": roi["next_region_arrow"],
+        "threshold": 0.75,
+        "green_mask": True,
+        "action": "Click",
+        "max_hit": spec["max_region_hops"],
+        "post_wait_freezes": 500,
+        "next": ["OpenScheduleSecondRoundAllSchedule"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+
+    out["CloseScheduleAllForNoTickets"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["all_schedule_close"],
+        "roi": roi["all_schedule_close"],
+        "threshold": 0.75,
+        "action": "Click",
+        "post_wait_freezes": 300,
+        "timeout": 2000,
+        "next": ["WaitScheduleAllClosedForNoTickets"],
+        "on_error": ["RetryCloseScheduleAllForNoTickets"],
+    }
+    out["WaitScheduleAllClosedForNoTickets"] = {
+        "recognition": "TemplateMatch",
+        "template": templates["all_schedule_title"],
+        "roi": roi["all_schedule_title"],
+        "threshold": 0.75,
+        "inverse": True,
+        "next": ["NavReturnToMain"],
+    }
+    out["RetryCloseScheduleAllForNoTickets"] = {
+        "action": "Click",
+        "target": [1138, 100],
+        "post_wait_freezes": 300,
+        "timeout": 2000,
+        "next": ["WaitScheduleAllClosedForNoTickets"],
+        "on_error": ["RecoverScheduleToMain"],
+    }
+    out["RecoverScheduleToMain"] = {"next": ["NavReturnToMain"]}
     return out
 
 
@@ -630,6 +1248,7 @@ def generated_files(spec: dict[str, Any]) -> dict[Path, str]:
         for sweep in spec["sweeps"]
     }
     files[ROOT / spec["shop"]["output"]] = render(generate_shop(spec["shop"]))
+    files[ROOT / spec["schedule"]["output"]] = render(generate_schedule(spec["schedule"]))
     files[ROOT / "assets" / "interface.json"] = render(generate_interface(spec))
     return files
 

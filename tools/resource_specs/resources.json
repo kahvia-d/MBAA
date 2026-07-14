@@ -38,6 +38,7 @@
       }
     ],
     "static_tasks": [
+      {"name": "课程表", "entry": "StartSchedule"},
       {"name": "社团签到", "entry": "StartClubCheckIn"},
       {"name": "购买每日免费组合包", "entry": "StartDailyFreePyroxenePack"},
       {"name": "信箱领取", "entry": "StartMailboxClaim"},
@@ -104,6 +105,13 @@
     "entry": "StartShopPurchase",
     "columns": [648, 798, 948, 1100],
     "visible_rows": [200, 449],
+    "goods_scroll": {
+      "begin": [1180, 580],
+      "end": [1180, 80],
+      "duration": 700
+    },
+    "reward_page_open_timeout": 5000,
+    "reward_animation_timeout": 30000,
     "categories": [
       {
         "label": "一般",
@@ -127,5 +135,57 @@
         }
       }
     ]
+  },
+  "schedule": {
+    "output": "assets/resource/pipeline/schedule.json",
+    "task_name": "课程表",
+    "entry": "StartSchedule",
+    "special_student_dir": "schedule/special_students",
+    "special_candidate_count": 5,
+    "heart_candidate_count": 5,
+    "special_heart_threshold": 0.68,
+    "heart_threshold": 0.7,
+    "max_region_hops": 24,
+    "templates": {
+      "home_title": "schedule/home_title.png",
+      "first_region_card": "schedule/first_region_card.png",
+      "region_title": "schedule/region_title.png",
+      "first_region_title": "schedule/first_region_title.png",
+      "last_region_title": "schedule/last_region_title.png",
+      "all_schedule_button": "schedule/all_schedule_button.png",
+      "next_region_arrow": "schedule/next_region_arrow.png",
+      "all_schedule_title": "schedule/all_schedule_title.png",
+      "all_schedule_close": "schedule/all_schedule_close.png",
+      "info_title": "schedule/info_title.png",
+      "info_close": "schedule/info_close.png",
+      "start_button": "schedule/start_button.png",
+      "report_title": "schedule/report_title.png",
+      "report_confirm": "schedule/report_confirm.png",
+      "bond_level_up_title": "cafe/bond_level_up_title.png",
+      "heart": [
+        "schedule/heart.png",
+        "schedule/heart_wide.png"
+      ],
+      "completed_check": "schedule/completed_check.png"
+    },
+    "roi": {
+      "home_title": [70, 0, 220, 70],
+      "home_tickets": [155, 82, 75, 42],
+      "first_region_card": [630, 120, 620, 130],
+      "region_title": [70, 0, 230, 70],
+      "region_name": [900, 70, 370, 100],
+      "all_schedule_button": [1040, 600, 240, 120],
+      "next_region_arrow": [1200, 300, 80, 130],
+      "all_schedule_title": [480, 55, 320, 100],
+      "all_schedule_close": [1080, 55, 100, 100],
+      "all_schedule_tickets": [660, 128, 100, 42],
+      "students": [120, 175, 1040, 455],
+      "info_title": [500, 70, 300, 100],
+      "start_button": [450, 480, 380, 140],
+      "report_title": [500, 90, 300, 100],
+      "report_confirm": [470, 480, 340, 140],
+      "bond_level_up_title": [450, 550, 390, 130]
+    },
+    "ticket_empty_expected": "^0/[0-9]+$"
   }
 }

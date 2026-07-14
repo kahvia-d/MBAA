@@ -74,6 +74,10 @@
       ]
     },
     {
+      "name": "课程表",
+      "entry": "StartSchedule"
+    },
+    {
       "name": "社团签到",
       "entry": "StartClubCheckIn"
     },

@@ -39,7 +39,7 @@
     "threshold": 0.75,
     "action": "Click",
     "post_wait_freezes": 500,
-    "timeout": 1200,
+    "timeout": 5000,
     "next": [
       "WaitMailboxClaimRewardSuccess"
     ],
@@ -55,66 +55,75 @@
   "WaitMailboxClaimRewardSuccess": {
     "recognition": "TemplateMatch",
     "template": "common/reward_success.png",
-    "threshold": 0.8,
+    "roi": [
+      430,
+      95,
+      450,
+      170
+    ],
+    "threshold": 0.7,
+    "timeout": 30000,
+    "rate_limit": 250,
+    "next": [
+      "CloseMailboxClaimRewardSuccess"
+    ],
+    "on_error": [
+      "RetryCloseMailboxClaimRewardSuccess"
+    ]
+  },
+  "CloseMailboxClaimRewardSuccess": {
+    "recognition": "TemplateMatch",
+    "template": "common/reward_continue.png",
+    "roi": [
+      480,
+      590,
+      330,
+      80
+    ],
+    "threshold": 0.75,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
-    "timeout": 10000,
+    "timeout": 3000,
     "next": [
       "WaitMailboxClaimRewardSuccessClosed"
     ],
     "on_error": [
-      "ContinueMailboxClaimAfterRewardTimeout"
-    ],
-    "roi": [
-      350,
-      60,
-      580,
-      220
+      "RetryCloseMailboxClaimRewardSuccess"
     ]
   },
   "WaitMailboxClaimRewardSuccessClosed": {
     "recognition": "TemplateMatch",
     "template": "common/reward_success.png",
-    "threshold": 0.8,
+    "threshold": 0.7,
     "inverse": true,
-    "timeout": 1000,
     "next": [
       "ReturnMailboxClaimToMainAfterReward"
     ],
-    "on_error": [
-      "RetryCloseMailboxClaimRewardSuccess"
-    ],
     "roi": [
-      350,
-      60,
-      580,
-      220
+      430,
+      95,
+      450,
+      170
     ]
   },
   "RetryCloseMailboxClaimRewardSuccess": {
+    "max_hit": 5,
     "action": "Click",
     "target": [
       640,
-      650
+      632
     ],
     "post_wait_freezes": 800,
+    "timeout": 2000,
     "next": [
       "WaitMailboxClaimRewardSuccessClosed"
-    ]
-  },
-  "ContinueMailboxClaimAfterRewardTimeout": {
-    "action": "Click",
-    "target": [
-      640,
-      650
     ],
-    "post_wait_freezes": 800,
-    "next": [
-      "ReturnMailboxClaimToMainAfterReward"
+    "on_error": [
+      "RetryCloseMailboxClaimRewardSuccess"
     ]
   },
   "ReturnMailboxClaimToMainAfterReward": {

@@ -49,9 +49,38 @@
       0.75,
       0.75
     ],
-    "timeout": 1200,
+    "timeout": 3000,
     "next": [
+      "WaitCafe1FirstEnterDialogReady",
       "ConfirmCafe1FirstEnterDialog"
+    ],
+    "on_error": [
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe1OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "WaitCafe1FirstEnterDialogReady": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm_disabled.png",
+    "roi": [
+      500,
+      400,
+      280,
+      120
+    ],
+    "threshold": 0.78,
+    "max_hit": 60,
+    "timeout": 15000,
+    "rate_limit": 250,
+    "next": [
+      "WaitCafe1FirstEnterDialogReady",
+      "ConfirmCafe1FirstEnterDialog"
+    ],
+    "on_error": [
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe1OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "ConfirmCafe1FirstEnterDialog": {
@@ -67,12 +96,14 @@
     "action": "Click",
     "pre_wait_freezes": 200,
     "post_wait_freezes": 500,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitCafe1FirstEnterDialogClosed"
     ],
     "on_error": [
-      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout"
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe1OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "WaitCafe1FirstEnterDialogClosed": {
@@ -97,28 +128,8 @@
       "WaitCafe1OpenedAfterFirstEnterDialog"
     ],
     "on_error": [
-      "RetryConfirmCafe1FirstEnterDialog"
-    ]
-  },
-  "RetryConfirmCafe1FirstEnterDialog": {
-    "recognition": "TemplateMatch",
-    "template": "cafe/first_enter_confirm.png",
-    "roi": [
-      480,
-      390,
-      330,
-      140
-    ],
-    "threshold": 0.75,
-    "action": "Click",
-    "pre_wait_freezes": 300,
-    "post_wait_freezes": 500,
-    "timeout": 12000,
-    "next": [
-      "WaitCafe1FirstEnterDialogClosed"
-    ],
-    "on_error": [
-      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout"
+      "RecheckCafe1FirstEnterDialogAfterConfirmTimeout",
+      "ReturnCafeDailyToMain"
     ]
   },
   "RecheckCafe1FirstEnterDialogAfterConfirmTimeout": {
@@ -137,12 +148,15 @@
       0.75,
       0.75
     ],
-    "timeout": 1000,
+    "max_hit": 2,
+    "timeout": 3000,
     "next": [
+      "WaitCafe1FirstEnterDialogReady",
       "ConfirmCafe1FirstEnterDialog"
     ],
     "on_error": [
-      "WaitCafe1OpenedAfterFirstEnterDialog"
+      "WaitCafe1OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "WaitCafe1OpenedAfterFirstEnterDialog": {
@@ -178,11 +192,7 @@
   },
   "RunCafe1HeadPat": {
     "next": [
-      "FindCafe1HeadPatVoiceMark"
-    ],
-    "timeout": 80,
-    "rate_limit": 80,
-    "on_error": [
+      "FindCafe1HeadPatVoiceMark",
       "FinishCafe1HeadPat"
     ],
     "enabled": true
@@ -224,7 +234,8 @@
     "timeout": 3800,
     "rate_limit": 150,
     "on_error": [
-      "FindCafe1HeadPatVoiceMark"
+      "FindCafe1HeadPatVoiceMark",
+      "FinishCafe1HeadPat"
     ]
   },
   "CloseCafe1BondLevelUp": {
@@ -264,7 +275,8 @@
     "inverse": true,
     "timeout": 1000,
     "next": [
-      "FindCafe1HeadPatVoiceMark"
+      "FindCafe1HeadPatVoiceMark",
+      "FinishCafe1HeadPat"
     ],
     "on_error": [
       "CloseCafe1BondLevelUp"
@@ -703,9 +715,38 @@
       0.75,
       0.75
     ],
-    "timeout": 1200,
+    "timeout": 3000,
     "next": [
+      "WaitCafe2FirstEnterDialogReady",
       "ConfirmCafe2FirstEnterDialog"
+    ],
+    "on_error": [
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe2OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
+    ]
+  },
+  "WaitCafe2FirstEnterDialogReady": {
+    "recognition": "TemplateMatch",
+    "template": "cafe/first_enter_confirm_disabled.png",
+    "roi": [
+      500,
+      400,
+      280,
+      120
+    ],
+    "threshold": 0.78,
+    "max_hit": 60,
+    "timeout": 15000,
+    "rate_limit": 250,
+    "next": [
+      "WaitCafe2FirstEnterDialogReady",
+      "ConfirmCafe2FirstEnterDialog"
+    ],
+    "on_error": [
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe2OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "ConfirmCafe2FirstEnterDialog": {
@@ -721,12 +762,14 @@
     "action": "Click",
     "pre_wait_freezes": 200,
     "post_wait_freezes": 500,
-    "timeout": 12000,
+    "timeout": 3000,
     "next": [
       "WaitCafe2FirstEnterDialogClosed"
     ],
     "on_error": [
-      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout"
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout",
+      "WaitCafe2OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "WaitCafe2FirstEnterDialogClosed": {
@@ -751,28 +794,8 @@
       "WaitCafe2OpenedAfterFirstEnterDialog"
     ],
     "on_error": [
-      "RetryConfirmCafe2FirstEnterDialog"
-    ]
-  },
-  "RetryConfirmCafe2FirstEnterDialog": {
-    "recognition": "TemplateMatch",
-    "template": "cafe/first_enter_confirm.png",
-    "roi": [
-      480,
-      390,
-      330,
-      140
-    ],
-    "threshold": 0.75,
-    "action": "Click",
-    "pre_wait_freezes": 300,
-    "post_wait_freezes": 500,
-    "timeout": 12000,
-    "next": [
-      "WaitCafe2FirstEnterDialogClosed"
-    ],
-    "on_error": [
-      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout"
+      "RecheckCafe2FirstEnterDialogAfterConfirmTimeout",
+      "ReturnCafeDailyToMain"
     ]
   },
   "RecheckCafe2FirstEnterDialogAfterConfirmTimeout": {
@@ -791,12 +814,15 @@
       0.75,
       0.75
     ],
-    "timeout": 1000,
+    "max_hit": 2,
+    "timeout": 3000,
     "next": [
+      "WaitCafe2FirstEnterDialogReady",
       "ConfirmCafe2FirstEnterDialog"
     ],
     "on_error": [
-      "WaitCafe2OpenedAfterFirstEnterDialog"
+      "WaitCafe2OpenedAfterFirstEnterDialog",
+      "ReturnCafeDailyToMain"
     ]
   },
   "WaitCafe2OpenedAfterFirstEnterDialog": {
@@ -824,11 +850,7 @@
   },
   "RunCafe2HeadPat": {
     "next": [
-      "FindCafe2HeadPatVoiceMark"
-    ],
-    "timeout": 80,
-    "rate_limit": 80,
-    "on_error": [
+      "FindCafe2HeadPatVoiceMark",
       "FinishCafe2HeadPat"
     ]
   },
@@ -869,7 +891,8 @@
     "timeout": 3800,
     "rate_limit": 150,
     "on_error": [
-      "FindCafe2HeadPatVoiceMark"
+      "FindCafe2HeadPatVoiceMark",
+      "FinishCafe2HeadPat"
     ]
   },
   "CloseCafe2BondLevelUp": {
@@ -909,7 +932,8 @@
     "inverse": true,
     "timeout": 1000,
     "next": [
-      "FindCafe2HeadPatVoiceMark"
+      "FindCafe2HeadPatVoiceMark",
+      "FinishCafe2HeadPat"
     ],
     "on_error": [
       "CloseCafe2BondLevelUp"

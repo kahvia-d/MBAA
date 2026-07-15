@@ -170,12 +170,10 @@ def main() -> int:
                     errors.append(f"{name}: non-string template value")
                     continue
                 template_path = IMAGE_DIR / template
-                exists = (
-                    template_path.exists()
-                    if recognition_type == "FeatureMatch"
-                    else template_path.is_file()
-                )
-                if not exists:
+                if template_path.is_dir():
+                    if not any(template_path.glob("*.png")):
+                        errors.append(f"{name}: empty template directory {template}")
+                elif not template_path.is_file():
                     errors.append(f"{name}: missing template {template}")
                 if "roi" not in recognition and template not in FULLSCREEN_TEMPLATE_ALLOWLIST:
                     errors.append(f"{name}: {recognition_type} {template} has no ROI")

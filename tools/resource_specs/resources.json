@@ -7,7 +7,7 @@
     "license": "MIT",
     "welcome": "首次使用！欢迎使用 MBAA!",
     "github": "https://github.com/kahvia-d/MBAA",
-    "version": "0.1.7",
+    "version": "0.1.9",
     "controller": [
       {
         "name": "安卓端",
@@ -140,11 +140,22 @@
     "output": "assets/resource/pipeline/schedule.json",
     "task_name": "课程表",
     "entry": "StartSchedule",
-    "special_student_dir": "schedule/special_students",
+    "special_student_template_dir": "schedule/special_students",
+    "special_student_templates": [
+      {"file": "Kei.png", "threshold": 0.74},
+      {"file": "佳世子(正月).png", "threshold": 0.74},
+      {"file": "彌香.png", "threshold": 0.74},
+      {"file": "愛麗絲(武裝).png", "threshold": 0.74},
+      {"file": "星野(泳裝).png", "threshold": 0.74},
+      {"file": "聖亞.png", "threshold": 0.74},
+      {"file": "花子(泳裝).png", "threshold": 0.74},
+      {"file": "莉央.png", "threshold": 0.8},
+      {"file": "陽奈(禮服).png", "threshold": 0.74}
+    ],
     "special_candidate_count": 5,
     "heart_candidate_count": 5,
-    "special_heart_threshold": 0.68,
-    "heart_threshold": 0.7,
+    "special_heart_threshold": 0.6,
+    "heart_threshold": 0.6,
     "max_region_hops": 24,
     "templates": {
       "home_title": "schedule/home_title.png",
@@ -162,10 +173,7 @@
       "report_title": "schedule/report_title.png",
       "report_confirm": "schedule/report_confirm.png",
       "bond_level_up_title": "cafe/bond_level_up_title.png",
-      "heart": [
-        "schedule/heart.png",
-        "schedule/heart_wide.png"
-      ],
+      "heart": "schedule/heart.png",
       "completed_check": "schedule/completed_check.png"
     },
     "roi": {

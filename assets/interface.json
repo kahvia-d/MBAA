@@ -7,7 +7,7 @@
   "license": "MIT",
   "welcome": "首次使用！欢迎使用 MBAA!",
   "github": "https://github.com/kahvia-d/MBAA",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "controller": [
     {
       "name": "安卓端",

@@ -355,17 +355,36 @@
     ]
   },
   "FindFirstRoundScheduleCandidate0": {
-    "recognition": "FeatureMatch",
-    "template": "schedule/special_students",
+    "recognition": "TemplateMatch",
+    "template": [
+      "schedule/special_students/Kei.png",
+      "schedule/special_students/佳世子(正月).png",
+      "schedule/special_students/彌香.png",
+      "schedule/special_students/愛麗絲(武裝).png",
+      "schedule/special_students/星野(泳裝).png",
+      "schedule/special_students/聖亞.png",
+      "schedule/special_students/花子(泳裝).png",
+      "schedule/special_students/莉央.png",
+      "schedule/special_students/陽奈(禮服).png"
+    ],
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "count": 5,
-    "ratio": 0.72,
-    "detector": "SIFT",
+    "threshold": [
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.8,
+      0.74
+    ],
+    "green_mask": true,
     "order_by": "Vertical",
     "index": 0,
     "timeout": 800,
@@ -378,10 +397,7 @@
   },
   "VerifyFirstRoundScheduleCandidate0Heart": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": "FindFirstRoundScheduleCandidate0",
     "roi_offset": [
       -8,
@@ -389,7 +405,7 @@
       35,
       35
     ],
-    "threshold": 0.68,
+    "threshold": 0.6,
     "green_mask": true,
     "timeout": 800,
     "next": [
@@ -772,17 +788,36 @@
     ]
   },
   "FindFirstRoundScheduleCandidate1": {
-    "recognition": "FeatureMatch",
-    "template": "schedule/special_students",
+    "recognition": "TemplateMatch",
+    "template": [
+      "schedule/special_students/Kei.png",
+      "schedule/special_students/佳世子(正月).png",
+      "schedule/special_students/彌香.png",
+      "schedule/special_students/愛麗絲(武裝).png",
+      "schedule/special_students/星野(泳裝).png",
+      "schedule/special_students/聖亞.png",
+      "schedule/special_students/花子(泳裝).png",
+      "schedule/special_students/莉央.png",
+      "schedule/special_students/陽奈(禮服).png"
+    ],
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "count": 5,
-    "ratio": 0.72,
-    "detector": "SIFT",
+    "threshold": [
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.8,
+      0.74
+    ],
+    "green_mask": true,
     "order_by": "Vertical",
     "index": 1,
     "timeout": 800,
@@ -795,10 +830,7 @@
   },
   "VerifyFirstRoundScheduleCandidate1Heart": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": "FindFirstRoundScheduleCandidate1",
     "roi_offset": [
       -8,
@@ -806,7 +838,7 @@
       35,
       35
     ],
-    "threshold": 0.68,
+    "threshold": 0.6,
     "green_mask": true,
     "timeout": 800,
     "next": [
@@ -1189,17 +1221,36 @@
     ]
   },
   "FindFirstRoundScheduleCandidate2": {
-    "recognition": "FeatureMatch",
-    "template": "schedule/special_students",
+    "recognition": "TemplateMatch",
+    "template": [
+      "schedule/special_students/Kei.png",
+      "schedule/special_students/佳世子(正月).png",
+      "schedule/special_students/彌香.png",
+      "schedule/special_students/愛麗絲(武裝).png",
+      "schedule/special_students/星野(泳裝).png",
+      "schedule/special_students/聖亞.png",
+      "schedule/special_students/花子(泳裝).png",
+      "schedule/special_students/莉央.png",
+      "schedule/special_students/陽奈(禮服).png"
+    ],
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "count": 5,
-    "ratio": 0.72,
-    "detector": "SIFT",
+    "threshold": [
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.8,
+      0.74
+    ],
+    "green_mask": true,
     "order_by": "Vertical",
     "index": 2,
     "timeout": 800,
@@ -1212,10 +1263,7 @@
   },
   "VerifyFirstRoundScheduleCandidate2Heart": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": "FindFirstRoundScheduleCandidate2",
     "roi_offset": [
       -8,
@@ -1223,7 +1271,7 @@
       35,
       35
     ],
-    "threshold": 0.68,
+    "threshold": 0.6,
     "green_mask": true,
     "timeout": 800,
     "next": [
@@ -1606,17 +1654,36 @@
     ]
   },
   "FindFirstRoundScheduleCandidate3": {
-    "recognition": "FeatureMatch",
-    "template": "schedule/special_students",
+    "recognition": "TemplateMatch",
+    "template": [
+      "schedule/special_students/Kei.png",
+      "schedule/special_students/佳世子(正月).png",
+      "schedule/special_students/彌香.png",
+      "schedule/special_students/愛麗絲(武裝).png",
+      "schedule/special_students/星野(泳裝).png",
+      "schedule/special_students/聖亞.png",
+      "schedule/special_students/花子(泳裝).png",
+      "schedule/special_students/莉央.png",
+      "schedule/special_students/陽奈(禮服).png"
+    ],
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "count": 5,
-    "ratio": 0.72,
-    "detector": "SIFT",
+    "threshold": [
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.8,
+      0.74
+    ],
+    "green_mask": true,
     "order_by": "Vertical",
     "index": 3,
     "timeout": 800,
@@ -1629,10 +1696,7 @@
   },
   "VerifyFirstRoundScheduleCandidate3Heart": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": "FindFirstRoundScheduleCandidate3",
     "roi_offset": [
       -8,
@@ -1640,7 +1704,7 @@
       35,
       35
     ],
-    "threshold": 0.68,
+    "threshold": 0.6,
     "green_mask": true,
     "timeout": 800,
     "next": [
@@ -2023,17 +2087,36 @@
     ]
   },
   "FindFirstRoundScheduleCandidate4": {
-    "recognition": "FeatureMatch",
-    "template": "schedule/special_students",
+    "recognition": "TemplateMatch",
+    "template": [
+      "schedule/special_students/Kei.png",
+      "schedule/special_students/佳世子(正月).png",
+      "schedule/special_students/彌香.png",
+      "schedule/special_students/愛麗絲(武裝).png",
+      "schedule/special_students/星野(泳裝).png",
+      "schedule/special_students/聖亞.png",
+      "schedule/special_students/花子(泳裝).png",
+      "schedule/special_students/莉央.png",
+      "schedule/special_students/陽奈(禮服).png"
+    ],
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "count": 5,
-    "ratio": 0.72,
-    "detector": "SIFT",
+    "threshold": [
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.74,
+      0.8,
+      0.74
+    ],
+    "green_mask": true,
     "order_by": "Vertical",
     "index": 4,
     "timeout": 800,
@@ -2046,10 +2129,7 @@
   },
   "VerifyFirstRoundScheduleCandidate4Heart": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": "FindFirstRoundScheduleCandidate4",
     "roi_offset": [
       -8,
@@ -2057,7 +2137,7 @@
       35,
       35
     ],
-    "threshold": 0.68,
+    "threshold": 0.6,
     "green_mask": true,
     "timeout": 800,
     "next": [
@@ -2441,17 +2521,14 @@
   },
   "FindSecondRoundScheduleCandidate0": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "order_by": "Vertical",
     "index": 0,
@@ -2849,17 +2926,14 @@
   },
   "FindSecondRoundScheduleCandidate1": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "order_by": "Vertical",
     "index": 1,
@@ -3257,17 +3331,14 @@
   },
   "FindSecondRoundScheduleCandidate2": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "order_by": "Vertical",
     "index": 2,
@@ -3665,17 +3736,14 @@
   },
   "FindSecondRoundScheduleCandidate3": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "order_by": "Vertical",
     "index": 3,
@@ -4073,17 +4141,14 @@
   },
   "FindSecondRoundScheduleCandidate4": {
     "recognition": "TemplateMatch",
-    "template": [
-      "schedule/heart.png",
-      "schedule/heart_wide.png"
-    ],
+    "template": "schedule/heart.png",
     "roi": [
       120,
       175,
       1040,
       455
     ],
-    "threshold": 0.7,
+    "threshold": 0.6,
     "green_mask": true,
     "order_by": "Vertical",
     "index": 4,

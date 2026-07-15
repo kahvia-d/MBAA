@@ -568,13 +568,19 @@ def add_schedule_candidate(
     }
 
     if candidate_kind == "special":
+        special_templates = [
+            f"{spec['special_student_template_dir']}/{item['file']}"
+            for item in spec["special_student_templates"]
+        ]
+        special_thresholds = [
+            item["threshold"] for item in spec["special_student_templates"]
+        ]
         out[find] = {
-            "recognition": "FeatureMatch",
-            "template": spec["special_student_dir"],
+            "recognition": "TemplateMatch",
+            "template": special_templates,
             "roi": roi["students"],
-            "count": 5,
-            "ratio": 0.72,
-            "detector": "SIFT",
+            "threshold": special_thresholds,
+            "green_mask": True,
             "order_by": "Vertical",
             "index": index,
             "timeout": 800,
